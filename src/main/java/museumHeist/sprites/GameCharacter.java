@@ -10,8 +10,8 @@ public class GameCharacter extends GameItem{
 	Position currentPosition; 
 	
 	public GameCharacter() {
-		int startx = 0;
-		int starty = 0; 
+		int startx = 2;
+		int starty = 2; 
 		currentPosition = new Position(startx,starty); 
 	}
 	
@@ -25,7 +25,8 @@ public class GameCharacter extends GameItem{
 		return gb.getGameBoardValue(currentPosition);
 	}
 
-	public void setCurrentPosition(int x, int y) {
+	public void setCurrentPosition(int x, int y) 
+	{
 		this.currentPosition = new Position(x,y); 
 	}
 
@@ -42,7 +43,18 @@ public class GameCharacter extends GameItem{
 		setCurrentPosition((int)currentPosition.getX()+1,(int)(currentPosition.getY()));  
 		}
 	
+	// Hämtar aktuell position
 	public Position getCurrentPosition() {
 		return currentPosition;
+	}
+
+	public boolean isCollidingWith(Wall wall) {
+		
+		return currentPosition.equals(wall.getPosition());
+	}
+
+	public boolean grabsTreasure(Treasure treasure) {
+		
+		return currentPosition.equals(treasure.getPosition());
 	}
 	}
