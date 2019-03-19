@@ -32,9 +32,9 @@ public class GameCharacter extends GameItem{
 		setCurrentPosition(x,y); 
 	}
 	
-	public int getGameBoardValueOfCurrentPosition() {
+	public int getGameBoardValueOfCurrentPosition(int level) {
 		GameBoard gb = new GameBoard(); 
-		return gb.getGameBoardValue(currentPosition);
+		return gb.getGameBoardValue(currentPosition, level);
 	}
 
 	public void setCurrentPosition(int x, int y) 
@@ -95,18 +95,18 @@ public class GameCharacter extends GameItem{
 		
 	}
 
-	public void updatePosition(GameBoard gameBoard) 
+	
+
+	public void updatePosition(GameBoard gameBoard, int level) 
 	{
 		// Om spelplanens position ger värdet 5 har karaktären gått in i en laser
-		if (5==gameBoard.getGameBoardValue(this.currentPosition))
+		if (5==gameBoard.getGameBoardValue(this.currentPosition, level))
 		{
 			this.isKilled();
 		}
 		
 		
 	}
-
-	
 
 	
 

@@ -25,7 +25,7 @@ public class registerCollision {
 		gameBoard = new GameBoard();
 	}
 
-	// Här testas att en krock med en vägg registreras när karaktären och väggen har samma position
+	// Level 1 - Här testas att en krock med en vägg registreras när karaktären och väggen har samma position
 	@Test
 	public void testCharacterWallCollision() 
 {
@@ -35,7 +35,7 @@ public class registerCollision {
 		assertTrue(mainCharacter.isCollidingWith(wall)); 
 	}
 	
-	// Här testas att karaktären plockar upp en skatt när när karaktären och skatten har samma position 
+	// Level 1- Här testas att karaktären plockar upp en skatt när när karaktären och skatten har samma position 
 	@Test
 	public void testCharacterGetsItem() 
 {
@@ -44,7 +44,7 @@ public class registerCollision {
 		assertTrue(mainCharacter.grabsTreasure(treasure)); 
 	}
 	
-	// Här testas att en krock med en laser registreras när karaktären och lasern har samma position
+	// Level 1- Här testas att en krock med en laser registreras när karaktären och lasern har samma position
 		@Test
 	public void testCharacterLaserCollision() 
 	{
@@ -52,7 +52,7 @@ public class registerCollision {
 		Laser laser = new Laser(10,10);	
 		assertTrue(mainCharacter.isCollidingWith(laser)); 
 	}
-	// Här testas att karaktären kan dö när denna har 0 liv
+	// Level 1- Här testas att karaktären kan dö när denna har 0 liv
 	@Test
 	public void GameOverWhenLifeIsZero() 
 	{
@@ -61,25 +61,25 @@ public class registerCollision {
 		assertTrue(mainCharacter.isDead()); 
 	}
 	
-	// Här testas att karaktären kan dö när denna krockar med en laser och har slut på liv
+	//Level 1- Här testas att karaktären kan dö när denna krockar med en laser och har slut på liv
 	@Test
 	public void GameOverWhenLifeIsOneAndCharacterCollidesithLaser() 
 	{
 		mainCharacter = new GameCharacter(10,10);
 		mainCharacter.setLife(0);
 		mainCharacter.moveOneTileRight();
-		mainCharacter.updatePosition(gameBoard);
+		mainCharacter.updatePosition(gameBoard, 1);
 		
 		assertTrue(mainCharacter.isDead()); 
 	}
 		
-// Här testas att karaktären tappar ett liv när denna krockar med laser
+// Level 1 - Här testas att karaktären tappar ett liv när denna krockar med laser
 	@Test
 	public void CharacterDies() 
 	{
 		mainCharacter = new GameCharacter(1,1);
 		mainCharacter.moveOneTileRight();
-		mainCharacter.updatePosition(gameBoard);
+		mainCharacter.updatePosition(gameBoard, 1);
 		// Gick emot regelboken men snake-snubben körde två asserts
 		assertTrue(mainCharacter.getLife()==2); 
 		assertEquals(mainCharacter.getCurrentPosition(),new Position(2,2)); 
