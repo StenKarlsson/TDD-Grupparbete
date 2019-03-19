@@ -2,6 +2,8 @@ package museumHeist.sprites;
 
 import java.awt.geom.Point2D;
 
+import javax.imageio.ImageTypeSpecifier;
+
 import museum_heist.GameBoard;
 import museum_heist.Position;
 
@@ -79,18 +81,34 @@ public class GameCharacter extends GameItem{
 	
 	// Karaktären dör om den krockar med en laser och har 0 liv kvar
 
-	public boolean isDead(Laser laser) 
+	public boolean isDead() 
 	{
 	
-		return currentPosition.equals(laser.getPosition()) && this.life==0;
+		return this.life==0;
 	}
 	
 	// Om karaktären dör så tappar denna ett liv och flyttas till startpositionen
-	public void dies() {
+	public void isKilled() 
+	{
 		this.life--;
 		setCurrentPosition(2, 2);
 		
 	}
+
+	public void updatePosition(GameBoard gameBoard) 
+	{
+		// Om spelplanens position ger värdet 5 har karaktären gått in i en laser
+		if (5==gameBoard.getGameBoardValue(this.currentPosition))
+		{
+			this.isKilled();
+		}
+		
+		
+	}
+
+	
+
+	
 
 	
 
