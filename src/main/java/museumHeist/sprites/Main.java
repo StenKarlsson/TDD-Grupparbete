@@ -1,17 +1,42 @@
 package museumHeist.sprites;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Scanner;
+
+import museumHeist.GUI.Classes.GameBoardInterface;
+import museumHeist.GUI.Classes.HybridGUI;
+import museum_heist.GameBoard;
+import museum_heist.Position;
+
 public class Main {
 	//skapade en mainklass bara för att leka med objekten lite 
+	
+	
 	public static void main(String[] args) {
-		GameCharacter c1 = new GameCharacter(); 
-		GameCharacter c2 = new GameCharacter(0,1); 
-		System.out.println(c1.getCurrentPosition());
 		
-		c1.moveOneTileRight();
-		System.out.println(c1.getCurrentPosition());
+		//Scanner sc = new Scanner(System.in);
+		
+
+		//GameBoard board = new GameBoard();
+	//GameCharacter character = new GameCharacter();
+		GameBoardInterface gui = new GameBoardInterface();
 		
 		
-		
-	}
+		 
+		while(true) {
+			
+			
+			
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+}
 	
 }
+
