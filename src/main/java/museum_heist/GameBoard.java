@@ -112,4 +112,37 @@ public class GameBoard {
 		else return value;
 		
 	} 
+	
+	// Ritar upp Arrayen
+	 public void drawMap(GameBoard gameBoard, int level )
+	    {
+			
+	        int[][] map = gameBoard.getGameBoard(level);
+	        
+	        
+	        
+	        for ( int q = 0; q < map.length; q++ )
+	        {
+	            for ( int x = 0; x < map[0].length; x++ )
+	            {
+	            	 
+	                    System.out.print(map[q][x]);
+	                    System.out.print("|");
+	                
+	            }
+	            System.out.print("\n");
+	       }
+	    
+	        
+	    }
+	 
+	 // Tar in en level och returnerar en 2D Array
+	 public int[][] getGameBoard(int level)
+	 {
+		 	if (level == 1) {return this.gameBoardLevel01;}
+			if (level == 2) {return this.gameBoardLevel02;}
+			if (level == 0) {return this.gameboardForInitialTesting;}
+			return this.gameBoardLevel01;
+		 
+	 }
 }

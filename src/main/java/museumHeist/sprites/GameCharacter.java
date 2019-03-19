@@ -99,6 +99,7 @@ public class GameCharacter extends GameItem{
 
 	public void updatePosition(GameBoard gameBoard, int level) 
 	{
+		
 		// Om spelplanens position ger värdet 5 har karaktären gått in i en laser
 		if (5==gameBoard.getGameBoardValue(this.currentPosition, level))
 		{
