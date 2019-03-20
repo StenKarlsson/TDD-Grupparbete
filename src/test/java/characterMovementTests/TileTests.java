@@ -29,6 +29,7 @@ public class TileTests {
 	
 	@Test
 	public void checkIfTileIsWall() {
+		
 		GameBoardInterface gb = new GameBoardInterface();
 		
 		Position pos = new Position(5,5);
@@ -36,6 +37,23 @@ public class TileTests {
 		
 		assertEquals(actualColor, Color.BLACK);
 	}
+	
+	@Test
+	public void checkIfTileIsTreasure() {
+		
+		GameBoardInterface gb = new GameBoardInterface();
+		
+		Position pos = new Position(2,2);
+		Color actualColor = gb.getColorOfTile(pos);
+		
+		assertEquals(actualColor, Color.ORANGE);
+	}
+	
+	@Test
+	public void checkIfTileIsLaser() {
+		
+	}
+	
 	
 	
 }
