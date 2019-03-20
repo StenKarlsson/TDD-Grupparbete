@@ -17,45 +17,46 @@ public class registerPositionOnGamBoard {
 		GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
 		
 		System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
-		assertEquals(1,mainCharacter.getGameBoardValueOfCurrentPosition()); 
+		assertEquals(1, mainCharacter.getGameBoardValueOfCurrentPosition());
 	}
 	
 	//Om figuren flyttas 1 steg åt höger ska den läsa in värde 2
-		@Test
-		public void moveRightGetValue() {
-			GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
-			mainCharacter.moveOneTileRight();
-			System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
-			assertEquals(2,mainCharacter.getGameBoardValueOfCurrentPosition()); 
-		}
-		//Om figuren flyttas 1 steg åt höger och sedan ett steg åt vänster ska den läsa in värde 1
-				@Test
-				public void moveRightLeftGetValue() {
-					GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
-					mainCharacter.moveOneTileRight();
-					mainCharacter.moveOneTileLeft();
-					System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
-					assertEquals(1,mainCharacter.getGameBoardValueOfCurrentPosition()); 
-				}
-				//Om figuren flyttas 1 steg åt höger och 1 steg ned ska den läsa in värde 7
-				@Test
-				public void moveRightDownGetValue() {
-					GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
-					mainCharacter.moveOneTileRight();
-					mainCharacter.moveOneTileDown();
-					System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
-					assertEquals(7,mainCharacter.getGameBoardValueOfCurrentPosition()); 
-				}
-				
-				//Om figuren flyttas 1 steg åt höger och 1 steg ned sedan 1 steg upp ska den läsa in värde 2
-				@Test
-				public void moveRightDownUpGetValue() {
-					GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
-					mainCharacter.moveOneTileRight();
-					mainCharacter.moveOneTileDown();
-					mainCharacter.moveOneTileUp();
-					System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
-					assertEquals(2,mainCharacter.getGameBoardValueOfCurrentPosition()); 
-				}
+	@Test
+	public void moveRightGetValue() {
+		GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
+		mainCharacter.moveOneTileRight();
+		System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
+		assertEquals(2, mainCharacter.getGameBoardValueOfCurrentPosition());
+	}
 	
+	//Om figuren flyttas 1 steg åt höger och sedan ett steg åt vänster ska den läsa in värde 1
+	@Test
+	public void moveRightLeftGetValue() {
+		GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
+		mainCharacter.moveOneTileRight();
+		mainCharacter.moveOneTileLeft();
+		System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
+		assertEquals(1, mainCharacter.getGameBoardValueOfCurrentPosition());
+	}
+	
+	//Om figuren flyttas 1 steg åt höger och 1 steg ned ska den läsa in värde 7
+	@Test
+	public void moveRightDownGetValue() {
+		GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
+		mainCharacter.moveOneTileRight();
+		mainCharacter.moveOneTileDown();
+		System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
+		assertEquals(7, mainCharacter.getGameBoardValueOfCurrentPosition());
+	}
+	
+	//Om figuren flyttas 1 steg åt höger och 1 steg ned sedan 1 steg upp ska den läsa in värde 2
+	@Test
+	public void moveRightDownUpGetValue() {
+		GameCharacter mainCharacter = new GameCharacter(); //har 0,0 som startposition
+		mainCharacter.moveOneTileRight();
+		mainCharacter.moveOneTileDown();
+		mainCharacter.moveOneTileUp();
+		System.out.println(mainCharacter.getGameBoardValueOfCurrentPosition());
+		assertEquals(2, mainCharacter.getGameBoardValueOfCurrentPosition());
+	}
 }
