@@ -52,12 +52,6 @@ public class GameBoardInterface extends JFrame {
 	    			newButton.setBackground(Color.WHITE);
 	    			squares[row][col]=newButton; 
 	    		}
-	    		if (currentLevel[row][col] == 5) {
-	    			JButton newButton = new JButton();
-	    			newButton.setBorderPainted(false);
-	    			newButton.setBackground(Color.ORANGE);
-	    			squares[row][col]=newButton; 
-				}
 	    		
 	    }
 	    }
