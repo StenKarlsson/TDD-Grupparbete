@@ -65,8 +65,9 @@ public class GameBoardInterface extends JFrame {
 				if (currentLevel[row][col] == 1) {
 					JButton newButton = new JButton();
 					newButton.setBorderPainted(false);
-				newButton.setOpaque(true);
-				newButton.setBackground(Color.BLACK);
+					newButton.setOpaque(true);
+					newButton.setBackground(Color.BLACK);
+					
 				//Borkommenterad kod målar ut bilder istället för färger 
 //					try {							
 //					Image image = ImageIO.read(this.getClass().getResource("/gameSprites/wallStone02_0000.png"));
@@ -106,7 +107,9 @@ public class GameBoardInterface extends JFrame {
 		}
 		this.add(board);
 		drawCharacterStartingPosition();
-
+		
+        this.setFocusable(true);
+        this.requestFocusInWindow();
 		//Keylistener till knapparna som ska styra figuren
 		this.addKeyListener(new KeyListener() {
 			
@@ -123,6 +126,7 @@ public class GameBoardInterface extends JFrame {
 				
 				if (keyCode == KeyEvent.VK_W) {
 					updateCharacterPosition("North");
+					
 				}
 			
 				if (keyCode == KeyEvent.VK_S) {
