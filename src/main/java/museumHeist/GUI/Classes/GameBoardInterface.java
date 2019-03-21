@@ -1,9 +1,15 @@
 package museumHeist.GUI.Classes;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,7 +65,15 @@ public class GameBoardInterface extends JFrame {
 				if (currentLevel[row][col] == 1) {
 					JButton newButton = new JButton();
 					newButton.setBorderPainted(false);
-					newButton.setBackground(Color.BLACK);
+				
+				newButton.setBackground(Color.BLACK);
+				//Borkommenterad kod målar ut bilder istället för färger 
+//					try {							
+//					Image image = ImageIO.read(this.getClass().getResource("/gameSprites/wallStone02_0000.png"));
+//					newButton.setIcon(new ImageIcon(image));
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
 					squares[row][col] = newButton;
 				}
 				
@@ -67,7 +81,16 @@ public class GameBoardInterface extends JFrame {
 				if (currentLevel[row][col] == 0) {
 					JButton newButton = new JButton();
 					newButton.setBorderPainted(false);
+					
 					newButton.setBackground(Color.WHITE);
+				
+					//Bortkommenterad kod målar ut bilder istället för färger
+//					try {							
+//						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/wallEarth01_0002.png"));
+//						newButton.setIcon(new ImageIcon(image));
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
 					squares[row][col] = newButton;
 				}
 
@@ -120,12 +143,22 @@ public class GameBoardInterface extends JFrame {
 	
 	//färglägger en enskild ruta i grid
 	private void colouriseSquare(Color colour, Position position) {
+	
 		squares[(int) position.getX()][(int) position.getY()].setBackground(colour);
-	}
+		
+		//Borkommenterad kod målar ut bilder istället för färger 
+//	try {							
+//			Image image = ImageIO.read(this.getClass().getResource("/gameSprites/skull0000.png"));
+//			squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+}
 	
 	//Placerar spelaren på startposition	
 	private void drawCharacterStartingPosition() {
 		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+		
 	}
 	
 	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
