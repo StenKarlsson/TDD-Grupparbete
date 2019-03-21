@@ -9,7 +9,7 @@ import museum_heist.Position;
 
 public class GameCharacter extends GameItem /* implements KeyListener */ {
 	
-	Position currentPosition;
+	private Position currentPosition;
 	
 	public GameCharacter() {
 		int startx = 0;
@@ -40,6 +40,7 @@ public class GameCharacter extends GameItem /* implements KeyListener */ {
 	}
 	
 	public void moveOneTileUp() {
+		
 		setCurrentPosition((int) currentPosition.getX() - 1, (int) (currentPosition.getY()));
 	}
 	
