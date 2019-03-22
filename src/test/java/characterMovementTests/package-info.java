@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author adgd
- *
- */
-package characterMovementTests;
