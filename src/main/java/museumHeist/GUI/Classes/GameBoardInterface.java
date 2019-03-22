@@ -1,15 +1,9 @@
 package museumHeist.GUI.Classes;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -141,124 +135,6 @@ public class GameBoardInterface extends JFrame {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-}
-	
-	//Placerar spelaren på startposition	
-	private void drawCharacterStartingPosition() {
-		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-		
-	}
-	
-	
-	
-	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
-	public void updateCharacterPosition(String direction) {
-		String recievedString = direction;
-		switch (recievedString) {
-			case "East": {
-				
-				//Kolla att positionen till höger inte är en vägg
-				Position nextTileRight = (new Position((int)characterObject.getCurrentPosition().getX(),
-				(int)characterObject.getCurrentPosition().getY()+1)); 
-						
-				if (1 == getGridValueOfPosition(nextTileRight)) {
-					System.out.println("Kan inte gå in i vägg till höger");
-				break; 	
-				} else { //Om det inte är vägg kan den gå höger
-				
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileRight();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
-				
-				break;
-				}
-			}
-			
-			case "West": {
-				
-				//Kolla att positionen till vänster inte är en vägg
-				Position nextTileLeft = (new Position((int)characterObject.getCurrentPosition().getX(),
-				(int)characterObject.getCurrentPosition().getY()-1)); 
-						
-				if (1 == getGridValueOfPosition(nextTileLeft)) {
-					System.out.println("Kan inte gå in i vägg till vänster");
-					break; 
-				} else { //Om det inte är vägg kan den gå vänster
-					
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileLeft();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
-				break;
-				}
-			}
-			case "South": {
-				
-				//Kolla att positionen under inte är en vägg
-				Position nextTileDown = (new Position((int)characterObject.getCurrentPosition().getX()+1,
-				(int)characterObject.getCurrentPosition().getY())); 
-						
-				if (1 == getGridValueOfPosition(nextTileDown)) {
-					System.out.println("Kan inte gå in i vägg nedan");
-					break; 
-				} else { //Om det inte är vägg kan den gå nedåt
-					
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileDown();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
-				break;
-				}
-			}
-			case "North": {
-				//Kolla att positionen ovanför inte är en vägg
-				Position nextTileUp = (new Position((int)characterObject.getCurrentPosition().getX()-1,
-				(int)characterObject.getCurrentPosition().getY())); 
-						
-				if (1 == getGridValueOfPosition(nextTileUp)) {
-					System.out.println("Kan inte gå in i vägg ovan");
-					break; 
-				} else { //Om det inte är vägg kan den gå uppåt
-					
-					colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-					characterObject.moveOneTileUp();
-					colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-					System.out.println(characterObject.getCurrentPosition().getX());
-					System.out.println(characterObject.getCurrentPosition().getY());
-				break; 
-				}
-				}
-		}
-	}
-	
-	//returnerar färgen på en specifik ruta i rutnätet som utgör spelplanen
-	public Color getColorOfTile(Position position) {
-		
-		JButton button = squares[(int) position.getX()][(int) position.getY()];
-		Color color = button.getBackground();
-		return color;
-	}
-	
-	
-	public GameCharacter getCharacter() {
-		return characterObject;
-	}
-	
-	public JButton[][] getGridContent() {
-		return squares;
-	}
-
-	private int getGridValueOfPosition(Position pos) {
-		int row = (int) pos.getX();
-		int column = (int)pos.getY();
-		int value = currentLevel[row][column];
-		return value;
-	} 
-
 }
 	
 	//Placerar spelaren på startposition	

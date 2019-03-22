@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import museumHeist.sprites.GameCharacter;
-import museum_heist.Position;
 
 public class registerPositionOnGamBoard {
 	//Här testas ifall spelkaraktären kan känna av vilket värde som finns
