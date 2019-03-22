@@ -1,6 +1,7 @@
 package characterMovementTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.awt.Color;
 
@@ -51,6 +52,16 @@ public class TileTests {
 	
 	@Test
 	public void checkIfTileIsLaser() {
+		
+		//Arrange
+		GameBoardInterface gb = new GameBoardInterface();
+		Position pos = new Position(3,3);
+		
+		//Act
+		Color actualColor = gb.getColorOfTile(pos);
+		
+		//Assert
+		assertEquals(actualColor, Color.RED);
 		
 	}
 	

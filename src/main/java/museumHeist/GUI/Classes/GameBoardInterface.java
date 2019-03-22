@@ -17,7 +17,7 @@ public class GameBoardInterface extends JFrame {
 	private GameCharacter characterObject = new GameCharacter(1, 1);
 	private JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
-	private int[][]  currentLevel  = Levels.getLevel(1);
+	private int[][]  currentLevel  = Levels.getLevel(6);
 	
 	public GameBoardInterface() {
 		
