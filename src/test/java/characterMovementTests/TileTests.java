@@ -1,8 +1,6 @@
 package characterMovementTests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.awt.Color;
 
 import org.junit.Test;
@@ -12,19 +10,19 @@ import museum_heist.Position;
 
 public class TileTests {
 
-	
+	//Dessa tester funkar för tillfället bara på level999 (ändras i början av GameBoardInterface)
 	
 	@Test
 	public void checkIfTileIsPlayer() {
 		
 		//Arrange 
 		GameBoardInterface gb = new GameBoardInterface();
-		gb.getCharacter().setCurrentPosition(1, 1);//spelkaraktären flyttas till en specifik position
-		Position pos = new Position(1, 1); //Variabeln pos antar dess uvarande värde
+		gb.getCharacter().setCurrentPosition(1, 1);
+		Position pos = new Position(1, 1);
 		//Act 
-		//Färgen på rutan (pos) innan förflyttningen 
 		Color actualColor = gb.getColorOfTile(pos);
 		
+		//Assert
 		assertEquals(actualColor, Color.CYAN);		
 	}
 	
