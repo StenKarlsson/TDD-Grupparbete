@@ -2,6 +2,16 @@ package museum_heist;
 
 public class Levels {
 
+  
+  /*
+	 * 1 = vägg
+	 * 2 = dörr
+	 * 3 = laser
+	 * 4 = startposition för spelare
+	 * 5 = skatt
+	 */
+  
+  
 	private static final int[][] level1 = {   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 										      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 										      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -124,4 +134,5 @@ public class Levels {
 		}
 	}
 	
+
 }

@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import museumHeist.GUI.Classes.GameBoardInterface;
-
+import museumHeist.GUI.Classes.HybridGUI;
 import museum_heist.GameBoard;
 import museum_heist.Position;
 
