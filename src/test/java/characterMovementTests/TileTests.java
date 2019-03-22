@@ -65,6 +65,20 @@ public class TileTests {
 		
 	}
 	
+	@Test
+	public void checkIfTileIsDoor() {
+		
+		//Arrange
+		GameBoardInterface gb = new GameBoardInterface();
+		Position pos = new Position(7,7);
+		
+		//Act
+		Color actualColor = gb.getColorOfTile(pos);
+		
+		//Assert
+		assertEquals(actualColor, Color.GREEN);
+	}
+	
 	
 	
 }

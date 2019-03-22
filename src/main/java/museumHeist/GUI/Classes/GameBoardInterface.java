@@ -118,6 +118,29 @@ public class GameBoardInterface extends JFrame {
 //					}
 					squares[row][col] = newButton;
 				}
+				if (currentLevel[row][col] == 5) {
+					JButton newButton = new JButton();
+					newButton.setBorderPainted(false);
+					newButton.setOpaque(true);
+					newButton.setBackground(Color.ORANGE);
+					squares[row][col] = newButton;
+				}
+				if (currentLevel[row][col] == 3) {
+					JButton newButton = new JButton();
+					newButton.setBorderPainted(false);
+					newButton.setOpaque(true);
+					newButton.setBackground(Color.RED);
+					squares[row][col] = newButton;
+					
+				}
+				if(currentLevel[row][col] == 2) {
+					JButton newButton = new JButton();
+					newButton.setBorderPainted(false);
+					newButton.setOpaque(true);
+					newButton.setBackground(Color.GREEN);
+					squares[row][col] = newButton;
+				}
+				
 
 			}
 		}
