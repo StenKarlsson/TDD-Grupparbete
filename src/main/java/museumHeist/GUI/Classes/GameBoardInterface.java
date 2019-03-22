@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import museumHeist.sprites.GameCharacter;
+import museum_heist.Levels;
 import museum_heist.Position;
 	
 public class GameBoardInterface extends JFrame {
@@ -22,32 +23,7 @@ public class GameBoardInterface extends JFrame {
 	private GameCharacter characterObject = new GameCharacter(1, 1);
 	private JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
-	private int[][]  currentLevel  = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,},
-								      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 				          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			 		    	          {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,}
-																										};
+	private int[][]  currentLevel  = Levels.getLevel(1);
 	
 	public GameBoardInterface() {
 		
@@ -56,6 +32,60 @@ public class GameBoardInterface extends JFrame {
 		board = new JPanel(new GridLayout(25, 25));
 	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		buildButtonArray();
+		this.setVisible(true);
+
+		paintButtonArray();
+		this.add(board);
+		drawCharacterStartingPosition();
+		
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+		//Keylistener till knapparna som ska styra figuren
+		this.addKeyListener(new KeyListener() {
+			
+			public void keyTyped(KeyEvent e) {
+				//Denna metod måste implementeras men används inte
+			}
+			
+			public void keyReleased(KeyEvent e) {
+				//Denna metod måste implementeras men används inte
+			}
+			
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				
+				if (keyCode == KeyEvent.VK_W) {
+					updateCharacterPosition("North");
+					
+				}
+			
+				if (keyCode == KeyEvent.VK_S) {
+					updateCharacterPosition("South");
+					
+				}
+				if (keyCode == KeyEvent.VK_A) {
+					updateCharacterPosition("West");
+					
+				}
+				if (keyCode == KeyEvent.VK_D) {
+					updateCharacterPosition("East");
+				}
+			}
+		});
+	
+	}
+
+	private void paintButtonArray() {
+		//Måla ut de färglagda knapparna på panelen, ruta för ruta. 
+		for (int boardRows = 0; boardRows < 25; boardRows++) {
+			for (int boardColumns = 0; boardColumns < 25; boardColumns++) {
+				board.add(squares[boardRows][boardColumns]);
+			}
+		}
+	}
+
+	private void buildButtonArray() {
 		//För varje vågrät rad i int []startArray...
 		for (int row = 0; row < currentLevel.length; row++) {
 			System.out.println();
@@ -97,52 +127,6 @@ public class GameBoardInterface extends JFrame {
 
 			}
 		}
-		this.setVisible(true);
-
-		//Måla ut de färglagda knapparna på panelen, ruta för ruta. 
-		for (int boardRows = 0; boardRows < 25; boardRows++) {
-			for (int boardColumns = 0; boardColumns < 25; boardColumns++) {
-				board.add(squares[boardRows][boardColumns]);
-			}
-		}
-		this.add(board);
-		drawCharacterStartingPosition();
-		
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-		//Keylistener till knapparna som ska styra figuren
-		this.addKeyListener(new KeyListener() {
-			
-			public void keyTyped(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyReleased(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				
-				if (keyCode == KeyEvent.VK_W) {
-					updateCharacterPosition("North");
-					
-				}
-			
-				if (keyCode == KeyEvent.VK_S) {
-					updateCharacterPosition("South");
-					
-				}
-				if (keyCode == KeyEvent.VK_A) {
-					updateCharacterPosition("West");
-					
-				}
-				if (keyCode == KeyEvent.VK_D) {
-					updateCharacterPosition("East");
-				}
-			}
-		});
-	
 	}
 	
 	//färglägger en enskild ruta i grid
