@@ -81,7 +81,6 @@ public class GameBoardInterface extends JFrame {
 				if (currentLevel[row][col] == 0) {
 					JButton newButton = new JButton();
 					newButton.setBorderPainted(false);
-					
 					newButton.setBackground(Color.WHITE);
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
