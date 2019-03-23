@@ -12,9 +12,10 @@ import museumHeist.sprites.GameCharacter;
 import museum_heist.Levels;
 import museum_heist.Position;
 
+
 public class GameBoardInterface extends JFrame {
 	
-	private GameCharacter characterObject = new GameCharacter(1, 1);
+	private GameCharacter characterObject = new GameCharacter(1, 4);
 	private JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
 	private int[][]  currentLevel  = Levels.getLevel(1);
@@ -168,90 +169,120 @@ public class GameBoardInterface extends JFrame {
 	
 	
 	
+	// Bestämmer vad som händer när karaktären går på diverse objekt/siffra i arrayen
+	public boolean positionEvent(Position nextTileDirection, String direction) 
+	
+	{
+		boolean runCode = true;
+		
+		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
+			
+		{
+			
+			characterObject.grabTreasure(); // Skatt +1
+			System.out.println("Skatt upplockad, totalt " + characterObject.getTreasures() );
+		}
+		
+		if (getColorOfTile(nextTileDirection)==Color.BLACK) // Vägg
+			
+		{
+			System.out.println("Wall to the " + direction);
+			runCode = false; // Flytta inte spelaren
+		}
+		
+		if (getColorOfTile(nextTileDirection)==Color.RED) // Laser
+			
+		{
+			
+		}
+		
+		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
+			
+		{
+			
+		}
+
+		
+		return runCode; // Ska spelaren flytta sig?
+		
+	}
+	
 	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
 	public void updateCharacterPosition(String direction) {
 		String recievedString = direction;
-		switch (recievedString) {
-			case "East": {
-				
-				//Kolla att positionen till höger inte är en vägg
+		boolean _runCode = true;
+		switch (recievedString) 
+		{
+			case "East": 
+			{
+				//Undersöker positionen åt höger
 				Position nextTileRight = (new Position((int)characterObject.getCurrentPosition().getX(),
-				(int)characterObject.getCurrentPosition().getY()+1)); 
-						
-				if (1 == getGridValueOfPosition(nextTileRight)) {
-					System.out.println("Kan inte gå in i vägg till höger");
-				break; 	
-				} else { //Om det inte är vägg kan den gå höger
+						(int)characterObject.getCurrentPosition().getY()+1));
 				
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileRight();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
 				
+				_runCode= positionEvent(nextTileRight, recievedString);
 				break;
-				}
+				
+				
 			}
 			
 			case "West": {
 				
-				//Kolla att positionen till vänster inte är en vägg
+				//Undersöker positionen åt vänster
 				Position nextTileLeft = (new Position((int)characterObject.getCurrentPosition().getX(),
 				(int)characterObject.getCurrentPosition().getY()-1)); 
-						
-				if (1 == getGridValueOfPosition(nextTileLeft)) {
-					System.out.println("Kan inte gå in i vägg till vänster");
-					break; 
-				} else { //Om det inte är vägg kan den gå vänster
-					
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileLeft();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
+				
+				_runCode =positionEvent(nextTileLeft, recievedString);
 				break;
-				}
+				
 			}
 			case "South": {
 				
-				//Kolla att positionen under inte är en vägg
+				//Undersöker positionen neråt
 				Position nextTileDown = (new Position((int)characterObject.getCurrentPosition().getX()+1,
 				(int)characterObject.getCurrentPosition().getY())); 
-						
-				if (1 == getGridValueOfPosition(nextTileDown)) {
-					System.out.println("Kan inte gå in i vägg nedan");
-					break; 
-				} else { //Om det inte är vägg kan den gå nedåt
-					
-				colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-				characterObject.moveOneTileDown();
-				colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-				System.out.println(characterObject.getCurrentPosition().getX());
-				System.out.println(characterObject.getCurrentPosition().getY());
+				
+				_runCode= positionEvent(nextTileDown, recievedString);
 				break;
-				}
+				
+						
+				
 			}
 			case "North": {
-				//Kolla att positionen ovanför inte är en vägg
+				//Undersöker positionen uppåt
 				Position nextTileUp = (new Position((int)characterObject.getCurrentPosition().getX()-1,
 				(int)characterObject.getCurrentPosition().getY())); 
+				
+				_runCode = positionEvent(nextTileUp, recievedString);
+				break;
 						
-				if (1 == getGridValueOfPosition(nextTileUp)) {
-					System.out.println("Kan inte gå in i vägg ovan");
-					break; 
-				} else { //Om det inte är vägg kan den gå uppåt
-					
-					colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-					characterObject.moveOneTileUp();
-					colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-					System.out.println(characterObject.getCurrentPosition().getX());
-					System.out.println(characterObject.getCurrentPosition().getY());
-				break; 
-				}
-				}
+				
+				} 
+		}
+		
+		if(_runCode) 
+		{
+			// Färgar positionen WHITE
+			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());	
+			
+			// Spelaren förflyttar sig
+			if (direction.equals("East")){characterObject.moveOneTileRight();}
+			if (direction.equals("West")){characterObject.moveOneTileLeft();}
+			if (direction.equals("South")){characterObject.moveOneTileDown();}
+			if (direction.equals("North")){characterObject.moveOneTileUp();}
+			
+			// Färgar positionen CYAN
+			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+			System.out.println(characterObject.getCurrentPosition().getX());
+			System.out.println(characterObject.getCurrentPosition().getY());
+			
+			
+			
 		}
 	}
 	
+	
+
 	//returnerar färgen på en specifik ruta i rutnätet som utgör spelplanen
 	public Color getColorOfTile(Position position) {
 		
@@ -276,4 +307,3 @@ public class GameBoardInterface extends JFrame {
 		return value;
 	} 
 }
-

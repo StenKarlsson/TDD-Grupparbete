@@ -10,6 +10,15 @@ import museum_heist.Position;
 public class GameCharacter extends GameItem /* implements KeyListener */ {
 	
 	private Position currentPosition;
+	int treasures=0;
+	
+	public int getTreasures() {
+		return treasures;
+	}
+
+	public void setTreasures(int treasures) {
+		this.treasures = treasures;
+	}
 	
 	public GameCharacter() {
 		int startx = 0;
@@ -50,5 +59,10 @@ public class GameCharacter extends GameItem /* implements KeyListener */ {
 	
 	public Position getCurrentPosition() {
 		return currentPosition;
+	}
+
+	public void grabTreasure() {
+		this.treasures++;
+		
 	}
 }
