@@ -80,6 +80,16 @@ public class GameBoardInterface extends JFrame {
 		}
 	}
 
+	private JButton createButton(Color color) 
+	{
+		JButton newButton = new JButton();
+		newButton.setBorderPainted(false);
+		newButton.setOpaque(true);
+		newButton.setBackground(color);
+		
+		return newButton;
+		
+	}
 	private void buildButtonArray() {
 		//För varje vågrät rad i int []startArray...
 		for (int row = 0; row < currentLevel.length; row++) {
@@ -87,11 +97,11 @@ public class GameBoardInterface extends JFrame {
 			//...så itererar vi igenom varje kolumn
 			for (int col = 0; col < currentLevel[row].length; col++) {
 				//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
+				
 				if (currentLevel[row][col] == 1) {
-					JButton newButton = new JButton();
-					newButton.setBorderPainted(false);
-					newButton.setOpaque(true);
-					newButton.setBackground(Color.BLACK);
+					
+					
+					
 					
 				//Borkommenterad kod målar ut bilder istället för färger 
 //					try {							
@@ -100,15 +110,12 @@ public class GameBoardInterface extends JFrame {
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
-					squares[row][col] = newButton;
+					squares[row][col] = createButton(Color.BLACK);
 				}
 				
 				//Om positionen i 2D-array är = 0 måla motsvarande ruta med svart 
 				if (currentLevel[row][col] == 0) {
-					JButton newButton = new JButton();
-					newButton.setBorderPainted(false);
-					newButton.setOpaque(true);
-					newButton.setBackground(Color.WHITE);
+					
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
 //					try {							
@@ -117,29 +124,20 @@ public class GameBoardInterface extends JFrame {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-					squares[row][col] = newButton;
+					squares[row][col] = createButton(Color.WHITE);
 				}
 				if (currentLevel[row][col] == 5) {
-					JButton newButton = new JButton();
-					newButton.setBorderPainted(false);
-					newButton.setOpaque(true);
-					newButton.setBackground(Color.ORANGE);
-					squares[row][col] = newButton;
+					
+					squares[row][col] = createButton(Color.ORANGE);
 				}
 				if (currentLevel[row][col] == 3) {
-					JButton newButton = new JButton();
-					newButton.setBorderPainted(false);
-					newButton.setOpaque(true);
-					newButton.setBackground(Color.RED);
-					squares[row][col] = newButton;
+					
+					squares[row][col] = createButton(Color.RED);
 					
 				}
 				if(currentLevel[row][col] == 2) {
-					JButton newButton = new JButton();
-					newButton.setBorderPainted(false);
-					newButton.setOpaque(true);
-					newButton.setBackground(Color.GREEN);
-					squares[row][col] = newButton;
+				
+					squares[row][col] = createButton(Color.GREEN);
 				}
 				
 
