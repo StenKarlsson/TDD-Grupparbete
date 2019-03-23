@@ -15,7 +15,7 @@ import museum_heist.Position;
 
 public class GameBoardInterface extends JFrame {
 	
-	private GameCharacter characterObject = new GameCharacter(1, 4);
+	private GameCharacter characterObject = new GameCharacter(1, 1);
 	private JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
 	private int[][]  currentLevel  = Levels.getLevel(1);
