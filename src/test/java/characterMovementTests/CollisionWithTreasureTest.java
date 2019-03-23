@@ -31,7 +31,7 @@ public class CollisionWithTreasureTest {
 	// I den här klassen testas en kollision med en skatt, det ska gå att gå över en skatt
 	// Den ska försvinna från spelplanen (färgen)
 	// Den ska plockas upp när spelaren är på samma position och adderas till spelarens totala skatter
-	// Det ska registreras när spelaren har 10 skatter 
+	
 	
 	
 	@Test
