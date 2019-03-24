@@ -2,11 +2,19 @@ package museumHeist.GUI.Classes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import museumHeist.sprites.GameCharacter;
 import museum_heist.Levels;
@@ -15,6 +23,10 @@ import museum_heist.Position;
 
 public class GameBoardInterface extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GameCharacter characterObject = new GameCharacter(1, 1);
 	private JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
@@ -37,38 +49,71 @@ public class GameBoardInterface extends JFrame {
         this.setFocusable(true);
         this.requestFocusInWindow();
 		//Keylistener till knapparna som ska styra figuren
-		this.addKeyListener(new KeyListener() {
-			
-			public void keyTyped(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyReleased(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
+//		this.addKeyListener(new KeyListener() {
+//			
+//			public void keyTyped(KeyEvent e) {
+//				//Denna metod måste implementeras men används inte
+//			}
+//			
+//			public void keyReleased(KeyEvent e) {
+//				//Denna metod måste implementeras men används inte
+//			}
+//			
+//			public void keyPressed(KeyEvent e) {
+//				int keyCode = e.getKeyCode();
+//				
+//				if (keyCode == KeyEvent.VK_W) {
+//					updateCharacterPosition("North");
+//					
+//				}
+//			
+//				if (keyCode == KeyEvent.VK_S) {
+//					updateCharacterPosition("South");
+//					
+//				}
+//				if (keyCode == KeyEvent.VK_A) {
+//					updateCharacterPosition("West");
+//					
+//				}
+//				if (keyCode == KeyEvent.VK_D) {
+//					updateCharacterPosition("East");
+//				}
+//			}
+//		});
+//	
+		addKeyBinding(board, KeyEvent.VK_W, "North", (evt) -> {
+			updateCharacterPosition("North");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_S, "South", (evt) -> {
+			updateCharacterPosition("South");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_D, "East", (evt) -> {
+			updateCharacterPosition("East");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_A, "West", (evt) -> {
+			updateCharacterPosition("West");
+		});
+	}
+	
+public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {
+		InputMap im = comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap ap = comp.getActionMap();
+		
+		im.put(KeyStroke.getKeyStroke(keyCode, 0), id);
+		
+		ap.put(id, new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actionListener.actionPerformed(e);
 				
-				if (keyCode == KeyEvent.VK_W) {
-					updateCharacterPosition("North");
-					
-				}
-			
-				if (keyCode == KeyEvent.VK_S) {
-					updateCharacterPosition("South");
-					
-				}
-				if (keyCode == KeyEvent.VK_A) {
-					updateCharacterPosition("West");
-					
-				}
-				if (keyCode == KeyEvent.VK_D) {
-					updateCharacterPosition("East");
-				}
 			}
 		});
-	
+		
 	}
 
 	private void paintButtonArray() {
