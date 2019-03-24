@@ -2,14 +2,22 @@ package museumHeist.GUI.Classes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
+import javafx.scene.chart.ValueAxis;
 import museumHeist.sprites.GameCharacter;
 import museum_heist.Levels;
 import museum_heist.Position;
@@ -42,41 +50,39 @@ public class GameBoardInterface extends JFrame {
 		this.add(board);
 		drawCharacterStartingPosition();
 		
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-		//Keylistener till knapparna som ska styra figuren
-		this.addKeyListener(new KeyListener() {
-			
-			public void keyTyped(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyReleased(KeyEvent e) {
-				//Denna metod måste implementeras men används inte
-			}
-			
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
+		addKeyBinding(board, KeyEvent.VK_W, "North", (evt) -> {
+			updateCharacterPosition("North");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_S, "South", (evt) -> {
+			updateCharacterPosition("South");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_D, "East", (evt) -> {
+			updateCharacterPosition("East");
+		});
+		
+		addKeyBinding(board, KeyEvent.VK_A, "West", (evt) -> {
+			updateCharacterPosition("West");
+		});
+	}
+	
+public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {
+		InputMap im = comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap ap = comp.getActionMap();
+		
+		im.put(KeyStroke.getKeyStroke(keyCode, 0), id);
+		
+		ap.put(id, new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actionListener.actionPerformed(e);
 				
-				if (keyCode == KeyEvent.VK_W) {
-					updateCharacterPosition("North");
-					
-				}
-			
-				if (keyCode == KeyEvent.VK_S) {
-					updateCharacterPosition("South");
-					
-				}
-				if (keyCode == KeyEvent.VK_A) {
-					updateCharacterPosition("West");
-					
-				}
-				if (keyCode == KeyEvent.VK_D) {
-					updateCharacterPosition("East");
-				}
 			}
 		});
-	
+		
 	}
 
 	private void paintButtonArray() {
@@ -122,7 +128,7 @@ public class GameBoardInterface extends JFrame {
 				}
 				
 				//Om positionen i 2D-array är = 0 måla motsvarande ruta med svart 
-				if (currentLevel[row][col] == 0) {
+				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) {
 					
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
@@ -337,12 +343,14 @@ public class GameBoardInterface extends JFrame {
             	Position position = new Position(q, x);
                 Color color = getColorOfTile(position);
                 int value = getGridValueOfPosition(position);
-                if (value==3) 
+                if (value==3 || value ==6) 
                 {
                 	if (color == color.RED) {colouriseSquare(color.WHITE,position);}
                 	else colouriseSquare(color.RED,position);
                 	
                 }
+                
+                
                 
             }
             
