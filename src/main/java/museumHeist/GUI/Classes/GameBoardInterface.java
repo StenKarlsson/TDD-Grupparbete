@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,10 +17,16 @@ import museum_heist.Position;
 
 public class GameBoardInterface extends JFrame {
 	
+	public boolean LevelCompleted = false;
 	private GameCharacter characterObject = new GameCharacter(1, 1);
-	private JButton[][] squares = new JButton[25][25]; //
+	public JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
-	private int[][]  currentLevel  = Levels.getLevel(1);
+	
+	private int[][]  currentLevel = Levels.getLevel(1);
+	static boolean laserOn = true;
+	
+	
+
 	
 	public GameBoardInterface() {
 		
@@ -191,12 +199,19 @@ public class GameBoardInterface extends JFrame {
 		if (getColorOfTile(nextTileDirection)==Color.RED) // Laser
 			
 		{
+			// Flyttar till spelaren till startposition 
+			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
+			characterObject.setCurrentPosition(1, 1);
+			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
 			
+			runCode = false;
 		}
 		
 		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
 			
 		{
+			
+			this.LevelCompleted=true;
 			
 		}
 
@@ -303,5 +318,40 @@ public class GameBoardInterface extends JFrame {
 		int column = (int)pos.getY();
 		int value = currentLevel[row][column];
 		return value;
-	} 
+	}
+	
+	public static boolean flipLaser() 
+	{
+		System.out.println(laserOn);
+		
+		return laserOn =!laserOn; 
+	
+	}
+	
+	public void flipLaserOnGameBoard(JButton[][] squares) 
+	{
+		for ( int q = 0; q < squares.length; q++ )
+        {
+            for ( int x = 0; x < squares[0].length; x++ )
+            {
+            	Position position = new Position(q, x);
+                Color color = getColorOfTile(position);
+                int value = getGridValueOfPosition(position);
+                if (value==3) 
+                {
+                	if (color == color.RED) {colouriseSquare(color.WHITE,position);}
+                	else colouriseSquare(color.RED,position);
+                	
+                }
+                
+            }
+            
+       }
+		
+		
+	}
+
+	
+
+	 
 }
