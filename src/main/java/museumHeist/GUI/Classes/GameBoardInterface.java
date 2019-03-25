@@ -2,14 +2,18 @@ package museumHeist.GUI.Classes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.logging.Level;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -118,13 +122,15 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 					
 				//Borkommenterad kod målar ut bilder istället för färger 
-//					try {							
-//					Image image = ImageIO.read(this.getClass().getResource("/gameSprites/wallStone02_0000.png"));
-//					newButton.setIcon(new ImageIcon(image));
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+					try {							
+					Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Wall.png"));
+					
 					squares[row][col] = createButton(Color.BLACK);
+					squares[row][col].setIcon(new ImageIcon(image));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+					//squares[row][col] = createButton(Color.BLACK);
 				}
 				
 				//Om positionen i 2D-array är = 0 måla motsvarande ruta med svart 
@@ -132,26 +138,54 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
-//					try {							
-//						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/wallEarth01_0002.png"));
-//						newButton.setIcon(new ImageIcon(image));
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-					squares[row][col] = createButton(Color.WHITE);
+					try {							
+						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Ground.png"));
+						squares[row][col] = createButton(Color.WHITE);
+						squares[row][col].setIcon(new ImageIcon(image));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					//squares[row][col] = createButton(Color.WHITE);
 				}
 				if (currentLevel[row][col] == 5) {
 					
-					squares[row][col] = createButton(Color.ORANGE);
+					try {							
+						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Treasure.png"));
+						squares[row][col] = createButton(Color.WHITE);
+						squares[row][col].setIcon(new ImageIcon(image));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					//squares[row][col] = createButton(Color.ORANGE);
 				}
 				if (currentLevel[row][col] == 3) {
 					
-					squares[row][col] = createButton(Color.RED);
+					try {							
+						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Laser.png"));
+						squares[row][col] = createButton(Color.WHITE);
+						squares[row][col].setIcon(new ImageIcon(image));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					//squares[row][col] = createButton(Color.RED);
 					
 				}
 				if(currentLevel[row][col] == 2) {
 				
-					squares[row][col] = createButton(Color.GREEN);
+					try {							
+						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Player.png"));
+						squares[row][col] = createButton(Color.GREEN);
+						squares[row][col].setIcon(new ImageIcon(image));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					//squares[row][col] = createButton(Color.GREEN);
 				}
 				
 
@@ -160,22 +194,49 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	}
 	
 	//färglägger en enskild ruta i grid
-	private void colouriseSquare(Color colour, Position position) {
+	private void colouriseSquare(Color colour, Position position) 
+	{
 	
+		Image image = null;
 		squares[(int) position.getX()][(int) position.getY()].setBackground(colour);
 		
-		//Borkommenterad kod målar ut bilder istället för färger 
-//	try {							
-//			Image image = ImageIO.read(this.getClass().getResource("/gameSprites/skull0000.png"));
-//			squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			if (colour == Color.CYAN) // Spelare
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Player.png"));
+			if (colour == Color.BLACK) // Vägg
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Wall.png"));
+			if (colour == Color.ORANGE) // Skatt
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Treasure.png"));
+			if (colour == Color.RED) // Laser 
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Laser.png"));
+			if (colour == Color.GREEN) // Dörr
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Door.png"));
+			if (colour == Color.WHITE) // Golv
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Ground.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		
+		pictuizeSquare(image, position);
+		
+		
+	}
+	
+	private void pictuizeSquare(Image image, Position position) {
+		
+		
+		
+		squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
+	
+	
 }
 	
 	//Placerar spelaren på startposition	
 	private void drawCharacterStartingPosition() {
 		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+		
 		
 	}
 	
@@ -207,6 +268,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		{
 			// Flyttar till spelaren till startposition 
 			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
+			
 			characterObject.setCurrentPosition(1, 1);
 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
 			

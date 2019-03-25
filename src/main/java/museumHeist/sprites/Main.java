@@ -14,7 +14,7 @@ public class Main {
 	
 
 	
-	static int timeInSeconds = 30;
+	static int timeInSeconds = 60;
 	
 	
 	
