@@ -152,7 +152,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 					try {							
 						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Treasure.png"));
-						squares[row][col] = createButton(Color.WHITE);
+						squares[row][col] = createButton(Color.ORANGE);
 						squares[row][col].setIcon(new ImageIcon(image));
 						
 					} catch (IOException e) {
@@ -164,7 +164,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 					try {							
 						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Laser.png"));
-						squares[row][col] = createButton(Color.WHITE);
+						squares[row][col] = createButton(Color.RED);
 						squares[row][col].setIcon(new ImageIcon(image));
 						
 					} catch (IOException e) {
