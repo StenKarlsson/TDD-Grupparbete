@@ -12,7 +12,22 @@ public class GameCharacter extends GameItem /* implements KeyListener */ {
 	private Position currentPosition;
 	
 	int treasures=0;
+	int life =3;
 	
+	public int getLife() {
+		return life;
+	}
+
+	public void addLife(int life)
+	{
+		this.life += life;
+	}
+	
+	public void subractLife(int life)
+	{
+		this.life -= life;
+	}
+
 	public int getTreasures() {
 		return treasures;
 	}

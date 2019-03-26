@@ -34,6 +34,7 @@ public class GameBoardInterface extends JFrame {
 	private GameCharacter characterObject = new GameCharacter(1, 1);
 	public JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
+	int level = 1;
 	
 	private int[][]  currentLevel = Levels.getLevel(1);
 	static boolean laserOn = true;
@@ -131,11 +132,12 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-					//squares[row][col] = createButton(Color.BLACK);
+					
 				}
 				
 				//Om positionen i 2D-array är = 0 måla motsvarande ruta med svart 
-				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) {
+				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) 
+				{
 					
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
@@ -147,7 +149,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					//squares[row][col] = createButton(Color.WHITE);
+					
 				}
 				if (currentLevel[row][col] == 5) {
 					
@@ -159,7 +161,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					//squares[row][col] = createButton(Color.ORANGE);
+					
 				}
 				if (currentLevel[row][col] == 3) {
 					
@@ -172,7 +174,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 						e.printStackTrace();
 					}
 					
-					//squares[row][col] = createButton(Color.RED);
+					
 					
 				}
 				if(currentLevel[row][col] == 2) {
@@ -186,7 +188,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 						e.printStackTrace();
 					}
 					
-					//squares[row][col] = createButton(Color.GREEN);
+					
 				}
 				
 
@@ -222,19 +224,12 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		}
 			
 		
-		pictuizeSquare(image, position);
+		squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
 		
 		
 	}
 	
-	private void pictuizeSquare(Image image, Position position) {
-		
-		
-		
-		squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
 	
-	
-}
 	
 	//Placerar spelaren på startposition	
 	private void drawCharacterStartingPosition() {
@@ -274,6 +269,10 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			
 			characterObject.setCurrentPosition(1, 1);
 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+			this.characterObject.subractLife(1);
+			if (this.characterObject.getLife()==0) {repaintGameBoard(3);}
+			System.out.println("Hit Laser -1 life, total life = " + this.characterObject.getLife());
+			
 			
 			runCode = false;
 		}
@@ -281,7 +280,9 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
 			
 		{
-			repaintGameBoard();
+			repaintGameBoard(level++);
+			this.characterObject.addLife(1);
+			System.out.println("Klarade bana, total life = " + this.characterObject.getLife());
 			runCode = false;
 			
 		}
@@ -399,10 +400,11 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	
 	}
 	
-	public void repaintGameBoard() 
+	// Målar om GameBoarden vid banbyte
+	public void repaintGameBoard(int level) 
 	{
 		// ny array - bana 2
-		int[][]  _nextLevel = Levels.getLevel(2);
+		int[][]  _nextLevel = Levels.getLevel(level);
 		//  nuvarande bana får dessa värden
 		currentLevel = _nextLevel;
 		
@@ -411,9 +413,8 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			System.out.println();
 			//...så itererar vi igenom varje kolumn
 			for (int col = 0; col < currentLevel[row].length; col++) {
-				//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
-				
 
+				// Färgar knapp beroende på värde (som sedan är kopplat till ikon)
 				if (currentLevel[row][col] == 1) 
 				{
 					colouriseSquare(Color.BLACK, new Position(row, col));
@@ -423,6 +424,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 				{
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
+				
 				if (currentLevel[row][col] == 5)
 					
 				{
