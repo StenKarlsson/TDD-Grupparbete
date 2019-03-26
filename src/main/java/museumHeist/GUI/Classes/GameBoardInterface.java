@@ -35,8 +35,6 @@ public class GameBoardInterface extends JFrame {
 	private JButton[][] squares; 
 	private JPanel board;
 	private int levelCount; 
-	
-
 	private int[][]  currentLevel;
 	private Door door; 
 	private int treasuresLeftOnCurrentLevel; 
@@ -203,7 +201,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	}
 	
 	//färglägger en enskild ruta i grid
-	private void colouriseSquare(Color colour, Position position) {
+	public void colouriseSquare(Color colour, Position position) {
 	
 		squares[(int) position.getX()][(int) position.getY()].setBackground(colour);
 		
@@ -231,37 +229,13 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		boolean runCode = true;
 		
 		if (getColorOfTile(nextTileDirection)==Color.pink) // öppen dörr
-		{ 	/*	
-			currentLevel=Levels.getLevel(2); 
-			door.setdoorIsLocked(true);
-			treasuresLeftOnCurrentLevel = 10; 
-			buildButtonArray();
-			paintButtonArray(); 
-			*/
+		{ 	
 			levelCount++; 
 			currentLevel  = Levels.getLevel(levelCount);
-			paintButtonArray();
-			//Målar upp ny bana med knappar i rutnät
-		
-				//För varje vågrät rad i int []startArray...
-//				for (int row = 0; row < currentLevel.length; row++) {
-//					System.out.println();
-//					//...så itererar vi igenom varje kolumn
-//					for (int col = 0; col < currentLevel[row].length; col++) {
-//						//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
-//					}
-//					}
+			repaintGameBoard();
 			
-			/*
-			squares = new JButton[25][25];
-			board = new JPanel(new GridLayout(25, 25));
-			door = new Door(); 
-			door.setdoorIsLocked(true);
-			treasuresLeftOnCurrentLevel = 10; 
-			buildButtonArray();
-			paintButtonArray();
-			this.add(board);
-			drawCharacterStartingPosition();*/
+			
+			
 			}
 		
 		
@@ -429,5 +403,52 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	public int getLevelCount() {
 		return levelCount;
 	}
-	
+	// Målar om GameBoarden vid banbyte
+		public void repaintGameBoard() 
+		{
+//			// ny array - bana 2
+//			int[][]  _nextLevel = Levels.getLevel(level);
+//			//  nuvarande bana får dessa värden
+//			currentLevel = _nextLevel;
+			
+			
+			for (int row = 0; row < currentLevel.length; row++) {
+				System.out.println();
+				//...så itererar vi igenom varje kolumn
+				for (int col = 0; col < currentLevel[row].length; col++) {
+
+					// Färgar knapp beroende på värde (som sedan är kopplat till ikon)
+					if (currentLevel[row][col] == 1) 
+					{
+						colouriseSquare(Color.BLACK, new Position(row, col));
+					}
+					
+					if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) 
+					{
+						colouriseSquare(Color.WHITE, new Position(row, col));
+					}
+					
+					if (currentLevel[row][col] == 5)
+						
+					{
+						colouriseSquare(Color.ORANGE, new Position(row, col));
+					}
+					if (currentLevel[row][col] == 3) 
+						
+					{
+						colouriseSquare(Color.RED, new Position(row, col));	
+					}
+					if(currentLevel[row][col] == 2) 
+						
+					{
+						colouriseSquare(Color.GREEN, new Position(row, col));
+					}
+
+				}
+			}
+			
+			// Ritar ut spelaren på startpositionen
+			this.characterObject.setCurrentPosition(1,1);
+			colouriseSquare(Color.CYAN, new Position(1, 1));
+		}
 }
