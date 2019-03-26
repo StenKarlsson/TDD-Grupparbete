@@ -2,13 +2,16 @@ package museumHeist.GUI.Classes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
 import museum_heist.Levels;
 import museum_heist.Position;
@@ -28,16 +32,24 @@ public class GameBoardInterface extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private GameCharacter characterObject = new GameCharacter(1, 1);
-	private JButton[][] squares = new JButton[25][25]; //
+	private JButton[][] squares; 
 	private JPanel board;
-	private int[][]  currentLevel  = Levels.getLevel(1);
+	private int levelCount; 
+	
+
+	private int[][]  currentLevel;
+	private Door door; 
+	private int treasuresLeftOnCurrentLevel; 
 	
 	public GameBoardInterface() {
-		
-		
+		squares = new JButton[25][25];
+		currentLevel  = Levels.getLevel(1);
+		levelCount=1; 
 		this.setSize(1200, 1200);
 		board = new JPanel(new GridLayout(25, 25));
-	
+		door = new Door(); 
+		door.setdoorIsLocked(true);
+		treasuresLeftOnCurrentLevel = 10; 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		buildButtonArray();
 		this.setVisible(true);
@@ -135,6 +147,8 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return newButton;
 		
 	}
+	
+	//Målar upp ny bana med knappar i rutnät
 	private void buildButtonArray() {
 		//För varje vågrät rad i int []startArray...
 		for (int row = 0; row < currentLevel.length; row++) {
@@ -181,11 +195,9 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 				}
 				if(currentLevel[row][col] == 2) {
-				
 					squares[row][col] = createButton(Color.GREEN);
+					door.setDoorsPosition(new Position(row,col));
 				}
-				
-
 			}
 		}
 	}
@@ -218,12 +230,48 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	{
 		boolean runCode = true;
 		
+		if (getColorOfTile(nextTileDirection)==Color.pink) // öppen dörr
+		{ 	/*	
+			currentLevel=Levels.getLevel(2); 
+			door.setdoorIsLocked(true);
+			treasuresLeftOnCurrentLevel = 10; 
+			buildButtonArray();
+			paintButtonArray(); 
+			*/
+			levelCount++; 
+			currentLevel  = Levels.getLevel(levelCount);
+			paintButtonArray();
+			//Målar upp ny bana med knappar i rutnät
+		
+				//För varje vågrät rad i int []startArray...
+//				for (int row = 0; row < currentLevel.length; row++) {
+//					System.out.println();
+//					//...så itererar vi igenom varje kolumn
+//					for (int col = 0; col < currentLevel[row].length; col++) {
+//						//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
+//					}
+//					}
+			
+			/*
+			squares = new JButton[25][25];
+			board = new JPanel(new GridLayout(25, 25));
+			door = new Door(); 
+			door.setdoorIsLocked(true);
+			treasuresLeftOnCurrentLevel = 10; 
+			buildButtonArray();
+			paintButtonArray();
+			this.add(board);
+			drawCharacterStartingPosition();*/
+			}
+		
+		
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
 			
 		{
 			
-			characterObject.grabTreasure(); // Skatt +1
+			characterObject.grabTreasure(); // Skatt +1 till karaktären
 			System.out.println("Skatt upplockad, totalt " + characterObject.getTreasures() );
+			decreaseTreasuresLeftOnLevel();
 		}
 		
 		if (getColorOfTile(nextTileDirection)==Color.BLACK) // Vägg
@@ -248,6 +296,17 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		
 		return runCode; // Ska spelaren flytta sig?
 		
+	}
+	
+	public void decreaseTreasuresLeftOnLevel() {
+		treasuresLeftOnCurrentLevel --; 				//Skatter kvar på banan -1
+		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
+		
+		//dörren byter tillstånd från låst till öppen om alla skatter är funna
+		if(treasuresLeftOnCurrentLevel==0) {
+			door.setdoorIsLocked(false);
+			colouriseSquare(Color.pink, door.getDoorsPosition());
+			}
 	}
 	
 	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
@@ -343,10 +402,32 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return squares;
 	}
 
-	private int getGridValueOfPosition(Position pos) {
+	public int getGridValueOfPosition(Position pos) {
 		int row = (int) pos.getX();
 		int column = (int)pos.getY();
 		int value = currentLevel[row][column];
 		return value;
 	} 
+	public Door getDoor() {
+		return door; 
+	}
+	
+	
+	public void setLevel(int i) {
+		currentLevel = Levels.getLevel(i); 
+		buildButtonArray(); 
+	}
+
+	public int getTreasuresLeftOnCurrentLevel() {
+		return treasuresLeftOnCurrentLevel;
+	}
+
+	public void setTreasuresLeftOnCurrentLevel(int treasuresLeftOnCurrentLevel) {
+		this.treasuresLeftOnCurrentLevel = treasuresLeftOnCurrentLevel;
+	}
+	
+	public int getLevelCount() {
+		return levelCount;
+	}
+	
 }
