@@ -30,6 +30,7 @@ import museum_heist.Position;
 public class GameBoardInterface extends JFrame {
 	
 	public boolean LevelCompleted = false;
+	Position startposition = new Position (1,1);
 	private GameCharacter characterObject = new GameCharacter(1, 1);
 	public JButton[][] squares = new JButton[25][25]; //
 	private JPanel board;
@@ -108,7 +109,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return newButton;
 		
 	}
-	private void buildButtonArray() {
+	private JButton[][] buildButtonArray() {
 		//För varje vågrät rad i int []startArray...
 		for (int row = 0; row < currentLevel.length; row++) {
 			System.out.println();
@@ -191,6 +192,8 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 
 			}
 		}
+		
+		return squares;
 	}
 	
 	//färglägger en enskild ruta i grid
@@ -278,8 +281,8 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
 			
 		{
-			
-			this.LevelCompleted=true;
+			repaintGameBoard();
+			runCode = false;
 			
 		}
 
@@ -395,6 +398,59 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return laserOn =!laserOn; 
 	
 	}
+	
+	public void repaintGameBoard() 
+	{
+		// ny array - bana 2
+		int[][]  _nextLevel = Levels.getLevel(2);
+		//  nuvarande bana får dessa värden
+		currentLevel = _nextLevel;
+		
+		
+		for (int row = 0; row < currentLevel.length; row++) {
+			System.out.println();
+			//...så itererar vi igenom varje kolumn
+			for (int col = 0; col < currentLevel[row].length; col++) {
+				//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
+				
+
+				if (currentLevel[row][col] == 1) 
+				{
+					colouriseSquare(Color.BLACK, new Position(row, col));
+				}
+				
+				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) 
+				{
+					colouriseSquare(Color.WHITE, new Position(row, col));
+				}
+				if (currentLevel[row][col] == 5)
+					
+				{
+					colouriseSquare(Color.ORANGE, new Position(row, col));
+				}
+				if (currentLevel[row][col] == 3) 
+					
+				{
+					colouriseSquare(Color.RED, new Position(row, col));	
+				}
+				if(currentLevel[row][col] == 2) 
+					
+				{
+					colouriseSquare(Color.GREEN, new Position(row, col));
+				}
+
+			}
+		}
+		
+		// Ritar ut spelaren på startpositionen
+		this.characterObject.setCurrentPosition(1,1);
+		colouriseSquare(Color.CYAN, new Position(1, 1));
+	}
+		
+		
+		
+		
+	
 	
 	public void flipLaserOnGameBoard(JButton[][] squares) 
 	{

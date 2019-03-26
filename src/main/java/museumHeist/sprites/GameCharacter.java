@@ -10,6 +10,7 @@ import museum_heist.Position;
 public class GameCharacter extends GameItem /* implements KeyListener */ {
 	
 	private Position currentPosition;
+	
 	int treasures=0;
 	
 	public int getTreasures() {
