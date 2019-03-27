@@ -36,7 +36,7 @@ public class Main {
 									try 
 									
 										{
-										gb.flipLaserOnGameBoard(gb.squares);
+										gb.flipLaserOnGameBoard(gb.getSquares());
 										 	timeInSeconds--;
 										 	Thread.sleep(2000);
 										} 
@@ -45,7 +45,7 @@ public class Main {
 										{
 											e.printStackTrace();
 										         }
-										} 
+										} gb.setCurrentLevel(Levels.getLevel(3));gb.repaintGameBoard();
 						    		
 						    }}); 
 						Laser.start();	

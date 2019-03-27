@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -21,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import javafx.scene.chart.ValueAxis;
+import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
 import museum_heist.Levels;
 import museum_heist.Position;
@@ -29,25 +28,34 @@ import museum_heist.Position;
 
 public class GameBoardInterface extends JFrame {
 	
-	public boolean LevelCompleted = false;
-	Position startposition = new Position (1,1);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GameCharacter characterObject = new GameCharacter(1, 1);
-	public JButton[][] squares = new JButton[25][25]; //
+	private JButton[][] squares; 
 	private JPanel board;
+	private int levelCount; 
+	private int[][]  currentLevel;
+	private Door door; 
+	private int treasuresLeftOnCurrentLevel; 
 	int level = 1;
 	
-	private int[][]  currentLevel = Levels.getLevel(1);
-	static boolean laserOn = true;
-	
+	public boolean LevelCompleted = false;
+	Position startposition = new Position (1,1);
 	
 
+	static boolean laserOn = true;
 	
 	public GameBoardInterface() {
-		
-		
+		setSquares(new JButton[25][25]);
+		setCurrentLevel(Levels.getLevel(1));
+		levelCount=1; 
 		this.setSize(1200, 1200);
 		board = new JPanel(new GridLayout(25, 25));
-	
+		door = new Door(); 
+		door.setdoorIsLocked(true);
+		treasuresLeftOnCurrentLevel = 10; 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		buildButtonArray();
 		this.setVisible(true);
@@ -56,6 +64,9 @@ public class GameBoardInterface extends JFrame {
 		this.add(board);
 		drawCharacterStartingPosition();
 		
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+
 		addKeyBinding(board, KeyEvent.VK_W, "North", (evt) -> {
 			updateCharacterPosition("North");
 		});
@@ -95,7 +106,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		//Måla ut de färglagda knapparna på panelen, ruta för ruta. 
 		for (int boardRows = 0; boardRows < 25; boardRows++) {
 			for (int boardColumns = 0; boardColumns < 25; boardColumns++) {
-				board.add(squares[boardRows][boardColumns]);
+				board.add(getSquares()[boardRows][boardColumns]);
 			}
 		}
 	}
@@ -110,25 +121,33 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return newButton;
 		
 	}
+	
 	private JButton[][] buildButtonArray() {
 		//För varje vågrät rad i int []startArray...
-		for (int row = 0; row < currentLevel.length; row++) {
+		for (int row = 0; row < getCurrentLevel().length; row++) {
 			System.out.println();
 			//...så itererar vi igenom varje kolumn
-			for (int col = 0; col < currentLevel[row].length; col++) {
+			for (int col = 0; col < getCurrentLevel()[row].length; col++) {
 				//Om positionen i 2D-array är = 1 måla motsvarande ruta i squares med svart 
 				
-				if (currentLevel[row][col] == 1) {
+				if (getCurrentLevel()[row][col] == 1) {
 					
 					
 					
 					
 				//Borkommenterad kod målar ut bilder istället för färger 
-					try {							
-					Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Wall.png"));
+					try {	
+						Image image = null;
+					if(squares[row][col]==squares[0][2]) // Ritar ut tre liv på översta tegelraden
+					{ 
+						
+						image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
 					
-					squares[row][col] = createButton(Color.BLACK);
-					squares[row][col].setIcon(new ImageIcon(image));
+					}
+					else image = ImageIO.read(this.getClass().getResource("/gameSprites/Wall.png"));
+					
+					getSquares()[row][col] = createButton(Color.BLACK);
+					getSquares()[row][col].setIcon(new ImageIcon(image));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -136,39 +155,39 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 				}
 				
 				//Om positionen i 2D-array är = 0 måla motsvarande ruta med svart 
-				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) 
+				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
 				{
 					
 				
 					//Bortkommenterad kod målar ut bilder istället för färger
 					try {							
 						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Ground.png"));
-						squares[row][col] = createButton(Color.WHITE);
-						squares[row][col].setIcon(new ImageIcon(image));
+						getSquares()[row][col] = createButton(Color.WHITE);
+						getSquares()[row][col].setIcon(new ImageIcon(image));
 						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					
 				}
-				if (currentLevel[row][col] == 5) {
+				if (getCurrentLevel()[row][col] == 5) {
 					
 					try {							
 						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Treasure.png"));
-						squares[row][col] = createButton(Color.ORANGE);
-						squares[row][col].setIcon(new ImageIcon(image));
+						getSquares()[row][col] = createButton(Color.ORANGE);
+						getSquares()[row][col].setIcon(new ImageIcon(image));
 						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					
 				}
-				if (currentLevel[row][col] == 3) {
+				if (getCurrentLevel()[row][col] == 3) {
 					
 					try {							
 						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Laser.png"));
-						squares[row][col] = createButton(Color.RED);
-						squares[row][col].setIcon(new ImageIcon(image));
+						getSquares()[row][col] = createButton(Color.RED);
+						getSquares()[row][col].setIcon(new ImageIcon(image));
 						
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -177,12 +196,13 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 					
 				}
-				if(currentLevel[row][col] == 2) {
+				if(getCurrentLevel()[row][col] == 2) {
 				
 					try {							
-						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/Door.png"));
-						squares[row][col] = createButton(Color.GREEN);
-						squares[row][col].setIcon(new ImageIcon(image));
+						Image image = ImageIO.read(this.getClass().getResource("/gameSprites/DoorClosed.png"));
+						getSquares()[row][col] = createButton(Color.RED);
+						getSquares()[row][col].setIcon(new ImageIcon(image));
+						door.setDoorsPosition(new Position(row,col));
 						
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -190,20 +210,24 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 					
 					
 				}
+				
+				
+				
 				
 
 			}
 		}
 		
-		return squares;
+		return getSquares();
 	}
 	
 	//färglägger en enskild ruta i grid
+	
 	private void colouriseSquare(Color colour, Position position) 
 	{
 	
 		Image image = null;
-		squares[(int) position.getX()][(int) position.getY()].setBackground(colour);
+		getSquares()[(int) position.getX()][(int) position.getY()].setBackground(colour);
 		
 		try {
 			if (colour == Color.CYAN) // Spelare
@@ -215,26 +239,26 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			if (colour == Color.RED) // Laser 
 				image = ImageIO.read(this.getClass().getResource("/gameSprites/Laser.png"));
 			if (colour == Color.GREEN) // Dörr
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/DoorClosed.png"));
+			if (colour == Color.PINK) // Dörr öppen
 				image = ImageIO.read(this.getClass().getResource("/gameSprites/Door.png"));
 			if (colour == Color.WHITE) // Golv
 				image = ImageIO.read(this.getClass().getResource("/gameSprites/Ground.png"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
 		
-		squares[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
+		getSquares()[(int) position.getX()][(int) position.getY()].setIcon(new ImageIcon(image));
 		
 		
 	}
 	
-	
-	
 	//Placerar spelaren på startposition	
 	private void drawCharacterStartingPosition() {
 		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-		
 		
 	}
 	
@@ -246,12 +270,33 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	{
 		boolean runCode = true;
 		
+		if (getColorOfTile(nextTileDirection)==Color.PINK) // öppen dörr
+		{ 	
+			levelCount++; 
+			setCurrentLevel(Levels.getLevel(levelCount));
+			this.characterObject.addLife(1);
+			repaintGameBoard();
+			Image image;
+			try {
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
+				getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
+			} catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			}
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
 			
 		{
 			
 			characterObject.grabTreasure(); // Skatt +1
 			System.out.println("Skatt upplockad, totalt " + characterObject.getTreasures() );
+			decreaseTreasuresLeftOnLevel();
 		}
 		
 		if (getColorOfTile(nextTileDirection)==Color.BLACK) // Vägg
@@ -270,6 +315,16 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			characterObject.setCurrentPosition(1, 1);
 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
 			this.characterObject.subractLife(1);
+			
+			
+			Image image;
+			try {
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Wall.png"));
+				getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (this.characterObject.getLife()==0) {repaintGameBoard(3);}
 			System.out.println("Hit Laser -1 life, total life = " + this.characterObject.getLife());
 			
@@ -280,16 +335,27 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
 			
 		{
-			repaintGameBoard(level++);
-			this.characterObject.addLife(1);
-			System.out.println("Klarade bana, total life = " + this.characterObject.getLife());
-			runCode = false;
+			//repaintGameBoard(level++);
+			//this.characterObject.addLife(1);
+			//System.out.println("Klarade bana, total life = " + this.characterObject.getLife());
+			//runCode = false;
 			
 		}
 
 		
 		return runCode; // Ska spelaren flytta sig?
 		
+	}
+	
+	public void decreaseTreasuresLeftOnLevel() {
+		treasuresLeftOnCurrentLevel --; 				//Skatter kvar på banan -1
+		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
+		
+		//dörren byter tillstånd från låst till öppen om alla skatter är funna
+		if(treasuresLeftOnCurrentLevel==0) {
+			door.setdoorIsLocked(false);
+			colouriseSquare(Color.pink, door.getDoorsPosition());
+			}
 	}
 	
 	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
@@ -371,7 +437,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	//returnerar färgen på en specifik ruta i rutnätet som utgör spelplanen
 	public Color getColorOfTile(Position position) {
 		
-		JButton button = squares[(int) position.getX()][(int) position.getY()];
+		JButton button = getSquares()[(int) position.getX()][(int) position.getY()];
 		Color color = button.getBackground();
 		return color;
 	}
@@ -382,60 +448,129 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	}
 	
 	public JButton[][] getGridContent() {
-		return squares;
+		return getSquares();
 	}
 
-	private int getGridValueOfPosition(Position pos) {
+	public int getGridValueOfPosition(Position pos) {
 		int row = (int) pos.getX();
 		int column = (int)pos.getY();
-		int value = currentLevel[row][column];
+		int value = getCurrentLevel()[row][column];
 		return value;
+	} 
+	public Door getDoor() {
+		return door; 
 	}
 	
-	public static boolean flipLaser() 
-	{
-		System.out.println(laserOn);
-		
-		return laserOn =!laserOn; 
 	
+	public void setLevel(int i) {
+		setCurrentLevel(Levels.getLevel(i)); 
+		buildButtonArray(); 
+	}
+
+	public int getTreasuresLeftOnCurrentLevel() {
+		return treasuresLeftOnCurrentLevel;
+	}
+
+	public void setTreasuresLeftOnCurrentLevel(int treasuresLeftOnCurrentLevel) {
+		this.treasuresLeftOnCurrentLevel = treasuresLeftOnCurrentLevel;
 	}
 	
+	public int getLevelCount() {
+		return levelCount;
+	}
 	// Målar om GameBoarden vid banbyte
+		// Målar om GameBoarden vid banbyte
 	public void repaintGameBoard(int level) 
 	{
 		// ny array - bana 2
 		int[][]  _nextLevel = Levels.getLevel(level);
 		//  nuvarande bana får dessa värden
-		currentLevel = _nextLevel;
+		setCurrentLevel(_nextLevel);
 		
 		
-		for (int row = 0; row < currentLevel.length; row++) {
+		for (int row = 0; row < getCurrentLevel().length; row++) {
 			System.out.println();
 			//...så itererar vi igenom varje kolumn
-			for (int col = 0; col < currentLevel[row].length; col++) {
+			for (int col = 0; col < getCurrentLevel()[row].length; col++) {
 
 				// Färgar knapp beroende på värde (som sedan är kopplat till ikon)
-				if (currentLevel[row][col] == 1) 
+				if (getCurrentLevel()[row][col] == 1) 
 				{
 					colouriseSquare(Color.BLACK, new Position(row, col));
 				}
 				
-				if (currentLevel[row][col] == 0 || currentLevel[row][col] == 6) 
+				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
 				{
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
 				
-				if (currentLevel[row][col] == 5)
+				if (getCurrentLevel()[row][col] == 5)
 					
 				{
 					colouriseSquare(Color.ORANGE, new Position(row, col));
 				}
-				if (currentLevel[row][col] == 3) 
+				if (getCurrentLevel()[row][col] == 3) 
 					
 				{
 					colouriseSquare(Color.RED, new Position(row, col));	
 				}
-				if(currentLevel[row][col] == 2) 
+				if(getCurrentLevel()[row][col] == 2) 
+					
+				{
+					colouriseSquare(Color.GREEN, new Position(row, col));
+				}
+				
+				
+
+			}
+		}
+		
+		// Ritar ut spelaren på startpositionen
+		this.characterObject.setCurrentPosition(1,1);
+		colouriseSquare(Color.CYAN, new Position(1, 1));
+	}// Målar om GameBoarden vid banbyte
+	public void repaintGameBoard() 
+	{
+//		// ny array - bana 2
+//		int[][]  _nextLevel = Levels.getLevel(level);
+//		//  nuvarande bana får dessa värden
+//		currentLevel = _nextLevel;
+		
+		
+		for (int row = 0; row < getCurrentLevel().length; row++) {
+			System.out.println();
+			//...så itererar vi igenom varje kolumn
+			for (int col = 0; col < getCurrentLevel()[row].length; col++) {
+
+				// Färgar knapp beroende på värde (som sedan är kopplat till ikon)
+				if (getCurrentLevel()[row][col] == 1) 
+				{
+					colouriseSquare(Color.BLACK, new Position(row, col));
+					
+					
+					
+					
+					
+				}
+				
+				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
+				{
+					
+					
+					colouriseSquare(Color.WHITE, new Position(row, col));
+				}
+				
+				if (getCurrentLevel()[row][col] == 5)
+					
+				{
+					colouriseSquare(Color.ORANGE, new Position(row, col));
+				}
+				if (getCurrentLevel()[row][col] == 3) 
+					
+				{
+					colouriseSquare(Color.RED, new Position(row, col));	
+				}
+				if(getCurrentLevel()[row][col] == 2) 
 					
 				{
 					colouriseSquare(Color.GREEN, new Position(row, col));
@@ -448,12 +583,8 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		this.characterObject.setCurrentPosition(1,1);
 		colouriseSquare(Color.CYAN, new Position(1, 1));
 	}
-		
-		
-		
-		
-	
-	
+
+
 	public void flipLaserOnGameBoard(JButton[][] squares) 
 	{
 		for ( int q = 0; q < squares.length; q++ )
@@ -479,7 +610,24 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		
 	}
 
+	public JButton[][] getSquares() {
+		return squares;
+	}
+
+	public void setSquares(JButton[][] squares) {
+		this.squares = squares;
+	}
+
+	public int[][] getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setCurrentLevel(int[][] currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
 	
 
 	 
 }
+
