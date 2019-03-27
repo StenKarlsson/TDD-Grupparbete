@@ -2,16 +2,11 @@ package museumHeist.GUI.Classes;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -228,12 +223,13 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 	{
 		boolean runCode = true;
 		
+		// Banan byts om det är en rosa ruta som spelaren går på
 		if (getColorOfTile(nextTileDirection)==Color.pink) // öppen dörr
 		{ 	
 			levelCount++; 
 			currentLevel  = Levels.getLevel(levelCount);
 			repaintGameBoard();
-			
+			setTreasuresLeftOnCurrentLevel(10);
 			
 			
 			}
