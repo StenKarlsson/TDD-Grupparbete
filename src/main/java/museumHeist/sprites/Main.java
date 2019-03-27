@@ -14,7 +14,7 @@ public class Main {
 	
 
 	
-	static int timeInSeconds = 40;
+	static int timeInSeconds = 90;
 	
 	
 	
@@ -36,9 +36,11 @@ public class Main {
 									try 
 									
 										{
-										gb.flipLaserOnGameBoard(gb.getSquares());
+									gb.flipLaserOnGameBoard(gb.getSquares());
 										 	timeInSeconds--;
-										 	Thread.sleep(2000);
+										 	gb.showTimer(timeInSeconds);
+									
+										 	Thread.sleep(1000);
 										} 
 									
 									catch (InterruptedException e) 
@@ -67,6 +69,7 @@ public class Main {
 								{
 								 	System.out.println("timer " + (String.valueOf(timeInSeconds)));
 								 	timeInSeconds--;
+								 	
 								 	Thread.sleep(1000);
 								} 
 							

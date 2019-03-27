@@ -1,6 +1,7 @@
 package museumHeist.GUI.Classes;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 
 import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
@@ -114,10 +116,15 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 
 	private JButton createButton(Color color) 
 	{
-		JButton newButton = new JButton();
+		JButton newButton = new JButton("");
 		newButton.setBorderPainted(false);
 		newButton.setOpaque(true);
 		newButton.setBackground(color);
+		// Sätter texten för timern på knappen istället för efter
+		newButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		
+		newButton.setForeground(Color.WHITE);
+		newButton.setFont(new Font("Arial", Font.PLAIN, 25));
 		
 		return newButton;
 		
@@ -222,7 +229,15 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		return getSquares();
 	}
 	
+	public void showTimer(int timer) {
+		
+		this.squares[0][24].setText(Integer.toString(timer));
+		
+		
+	}
+	
 	//färglägger en enskild ruta i grid
+	
 	
 	private void colouriseSquare(Color colour, Position position) 
 	{
@@ -276,23 +291,33 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			levelCount++; 
 			setCurrentLevel(Levels.getLevel(levelCount));
 			
-			this.characterObject.addLife(1);
-			repaintGameBoard();
-			Main.setTimeInSeconds(30);
+			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
+			repaintGameBoard(); 
+			Main.setTimeInSeconds(30); // Sätter nästa banas timer
+			
+
 			Image image;
 			try {
 				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
-				getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
-			} catch (IOException e) 
-			{
+				// Ritar ut hjärtan för antal liv. KAN SKRIVAS SNYGGARE!!
+				if (this.characterObject.getLife()>=1) {getSquares()[0][0].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=2) {getSquares()[0][1].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=3) {getSquares()[0][2].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=4) {getSquares()[0][3].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=5) {getSquares()[0][4].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=6) {getSquares()[0][5].setIcon(new ImageIcon(image));}
+				if (this.characterObject.getLife()>=7) {getSquares()[0][6].setIcon(new ImageIcon(image));}
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+					
+						
+						
+					}
+					
+		
 			
-			
-			
-			
-			}
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
 			
 		{
@@ -338,10 +363,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		if (getColorOfTile(nextTileDirection)==Color.GREEN) // Dörr
 			
 		{
-			//repaintGameBoard(level++);
-			//this.characterObject.addLife(1);
-			//System.out.println("Klarade bana, total life = " + this.characterObject.getLife());
-			//runCode = false;
+			
 			runCode = false;
 			
 		}
@@ -533,14 +555,11 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		this.characterObject.setCurrentPosition(1,1);
 		colouriseSquare(Color.CYAN, new Position(1, 1));
 	}// Målar om GameBoarden vid banbyte
+	
+	
 	public void repaintGameBoard() 
 	{
-//		// ny array - bana 2
-//		int[][]  _nextLevel = Levels.getLevel(level);
-//		//  nuvarande bana får dessa värden
-//		currentLevel = _nextLevel;
-		
-		
+
 		for (int row = 0; row < getCurrentLevel().length; row++) {
 			System.out.println();
 			//...så itererar vi igenom varje kolumn
@@ -550,10 +569,6 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 				if (getCurrentLevel()[row][col] == 1) 
 				{
 					colouriseSquare(Color.BLACK, new Position(row, col));
-					
-					
-					
-					
 					
 				}
 				
