@@ -22,6 +22,7 @@ import javax.swing.KeyStroke;
 
 import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
+import museumHeist.sprites.Main;
 import museum_heist.Levels;
 import museum_heist.Position;
 
@@ -274,8 +275,10 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 		{ 	
 			levelCount++; 
 			setCurrentLevel(Levels.getLevel(levelCount));
+			
 			this.characterObject.addLife(1);
 			repaintGameBoard();
+			Main.setTimeInSeconds(30);
 			Image image;
 			try {
 				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
@@ -339,6 +342,7 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 			//this.characterObject.addLife(1);
 			//System.out.println("Klarade bana, total life = " + this.characterObject.getLife());
 			//runCode = false;
+			runCode = false;
 			
 		}
 
@@ -630,4 +634,3 @@ public static void addKeyBinding(JComponent comp, int keyCode, String id, final 
 
 	 
 }
-
