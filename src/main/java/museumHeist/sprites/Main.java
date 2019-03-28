@@ -47,7 +47,7 @@ public class Main {
 										{
 											e.printStackTrace();
 										         }
-										} gb.setCurrentLevel(Levels.getLevel(3));gb.repaintGameBoard();
+										} gb.setCurrentLevel(Levels.getLevel(999));gb.repaintGameBoard();
 						    		
 						    }}); 
 						Laser.start();	
