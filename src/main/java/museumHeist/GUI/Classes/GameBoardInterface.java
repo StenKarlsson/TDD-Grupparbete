@@ -270,28 +270,14 @@ public class GameBoardInterface extends JFrame {
 			
 
 			Image image;
-			try {
-				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
-				// Ritar ut hjärtan för antal liv. KAN SKRIVAS SNYGGARE!! - typ som den bortmarkerade just under, funkar inte
-				if (this.characterObject.getLife()>=1) {getSquares()[0][0].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=2) {getSquares()[0][1].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=3) {getSquares()[0][2].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=4) {getSquares()[0][3].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=5) {getSquares()[0][4].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=6) {getSquares()[0][5].setIcon(new ImageIcon(image));}
-				if (this.characterObject.getLife()>=7) {getSquares()[0][6].setIcon(new ImageIcon(image));}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			/*Image image;
 			try 
 			{
-				image = ImageIO.read(this.getClass().getResource(picLife));
-				for ( int i = 0; i == this.characterObject.getLife(); i++ )
+				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
+				
+				
+				for ( int i = 0; this.characterObject.getLife()>i; i++ )
 	            {
-	            	getSquares()[0][(this.characterObject.getLife())].setIcon(new ImageIcon(image));
+	            	getSquares()[0][i].setIcon(new ImageIcon(image));
 	 
 	            }
 			} 
@@ -301,7 +287,7 @@ public class GameBoardInterface extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
+			
 	
 		}
 					

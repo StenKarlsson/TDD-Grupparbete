@@ -37,7 +37,7 @@ public class Main {
 									
 										{
 									gb.flipLaserOnGameBoard(gb.getSquares());
-										 	timeInSeconds--;
+										 	
 										 	gb.showTimer(timeInSeconds);
 									
 										 	Thread.sleep(1000);
