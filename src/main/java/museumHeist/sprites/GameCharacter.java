@@ -81,4 +81,9 @@ public class GameCharacter extends GameItem /* implements KeyListener */ {
 		this.treasures++;
 		
 	}
+	
+	public void grabTreasure(int amount) {
+		this.treasures += amount;
+		
+	}
 }
