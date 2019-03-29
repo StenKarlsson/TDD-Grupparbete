@@ -1,3 +1,4 @@
+
 package museumHeist.sprites;
 
 import museum_heist.Position;

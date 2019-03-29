@@ -82,8 +82,7 @@ public class CollisionWithTreasureTest {
 		
 		//Kollar om antalet skatter 1
 		assertTrue(treasureCountAfter == 1);
-		
-	}
+		}
 	
 	@Test
 	public void testThatOneTreasureCantBePickedUpTwise() {
