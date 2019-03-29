@@ -1,3 +1,4 @@
+
 package museumHeist.sprites;
 
 import museum_heist.Position;
@@ -5,6 +6,8 @@ import museum_heist.Position;
 public class Door extends GameItem{
 	private boolean doorIsLocked;
 	private Position doorsPosition;
+	
+	
 	
 	public Position getDoorsPosition() {
 		return doorsPosition;
