@@ -265,7 +265,7 @@ public class GameBoardInterface extends JFrame {
 			setCurrentLevel(Levels.getLevel(levelCount));
 			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
 			repaintGameBoard(); 
-			Main.setTimeInSeconds(35); // Sätter nästa banas timer
+			Main.setTimeInSeconds(180); // Sätter nästa banas timer
 			treasuresLeftOnCurrentLevel = 10; 
 			
 

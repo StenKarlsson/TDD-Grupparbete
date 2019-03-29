@@ -14,7 +14,7 @@ public class Main {
 	
 
 	
-	static int timeInSeconds = 35;
+	static int timeInSeconds = 180;
 	protected static boolean playerIsMoving = false;
 	
 	
