@@ -15,6 +15,7 @@ public class Main {
 
 	
 	static int timeInSeconds = 35;
+	protected static boolean playerIsMoving = false;
 	
 	
 	
@@ -68,7 +69,7 @@ public class Main {
 							
 								{
 								 	System.out.println("timer " + (String.valueOf(timeInSeconds)));
-								 	timeInSeconds--;
+								 	if(playerIsMoving) {timeInSeconds--;}
 								 	
 								 	Thread.sleep(1000);
 								} 
@@ -97,5 +98,14 @@ public class Main {
 	public static void setTimeInSeconds(int timeInSeconds) {
 		Main.timeInSeconds = timeInSeconds;
 	}
-}
 
+
+	public static boolean isPlayerIsMoving() {
+		return playerIsMoving;
+	}
+
+
+	public static void setPlayerIsMoving(boolean playerIsMoving) {
+		Main.playerIsMoving = playerIsMoving;
+	}
+}

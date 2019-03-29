@@ -414,6 +414,7 @@ public class GameBoardInterface extends JFrame {
 		
 		if(_runCode) 
 		{
+			Main.setPlayerIsMoving(true);
 			// Färgar positionen WHITE
 			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());	
 			
@@ -522,7 +523,7 @@ public class GameBoardInterface extends JFrame {
 					
 					
 					colouriseSquare(Color.GREEN, new Position(row, col));
-					//door.setDoorsPosition(new Position(row,col));
+					
 				}
 
 			}
@@ -539,6 +540,7 @@ public class GameBoardInterface extends JFrame {
 	public void repaintGameBoard() 
 	{
 
+		Main.setPlayerIsMoving(false);
 		for (int row = 0; row < getCurrentLevel().length; row++) {
 			System.out.println();
 			for (int col = 0; col < getCurrentLevel()[row].length; col++) 
