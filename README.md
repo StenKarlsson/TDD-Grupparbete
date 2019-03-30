@@ -111,6 +111,7 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 			case 2: // Stänger av lasern
 
 			...osv
+			
 ```
 
 ## Svårigheter
