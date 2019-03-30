@@ -22,7 +22,7 @@ public class AvoidWallCollisionTest {
 		//Spara nuvarande position
 		Position expected = gb.getCharacter().getCurrentPosition();
 		//prva förflyttning upp där svart ruta finns (det ska inte gå)
-		gb.updateCharacterPosition("North");
+		gb.updateCharacterPosition("Up");
 		
 		//Assert 
 		//Positionen ska vara samma som den urspringliga positionen dvs det ska inte gå att utföra rörelsen uppåt
@@ -41,7 +41,7 @@ public class AvoidWallCollisionTest {
 		//Spara nuvarande position
 		Position expected = gb.getCharacter().getCurrentPosition();
 		//prva förflyttning nedåt där svart ruta finns (det ska inte gå)
-		gb.updateCharacterPosition("South");
+		gb.updateCharacterPosition("Down");
 		
 		//Assert 
 		//Positionen ska vara samma som den urspringliga positionen dvs det ska inte gå att utföra rörelsen uppåt
@@ -60,7 +60,7 @@ public class AvoidWallCollisionTest {
 		//Spara nuvarande position
 		Position expected = gb.getCharacter().getCurrentPosition();
 		//prva förflyttning höger där svart ruta finns (det ska inte gå)
-		gb.updateCharacterPosition("East");
+		gb.updateCharacterPosition("Right");
 		
 		//Assert 
 		//Positionen ska vara samma som den urspringliga positionen dvs det ska inte gå att utföra rörelsen uppåt
@@ -78,7 +78,7 @@ public class AvoidWallCollisionTest {
 		//Spara nuvarande position
 		Position expected = gb.getCharacter().getCurrentPosition();
 		//prva förflyttning upp där svart ruta finns (det ska inte gå)
-		gb.updateCharacterPosition("West");
+		gb.updateCharacterPosition("Left");
 		
 		//Assert 
 		//Positionen ska vara samma som den urspringliga positionen dvs det ska inte gå att utföra rörelsen uppåt
