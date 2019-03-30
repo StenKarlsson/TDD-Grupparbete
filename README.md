@@ -31,7 +31,11 @@ Inledningsvis började vi med att försöka konkretisera hur en 2d-Array kan öv
 
 Därefter påbörjades processen få det grafiska gränssnittet att översätta 2D-arrayens siffror till färger. I vårat projekt finns en klass som heter GameBoardInterface där dessa processer är implementerade. Metoderna buildButtonArray och paintButtonArray ansvarar för denna ”översättning”.  
 
-Flera av de ursprungliga testerna hade som syfte att just få till implementering som skulle se till att de grundläggande funktionerna i spelet fanns. Till exempel, att en ruta kunde tilldelas en bild/färg, att förflytta en karaktär mellan olika rutor, att få karaktären att kunna ”ta” ett objekt i en ruta, att få till väggar som karaktären inte kan ta sig igenom osv.          
+Flera av de ursprungliga testerna hade som syfte att just få till implementering som skulle se till att de grundläggande funktionerna i spelet fanns. Till exempel, att en ruta kunde tilldelas en bild/färg, att förflytta en karaktär mellan olika rutor, att få karaktären att kunna ”ta” ett objekt i en ruta, att få till väggar som karaktären inte kan ta sig igenom osv. 
+
+Att arbeta med 2d-arrayer kan vara ganska omständigt arbete eftersom varje punkt i det 2-dimensionallea planet måste anropas med en position för rad och en position för kolumn (x och y-värden).
+För att underlätta arbetet med att hämta data från en viss position i 2d-arrayerna skapades klassen Position som extendar klassen Point. Med hjälp av dess inbygda metoder kan man skapa olika positioner i det 2-dimensionella planet och arbeta med istället. Detta har underlättat både testandet och implementeringen av kod.  
+         
 
 
 
@@ -56,6 +60,10 @@ Spelet bygger på "klossar" i en 2D Array. En stor del av testerna utgår från 
 // Om spelkaraktären - vad denna ska kunna göra
 
 ### Tester
+När det gäller testerna så har utvecklingen av programmet skett växelvis med implementationen av kod. De tidiga testerna har handlat om grundläggande saker som att ifall man kan läsa in ett värde från 2d-arrayen som fungerar som en ritning för banan. 
+I klassen RegisterPositionOnGameBoard så kollas till exempel om testmetoden kan returnera aktuellt värde från en specifik position från en 2d-array. 
+
+Ju längre utvecklingen av spelet har kommit desto mer har testerna blivit baserade på antaganden om vilka metoder som kommer att behövas och vilken funktionalitet som dessa metoder behöver ha. 
 
 ### Implementation
 
