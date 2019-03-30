@@ -10,8 +10,8 @@ import museum_heist.Levels;
 public class Main {
 	
 	// Skiss av trådar och laserfunktion
+		
 	
-
 	
 	static int timeInSeconds = 180;
 	protected static boolean playerIsMoving = false;
