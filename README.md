@@ -9,6 +9,8 @@ Länk till Planering: https://github.com/StenKarlsson/TDD-Grupparbete/projects/
 
 Inspiration: // Alfred kanske har en länk till brädspelet?
 
+## Syfte
+
 Syftet med uppgiften är att med hjälp av JUnit skriva tester som ska stå som grund för implementerad funktionalitet - att expandera applikationen utifrån dessa. Som platform för sammarbetet används Github där dokumentation och kod redovisas.
 
 ## Verktyg
