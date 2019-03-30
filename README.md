@@ -90,7 +90,7 @@ Karaktären representeras av en egen klass somheter GameCharacter. I den klassen
 ### Implementation
 
 ## Dörr
-Dörren som spelare ska passera igenom representeras av en egen klass som heter Door. En instans av Door finns i klassen GameBoardInterface. Dören har egenskaper som position samt om den är låst eller inte.  
+Dörren som spelare ska passera igenom representeras av en egen klass som heter Door. En instans av Door finns i klassen GameBoardInterface. Dörren har egenskaper som position samt om den är låst eller inte.  
 
 ### Tester
 I klassen newLevel görs asserteringar om att dörren ska byta tillstånd från att vara låst till att vara olåst om spelaren har fångat alla skatter i rummet samt att en ny bana läses in när spelaren passerar den olåsta dörren. 
