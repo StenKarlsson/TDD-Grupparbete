@@ -100,7 +100,7 @@ Dörren som spelare ska passera igenom representeras av en egen klass som heter 
 I klassen newLevel görs asserteringar om att dörren ska byta tillstånd från att vara låst till att vara olåst om spelaren har fångat alla skatter i rummet samt att en ny bana läses in när spelaren passerar den olåsta dörren. 
 
 ### Implementation
-
+Implementationen för klassen dörr är mycket grundläggande med instansvariabler för position och en boolsk variabel som avgör om den är låst eller inte. Dessa har också publika getters och setters som anropas från klassen GameBoardInterface när antalet hämtade skatter == 10. 
 ## Laser
 
 // Om laser- vad denna har för egenskaper
