@@ -42,7 +42,8 @@ För att underlätta arbetet med att hämta data från en viss position i 2d-arr
 
 ## Användarinput (KeyBindings)
 
-// Om hur Keybindings fungerar, varför vi bytte från ActionListener, skillnader etc
+Vi använde till en början KeyListener för att förflytta spelarens karaktär, men på grund av problem med att fokus flyttades från komponenten
+så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar oavsett var fokus är.
 
 ## Sprites
 
