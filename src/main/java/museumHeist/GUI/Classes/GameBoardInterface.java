@@ -74,7 +74,7 @@ public class GameBoardInterface extends JFrame {
 		setSquares(new JButton[25][25]);
 		setCurrentLevel(Levels.getLevel(1));
 		levelCount=1; 
-		this.setSize(1200, 1200);
+		this.setSize(800, 800);
 		board = new JPanel(new GridLayout(25, 25));
 		door = new Door(); 
 		door.setdoorIsLocked(true);
