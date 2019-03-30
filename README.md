@@ -85,11 +85,32 @@ Spelet bygger på "klossar" i en 2D Array. En stor del av testerna utgår från 
 
 ## Frågetecken 
 
-// Om frågetecken- vad denna har för egenskaper
+Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, man kan få skatter, liv, tid eller avaktivera lasern men även förlora liv och tid.
 
 ### Tester
 
 ### Implementation
+
+Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats vilket resulterar i ett av sex möjliga ufall.
+```
+
+				    rand = (int)(6.0*Math.random());
+				  
+				    switch(rand) 
+				    {
+				      case 0: // Tar ett liv
+				    	  this.characterObject.subractLife(1);
+				    	  	removeOneHeart();
+							
+				        break;
+				      case 1: // Plockar upp 5 skatter
+				    		characterObject.grabTreasure(5);
+				    	  	decreaseTreasuresLeftOnLevel(5);
+				        break;
+				      case 2: // Stänger av lasern
+              
+              ...osv
+```
 
 ## Svårigheter
 
