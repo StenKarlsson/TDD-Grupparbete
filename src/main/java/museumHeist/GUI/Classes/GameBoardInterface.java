@@ -59,13 +59,16 @@ public class GameBoardInterface extends JFrame {
 	
 	String picPlayer = "/gameSprites/Player.png";
 	String picLaser = "/gameSprites/Laser.png";
-	String picWall = "/gameSprites/Wall.png";
 	String picGround = "/gameSprites/Ground.png";
+	String picWall = "/gameSprites/Wall.png";
+	String picWallGrey = "/gameSprites/Wall_grey.png";
+	String picLifeGrey = "/gameSprites/Life_grey.png";		
 	String picLife = "/gameSprites/Life.png";
 	String picDoor = "/gameSprites/Door.png";
 	String picDoorClosed = "/gameSprites/DoorClosed.png";
 	String picTreasure = "/gameSprites/Treasure.png";
 	String picQuestionMark = "/gameSprites/QuestionMark.png";
+	private boolean setRandForTesting;
 	
 	
 	
@@ -150,8 +153,21 @@ public class GameBoardInterface extends JFrame {
 				
 				if (getCurrentLevel()[row][col] == 1) 
 				{
-					if(squares[row][col]==squares[0][2]) {setupButton(row, col, picLife, Color.BLACK);}
-					else setupButton(row, col, picWall, Color.BLACK);
+					
+					
+					if (isEven(levelCount)) 
+					{
+					if(squares[row][col]==squares[0][2]) {setupButton(row, col, picLifeGrey, Color.BLACK);}
+					else setupButton(row, col, picWallGrey, Color.BLACK);
+					}
+					
+					else 
+					{
+						
+						if(squares[row][col]==squares[0][2]) {setupButton(row, col, picLife, Color.BLACK);}
+						else setupButton(row, col, picWall, Color.BLACK);
+					}
+					
 				}
 				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6 || getCurrentLevel()[row][col] == 7) 
 				{
@@ -215,7 +231,7 @@ public class GameBoardInterface extends JFrame {
 			// Textmetoderna är för att sätta text synlig ovanpå knappen
 			newButton.setHorizontalTextPosition(SwingConstants.CENTER);
 			newButton.setForeground(Color.WHITE);
-			newButton.setFont(new Font("Arial", Font.PLAIN, 18));
+			newButton.setFont(new Font("Arial", Font.PLAIN, 15));
 			
 			return newButton;
 			
@@ -236,7 +252,10 @@ public class GameBoardInterface extends JFrame {
 			if (colour == Color.CYAN) // Spelare
 				image = ImageIO.read(this.getClass().getResource(picPlayer));
 			if (colour == Color.BLACK) // Vägg
-				image = ImageIO.read(this.getClass().getResource(picWall));
+				{
+				if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picWallGrey));}
+				else image = ImageIO.read(this.getClass().getResource(picWall));
+				}
 			if (colour == Color.ORANGE) // Skatt
 				image = ImageIO.read(this.getClass().getResource(picTreasure));
 			if (colour == Color.RED) // Laser 
@@ -282,7 +301,9 @@ public class GameBoardInterface extends JFrame {
 			setCurrentLevel(Levels.getLevel(levelCount));
 			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
 			repaintGameBoard(); 
-			Main.setTimeInSeconds(180); // Sätter nästa banas timer
+
+			Main.setTimeInSeconds(150); // Sätter nästa banas timer
+
 			treasuresLeftOnCurrentLevel = 10; 
 			printLife();
 
@@ -313,8 +334,9 @@ public class GameBoardInterface extends JFrame {
 			 
 			
 				    int rand = 1;
-				    rand = (int)(6.0*Math.random());
-				 
+				    rand = (int)(7.0*Math.random());
+				    
+				    //setRandForTesting(6);
 				    
 				    switch(rand) 
 				    {
@@ -343,16 +365,19 @@ public class GameBoardInterface extends JFrame {
 				              }   
 				         }
 				        break;
-				      case 3: // Lägger till 2 liv
-				    	  this.characterObject.addLife(2);
+				      case 3: // Lägger till 3 liv
+				    	  this.characterObject.addLife(3);
 				    	  printLife();
 				    		
 				        break;
-				      case 4: // Lägger till 20 sek
-				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()+20);
+				      case 4: // Lägger till 30 sek
+				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()+30);
 				        break;
-				      case 5: // Tar bort 10 sek
-				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()-10);
+				      case 5: // Sänker Laserns hastighet
+				    	  Main.setLaserSpeed(3000);
+				        break;
+				      case 6: // Ökar Laserns hastighet
+				    	  Main.setLaserSpeed(500);
 				        break;
 				  
 				}
@@ -380,6 +405,7 @@ public class GameBoardInterface extends JFrame {
 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
 			this.characterObject.subractLife(1);
 			removeOneHeart();
+			Main.setLaserSpeed(1500);
 			
 			
 			runCode = false;
@@ -398,6 +424,11 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 	
+	private int setRandForTesting(int setCase) {
+		return setCase;
+		
+	}
+
 	public void decreaseTreasuresLeftOnLevel() {
 		treasuresLeftOnCurrentLevel --; 				//Skatter kvar på banan -1
 		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
@@ -657,8 +688,25 @@ public class GameBoardInterface extends JFrame {
                 if(laserActive) {
                 if (value==3 || value ==6) 
                 {
+                	
                 	if (color == color.RED) {colouriseSquare(color.WHITE,position);}
-                	else colouriseSquare(color.RED,position);
+                	else 
+                	{
+                		colouriseSquare(color.RED,position);
+                		if(this.characterObject.getCurrentPosition().equals(position)) 
+                		{
+                			
+                			// Om lasern rör sig på spelaren så tappar den ett liv och flyttas till start
+                			
+                			
+                			characterObject.setCurrentPosition(1, 1);
+                			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+                			this.characterObject.subractLife(1);
+                			removeOneHeart();
+                			Main.setLaserSpeed(1500);
+                		}
+                	
+                	}
                 	
                 }
                 }
@@ -683,7 +731,11 @@ public class GameBoardInterface extends JFrame {
 		Image image;
 		try 
 		{
-			image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
+			if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picLifeGrey));}
+			else image = ImageIO.read(this.getClass().getResource(picLife));
+			
+			
+			
 
 			for ( int i = 0; this.characterObject.getLife()>i; i++ )
 	        {
@@ -704,7 +756,9 @@ public class GameBoardInterface extends JFrame {
 
 		Image image;
 		try {
-			image = ImageIO.read(this.getClass().getResource(picWall));
+			if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picWallGrey));}
+			else image = ImageIO.read(this.getClass().getResource(picWall));
+			
 			getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -734,7 +788,7 @@ public class GameBoardInterface extends JFrame {
 		this.currentLevel = currentLevel;
 	}
 
-	
+	boolean isEven(double num) { return ((num % 2) == 0); }
 
 	 
 }

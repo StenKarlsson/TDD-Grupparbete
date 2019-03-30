@@ -83,7 +83,7 @@ Alla positioner med värde 1 på spelplanen målas ut som en svart ruta. Efter a
 I klassen AvoidWallCollisionTest så förflyttas karaktären mot en vägg. Implementationen som är en följd av detta test omöjliggör att karaktären kan ta sig igenom/förbi en vägg. 
 
 ### Implementation
-I klassen GameBoardInterface finns en metod som heter positionEvent i där det triggas olika händelser beroende på var karaktären befinner sig. Om den står vid en vägg och rör sig i den riktningen så förhindras förflyttningen. 
+I klassen GameBoardInterface finns en metod som heter positionEvent i där det triggas olika händelser beroende på var karaktären befinner sig. Om står står vid en vägg och rör sig i riktningen mot väggen så förhindras förflyttningen genom den metoden. 
 
 ## Golv
 
