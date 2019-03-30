@@ -1,5 +1,7 @@
 package museumHeist.GUI.Classes;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -8,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -60,6 +64,7 @@ public class GameBoardInterface extends JFrame {
 	String picDoor = "/gameSprites/Door.png";
 	String picDoorClosed = "/gameSprites/DoorClosed.png";
 	String picTreasure = "/gameSprites/Treasure.png";
+	
 	
 	
 	public GameBoardInterface() {
@@ -297,9 +302,13 @@ public class GameBoardInterface extends JFrame {
 			
 		{
 			
+		
 			characterObject.grabTreasure(); // Skatt +1
 			showTotalTreasure(); // Skriver ut totalt antal skatter i högra hörnet
 			decreaseTreasuresLeftOnLevel();
+			//skapa nytt ljudklipp 
+			
+		
 			
 		}
 		

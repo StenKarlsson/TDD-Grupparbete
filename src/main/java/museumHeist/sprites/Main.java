@@ -9,7 +9,6 @@ import museum_heist.Levels;
 
 public class Main {
 	
-	
 	// Skiss av trådar och laserfunktion
 	
 
@@ -41,7 +40,7 @@ public class Main {
 										 	
 										 	gb.showTimer(timeInSeconds);
 									
-										 	Thread.sleep(1000);
+										 	Thread.sleep(250);
 										} 
 									
 									catch (InterruptedException e) 
