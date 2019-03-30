@@ -88,6 +88,8 @@ Spelet bygger på "klossar" i en 2D Array. En stor del av testerna utgår från 
 Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, man kan få skatter, liv, tid eller avaktivera lasern men även förlora liv och tid.
 
 ### Tester
+Här handlar det givetvis inte om att testa java-metoden Math.random() utan att de möjliga utfallen resulterar i vad som är tänkt.
+...... osv
 
 ### Implementation
 
