@@ -14,8 +14,9 @@ public class Main {
 	
 
 	
-	static int timeInSeconds = 180;
+	static int timeInSeconds = 150;
 	protected static boolean playerIsMoving = false;
+	private static int laserSpeed = 2000;
 	
 	
 	
@@ -30,7 +31,9 @@ public class Main {
 				    	final GameBoardInterface gb = new GameBoardInterface();	
 				    	Thread Laser = new Thread(new Runnable() 
 						{
-						    public void run()
+						    
+
+							public void run()
 						    {
 						    	while(timeInSeconds != 0) // Går tills tiden är slut
 								{
@@ -41,7 +44,7 @@ public class Main {
 										 	
 										 	gb.showTimer(timeInSeconds);
 									
-										 	Thread.sleep(1000);
+										 	Thread.sleep(laserSpeed);
 										} 
 									
 									catch (InterruptedException e) 
@@ -107,5 +110,15 @@ public class Main {
 
 	public static void setPlayerIsMoving(boolean playerIsMoving) {
 		Main.playerIsMoving = playerIsMoving;
+	}
+
+
+	public static int getLaserSpeed() {
+		return laserSpeed;
+	}
+
+
+	public static void setLaserSpeed(int laserSpeed) {
+		Main.laserSpeed = laserSpeed;
 	}
 }
