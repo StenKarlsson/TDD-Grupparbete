@@ -75,11 +75,15 @@ Många tester av spelet har på något sätt med karaktären att göra. Det hand
 Karaktären representeras av en egen klass somheter GameCharacter. I den klassen anges startposition, antal liv osv. Här finns ocks de metoder som anropas när figuren förflyttar sig. 
 ## Vägg
 
-// Om vägg - vad denna har för egenskaper
+I spelet representeras väggen inte av en egen klass. Däremot så representeras den av en färg/bild på det 2-dimensionella spelbrädet. 
+Alla positioner med värde 1 på spelplanen målas ut som en svart ruta. Efter att det grafiska manéeret är satt så visas också väggarna med en tegelmönstrad bild. Väggen ska till skillnad från de andra ytorna inte gå att passera. 
 
 ### Tester
 
+I klassen AvoidWallCollisionTest så förflyttas karaktären mot en vägg. Implementationen som är en följd av detta test omöjliggör att karaktären kan ta sig igenom/förbi en vägg. 
+
 ### Implementation
+I klassen GameBoardInterface finns en metod som heter positionEvent i där det triggas olika händelser beroende på var karaktären befinner sig. Om den står vid en vägg och rör sig i den riktningen så förhindras förflyttningen. 
 
 ## Golv
 
