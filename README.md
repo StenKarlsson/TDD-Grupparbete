@@ -125,10 +125,7 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 			case 0: // Tar ett liv
 			this.characterObject.subractLife(1);
 
-## Kända buggar
-Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
-•	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
-•	Att rutan som karaktären dör på ibland ersätts av en laser.
+
 
 			removeOneHeart();							
 			break;
@@ -151,6 +148,10 @@ Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
 - Få rörelse i lasern (även ta upp Stens tanke kring hur detta skulle kunnat göras)
 - Färger och hantering av tester kring dessa / fördelar nackdelar
 
+## Kända buggar
+Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
+•	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
+•	Att rutan som karaktären dör på ibland ersätts av en laser.
 ## Slutligen
 
 // Om vad vi fått ut av uppgiften/testerna, samarbete..
