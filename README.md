@@ -94,22 +94,23 @@ Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, ma
 Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats vilket resulterar i ett av sex möjliga ufall.
 ```
 
-				    rand = (int)(6.0*Math.random());
-				  
-				    switch(rand) 
-				    {
-				      case 0: // Tar ett liv
-				    	  this.characterObject.subractLife(1);
-				    	  	removeOneHeart();
-							
-				        break;
-				      case 1: // Plockar upp 5 skatter
-				    		characterObject.grabTreasure(5);
-				    	  	decreaseTreasuresLeftOnLevel(5);
-				        break;
-				      case 2: // Stänger av lasern
-              
-              ...osv
+		rand = (int)(6.0*Math.random());
+
+		switch(rand) 
+		{
+			case 0: // Tar ett liv
+			this.characterObject.subractLife(1);
+			removeOneHeart();							
+			break;
+
+			case 1: // Plockar upp 5 skatter
+			characterObject.grabTreasure(5);
+			decreaseTreasuresLeftOnLevel(5);
+			break;
+
+			case 2: // Stänger av lasern
+
+			...osv
 ```
 
 ## Svårigheter
