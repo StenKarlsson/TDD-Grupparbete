@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import museum_heist.GameBoard;
 import museum_heist.Position;
 
-public class GameCharacter extends GameItem /* implements KeyListener */ {
+public class GameCharacter /* implements KeyListener */ {
 	
 	private Position currentPosition;
 	
