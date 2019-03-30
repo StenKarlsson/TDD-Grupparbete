@@ -5,8 +5,9 @@
 
 **Deltagare** Alfred Grimlund, Sten Karlsson, Stefan Sundström
 
-**Länk till Planering:** https://github.com/StenKarlsson/TDD-Grupparbete/projects/2
-**Inspiration:** // Alfred kanske har en länk till brädspelet?
+Länk till Planering: https://github.com/StenKarlsson/TDD-Grupparbete/projects/2
+
+Inspiration: // Alfred kanske har en länk till brädspelet?
 
 Syftet med uppgiften är att med hjälp av JUnit skriva tester som ska stå som grund för implementerad funktionalitet - att expandera applikationen utifrån dessa. Som platform för sammarbetet används Github där dokumentation och kod redovisas.
 
