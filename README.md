@@ -22,7 +22,7 @@ Syftet med uppgiften är att med hjälp av JUnit skriva tester som ska stå som 
 
 Applikationen är ett spel med 8-bitarskänsla som går ut på att en spelkaraktär vandrar omkring i en labyrintliknande värld och samlar skatter för att öppna dörren till nästa nivå. Spelaren har en viss tid på sig för att klara diverse bana och för att försvåra uppdraget finns bla rörliga eldklot som spelkaraktären måste akta sig för. 
 
-## Inspiration/Balgrund
+## Inspiration/Bakgrund
 
 // tankesättet för att komma igång med uppgiften och hur progammet i grunden är uppbyggt 
 
