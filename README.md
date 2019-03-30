@@ -50,7 +50,10 @@ så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar o
 
 ## Sprites
 
-Spelet bygger på "klossar" i en 2D Array. En stor del av testerna utgår från dessa och ligger som grund till implementationen av deras egenskaper.
+Spelet bygger på rutor i en 2D Array. En stor del av testerna utgår från dessa och ligger som grund till implementationen av deras egenskaper.
+
+Inledningsvis så tilldelades alla rutorna i spelet en egen färg för att få en visuell överblick över spelet. Senare har dessa positioner också tilldelats en bild för att få en grafik som syftar till att ge en sorts 8-bits-känsla. 
+
 
 * Spelkaraktär 
 * Vägg
@@ -61,13 +64,15 @@ Spelet bygger på "klossar" i en 2D Array. En stor del av testerna utgår från 
 
 ## Spelkaraktär
 
-// Om spelkaraktären - vad denna ska kunna göra
+Spelkaraktärens ruta gestaltas av färgen cyan som tilldelas den ruta som är angiven som spelarens startposition. 
 
-### Tester
+## Tester
+Många tester av spelet har på något sätt med karaktären att göra. Det handlar om rörelser, kollisioner med andra sprites, om den kan "ta" skatter osv. Dessa finns i mappen characterMovementTests. Här görs tex olika asserteringar om att figuren inte ska kunna röra sig åt en riktning där det finns en vägg och asserteringar om att när spelaren trycker på knapp som syftar till att karaktären rör sig i den angivna riktningen verkligen gör det. 
 
 
 ### Implementation
 
+Karaktären representeras av en egen klass somheter GameCharacter. I den klassen anges startposition, antal liv osv. Här finns ocks de metoder som anropas när figuren förflyttar sig. 
 ## Vägg
 
 // Om vägg - vad denna har för egenskaper
@@ -119,6 +124,12 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 		{
 			case 0: // Tar ett liv
 			this.characterObject.subractLife(1);
+
+## Kända buggar
+Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
+•	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
+•	Att rutan som karaktären dör på ibland ersätts av en laser.
+
 			removeOneHeart();							
 			break;
 
