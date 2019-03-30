@@ -53,6 +53,7 @@ public class GameBoardInterface extends JFrame {
 	
 
 	static boolean laserOn = true;
+	private static boolean laserActive = true;
 	
 	// Länkar till sprites-bilderna
 	
@@ -64,6 +65,8 @@ public class GameBoardInterface extends JFrame {
 	String picDoor = "/gameSprites/Door.png";
 	String picDoorClosed = "/gameSprites/DoorClosed.png";
 	String picTreasure = "/gameSprites/Treasure.png";
+	String picQuestionMark = "/gameSprites/QuestionMark.png";
+	
 	
 	
 	
@@ -172,6 +175,13 @@ public class GameBoardInterface extends JFrame {
 				{ 
 					setupButton(row, col, picDoorClosed, Color.GREEN); door.setDoorsPosition(new Position(row,col));
 				}	
+				
+
+				if(getCurrentLevel()[row][col] == 8) 
+					
+				{ 
+					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
+				}	
 			}
 			
 		}
@@ -205,7 +215,7 @@ public class GameBoardInterface extends JFrame {
 			// Textmetoderna är för att sätta text synlig ovanpå knappen
 			newButton.setHorizontalTextPosition(SwingConstants.CENTER);
 			newButton.setForeground(Color.WHITE);
-			newButton.setFont(new Font("Arial", Font.PLAIN, 25));
+			newButton.setFont(new Font("Arial", Font.PLAIN, 18));
 			
 			return newButton;
 			
@@ -237,6 +247,8 @@ public class GameBoardInterface extends JFrame {
 				image = ImageIO.read(this.getClass().getResource(picDoor));
 			if (colour == Color.WHITE) // Golv
 				image = ImageIO.read(this.getClass().getResource(picGround));
+			if (colour == Color.MAGENTA) // Frågetecken
+				image = ImageIO.read(this.getClass().getResource(picQuestionMark));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -256,7 +268,7 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 	
-	
+
 	
 	// Bestämmer vad som händer när karaktären går på diverse objekt/siffra i arrayen
 	public boolean positionEvent(Position nextTileDirection, String direction) 
@@ -270,28 +282,11 @@ public class GameBoardInterface extends JFrame {
 			setCurrentLevel(Levels.getLevel(levelCount));
 			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
 			repaintGameBoard(); 
-			Main.setTimeInSeconds(180); // Sätter nästa banas timer
+			Main.setTimeInSeconds(35); // Sätter nästa banas timer
 			treasuresLeftOnCurrentLevel = 10; 
-			
+			printLife();
 
-			Image image;
-			try 
-			{
-				image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
-				
-				
-				for ( int i = 0; this.characterObject.getLife()>i; i++ )
-	            {
-	            	getSquares()[0][i].setIcon(new ImageIcon(image));
-	 
-	            }
-			} 
 			
-			catch (IOException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
 	
 		}
@@ -312,12 +307,68 @@ public class GameBoardInterface extends JFrame {
 			
 		}
 		
+		if (getColorOfTile(nextTileDirection)==Color.MAGENTA) // Frågetecken
+			
+		{
+			 
+			
+				    int rand = 1;
+				    rand = (int)(6.0*Math.random());
+				 
+				    
+				    switch(rand) 
+				    {
+				      case 0: // Tar ett liv
+				    	  this.characterObject.subractLife(1);
+				    	  	removeOneHeart();
+							
+				        break;
+				      case 1: // Plockar upp 5 skatter
+				    		characterObject.grabTreasure(5);
+				    	  	decreaseTreasuresLeftOnLevel(5);
+				        break;
+				      case 2: // Stänger av lasern
+				    	  laserActive=false;
+				    	  for ( int q = 0; q < squares.length; q++ )
+				          {
+				              for ( int x = 0; x < squares[0].length; x++ )
+				              {
+				              	Position position = new Position(q, x);
+				                  Color color = getColorOfTile(position);
+				                  int value = getGridValueOfPosition(position);
+				                  if (value==3 || value ==6) 
+				                  {
+				                  	colouriseSquare(color.WHITE,position);	
+				                  }
+				              }   
+				         }
+				        break;
+				      case 3: // Lägger till 2 liv
+				    	  this.characterObject.addLife(2);
+				    	  printLife();
+				    		
+				        break;
+				      case 4: // Lägger till 20 sek
+				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()+20);
+				        break;
+				      case 5: // Tar bort 10 sek
+				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()-10);
+				        break;
+				  
+				}
+			
+			showTotalTreasure(); // Skriver ut totalt antal skatter i högra hörnet
+			
+		}
+		
 		if (getColorOfTile(nextTileDirection)==Color.BLACK) // Vägg
 			
 		{
 			System.out.println("Wall to the " + direction);
 			runCode = false; // Flytta inte spelaren
 		}
+		
+		
 		
 		if (getColorOfTile(nextTileDirection)==Color.RED) // Laser
 			
@@ -328,18 +379,7 @@ public class GameBoardInterface extends JFrame {
 			characterObject.setCurrentPosition(1, 1);
 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
 			this.characterObject.subractLife(1);
-			
-			
-			Image image;
-			try {
-				image = ImageIO.read(this.getClass().getResource(picWall));
-				getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (this.characterObject.getLife()==0) {repaintGameBoard(999);}
-			System.out.println("Hit Laser -1 life, total life = " + this.characterObject.getLife());
+			removeOneHeart();
 			
 			
 			runCode = false;
@@ -364,6 +404,17 @@ public class GameBoardInterface extends JFrame {
 		
 		//dörren byter tillstånd från låst till öppen om alla skatter är funna
 		if(treasuresLeftOnCurrentLevel==0) {
+			door.setdoorIsLocked(false);
+			colouriseSquare(Color.PINK, door.getDoorsPosition());
+			}
+	}
+	
+	public void decreaseTreasuresLeftOnLevel(int amount) {
+		treasuresLeftOnCurrentLevel -= amount;				//Skatter kvar på banan - amount
+		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
+		
+		//dörren byter tillstånd från låst till öppen om alla skatter är funna
+		if(treasuresLeftOnCurrentLevel<=0) {
 			door.setdoorIsLocked(false);
 			colouriseSquare(Color.PINK, door.getDoorsPosition());
 			}
@@ -521,6 +572,12 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.ORANGE, new Position(row, col));
 				}
+				
+				if (getCurrentLevel()[row][col] == 8)
+					
+				{
+					colouriseSquare(Color.MAGENTA, new Position(row, col));
+				}
 				if (getCurrentLevel()[row][col] == 3) 
 					
 				{
@@ -538,9 +595,7 @@ public class GameBoardInterface extends JFrame {
 			}
 		}
 		
-		// Ritar ut spelaren på startpositionen
-		this.characterObject.setCurrentPosition(1,1);
-		colouriseSquare(Color.CYAN, new Position(1, 1));	
+			
 	}
 	
 	// Målar om GameBoarden vid banbyte, Ittererar igenom rad och kolumn
@@ -549,6 +604,7 @@ public class GameBoardInterface extends JFrame {
 	public void repaintGameBoard() 
 	{
 
+		laserActive=true;
 		Main.setPlayerIsMoving(false);
 		for (int row = 0; row < getCurrentLevel().length; row++) {
 			System.out.println();
@@ -566,6 +622,10 @@ public class GameBoardInterface extends JFrame {
 				if (getCurrentLevel()[row][col] == 5)	
 				{
 					colouriseSquare(Color.ORANGE, new Position(row, col));
+				}
+				if (getCurrentLevel()[row][col] == 8)	
+				{
+					colouriseSquare(Color.MAGENTA, new Position(row, col));
 				}
 				if (getCurrentLevel()[row][col] == 3) 	
 				{
@@ -594,11 +654,13 @@ public class GameBoardInterface extends JFrame {
             	Position position = new Position(q, x);
                 Color color = getColorOfTile(position);
                 int value = getGridValueOfPosition(position);
+                if(laserActive) {
                 if (value==3 || value ==6) 
                 {
                 	if (color == color.RED) {colouriseSquare(color.WHITE,position);}
                 	else colouriseSquare(color.RED,position);
                 	
+                }
                 }
  
             }
@@ -611,9 +673,45 @@ public class GameBoardInterface extends JFrame {
 	public void showTimer(int timer) {
 		
 		this.squares[0][24].setText(Integer.toString(timer));
+		
 	}
 	
 
+	
+	private void printLife() 
+	{
+		Image image;
+		try 
+		{
+			image = ImageIO.read(this.getClass().getResource("/gameSprites/Life.png"));
+
+			for ( int i = 0; this.characterObject.getLife()>i; i++ )
+	        {
+	        	getSquares()[0][i].setIcon(new ImageIcon(image));
+	
+	        }
+		} 
+		
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void removeOneHeart()
+	{
+
+		Image image;
+		try {
+			image = ImageIO.read(this.getClass().getResource(picWall));
+			getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (this.characterObject.getLife()==0) {repaintGameBoard(999); }
+		
+	}
 	// Skriver ut tiden på timern på sista rutan översta raden
 	public void showTotalTreasure() {
 		
