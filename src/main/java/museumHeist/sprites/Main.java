@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package museumHeist.sprites;
 
 import java.awt.EventQueue;
@@ -235,4 +235,3 @@ public class Main {
 		Main.laserSpeed = laserSpeed;
 	}
 }
->>>>>>> branch 'master' of https://github.com/StenKarlsson/TDD-Grupparbete.git
