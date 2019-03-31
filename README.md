@@ -76,6 +76,10 @@ Inledningsvis så tilldelades alla rutorna i spelet en egen färg för att få e
 * Dörr
 * Laser
 * Frågetecken
+* Warp-Zone
+* Monster
+
+Bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.com, www.opengameart.org samt www.minecraftforum.net.
 
 ## Spelkaraktär
 
@@ -177,6 +181,38 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 			...osv
 			
 ```
+## Warp-Zone
+
+
+
+### Tester
+
+### Implementation
+
+## Monster
+
+Monstret rör sig mot spelkaraktären över positioner på spelplanen som representerar golv och tar ett liv av spelkaraktären vid kollison. 
+
+### Tester
+
+Tester kring monstret handlar om att ta reda på att detta rör sig mot spelkaraktären oavsett riktning men även att det beeter sig som förväntat efter kollision.
+
+### Implementation
+
+Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Mainklassen anropas i en while loop där frekvensen styrs av Thread.Sleep(). 
+I metoden körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
+
+Om monstrets position i x-led är större än spelkaraktärens position så minska monstrets position i x-led med 1. 
+
+```
+
+if (monster_x>char_x) 
+           {
+               movement_x= (monster_x)-1;
+           }
+	   
+```
+
 
 ## Svårigheter
 
