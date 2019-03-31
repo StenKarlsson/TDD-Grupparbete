@@ -183,26 +183,53 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 ```
 ## Warp-Zone
 
-
+Fungerar som en portal, om spelkaraktären ställer sig på denna så sker en warp till en slumpmässigt vald golv-ruta.
 
 ### Tester
 
+Det enda testet som gjorde var ett test för att ta reda på att spelkaraktären är flyttad. Implementationen är så enkel och självklar (jämfört med att utforma ett test för att säkerhetställa att karaktären flyttas till en golvyta i Arrayen). Därför valde vi att inte göra fler test.
+
 ### Implementation
+
+En While loop innehåller for-loopar som ittererar igenom spelplanen och tar in slumpmässiga kordinater, när positionens värde är 0 (som motsvarar golv) så flyttas spelkaraktären till denna position. 
+
+```
+
+while(!CharacterMoved) 
+	{
+		int row = (int)(25.0*Math.random());
+		int col = (int)(25.0*Math.random());
+				
+		for ( int q = 0; q < squares.length; q++ )
+		          {
+		              for ( int x = 0; x < squares[0].length; x++ )
+		              {
+		            	  if (getGridValueOfPosition(new Position(row, col))==0)
+		            	  {
+		            		  this.characterObject.setCurrentPosition(row, row); 
+		            		  CharacterMoved = true;
+		            	  } 
+		              }   
+		         }	
+	}
+	
+```
 
 ## Monster
 
-Monstret rör sig mot spelkaraktären över positioner på spelplanen som representerar golv och tar ett liv av spelkaraktären vid kollison. 
+Monstret rör sig mot spelkaraktären över positioner på spelplanen som utgörs av golv och tar ett liv av spelkaraktären vid kollison. 
 
 ### Tester
 
-Tester kring monstret handlar om att ta reda på att detta rör sig mot spelkaraktären oavsett riktning men även att det beeter sig som förväntat efter kollision.
+Tester kring monstret handlar om att ta reda på att detta rör sig mot spelkaraktären oavsett riktning men även att det beter sig som förväntat efter kollision.
 
 ### Implementation
 
-Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Mainklassen anropas i en while loop där frekvensen styrs av Thread.Sleep(). 
-I metoden körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
+Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Main-klassen anropas i en while loop där frekvensen styrs av Thread.Sleep(). 
 
-Om monstrets position i x-led är större än spelkaraktärens position så minska monstrets position i x-led med 1. 
+I metoden moveMonster() körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
+
+Exempelvis - Om monstrets position i x-led är större än spelkaraktärens position så minska monstrets position i x-led med 1. 
 
 ```
 
@@ -212,6 +239,7 @@ if (monster_x>char_x)
            }
 	   
 ```
+Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en yta med golv i optimal riktning. 
 
 
 ## Svårigheter
@@ -222,14 +250,6 @@ En av de svårigheter vi har haft är att det till en början var svårt att tä
 - Ett smidigt sätt att rita upp nästa bana
 - Få rörelse i lasern (även ta upp Stens tanke kring hur detta skulle kunnat göras)
 - Färger och hantering av tester kring dessa / fördelar nackdelar
-
-## Kända buggar
-
-// Hoppas detta är åtgärdat
-
-Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
-•	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
-•	Att rutan som karaktären dör på ibland ersätts av en laser.
 
 ## Slutligen
 Det har varit en lärorik process att skapa spelet. Inte bara för det skapat en större förståelse för hur testdriven utveckling kan gå till utan också för att det ökat förståelse för hur 2-dimensionella spel kan byggas. 
