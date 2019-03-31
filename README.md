@@ -48,20 +48,15 @@ Ju längre utvecklingen av spelet har kommit desto mer har testerna blivit baser
 Vi använde till en början KeyListener för att förflytta spelarens karaktär, men på grund av problem med att fokus flyttades från komponenten
 så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar oavsett var fokus är.
 
-## Mainklassen och Tid
+## Timer
 
 Det var ganska sent i processen vi adderade en timer till spelet (och då även den rörliga funktionen med lasern). Spelet kördes vid den tidpunkten i en tråd (utan loop) från mainmetoden, det behövdes inte mer då rörelsen av spelkaraktären visades grafiskt genom att ändra knapparnas egenskap för färg.
 
-Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att begränsa tiden man har för att ta sig igenom en bana. 
-
-Vi skapade en egen tråd för timern där vi kör metoden Threed.sleep() i en while-loop för att låta tråden vila 1 sek och sedan subtrahera 1 från variabeln timeInSeconds varje varv loopen körs. 
-
-Med andra ord sätter variabeln timeInSeconds en nedräkning i sekunder, om tiden tar slut innan banan klarats så skrivs det "Game Over" och spelet är slut.
+Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att begränsa tiden man har för att ta sig igenom en bana. Vi skapade en egen tråd för timern där vi kör metoden Threed.sleep() i en while-loop för att låta tråden vila 1 sek och sedan subtrahera 1 från variabeln timeInSeconds varje varv loopen körs. Med andra ord sätter variabeln timeInSeconds en nedräkning i sekunder, om tiden tar slut innan banan klarats så skrivs det "Game Over" och spelet är slut.
 
 För att spelaren ska få en chans att se banan innan tiden börjar rulla så har vi satt en boolean som vilkor (playerIsMoving) som triggar på en rörelse från spelkaraktären.
 
-Lasern gav vi också en egen tråd vilket beskrivs nedan. 
-
+Lasern och Monstret gav vi också en egen tråd vilket beskrivs nedan. 
 
 ## Sprites
 
@@ -79,19 +74,21 @@ Inledningsvis så tilldelades alla rutorna i spelet en egen färg för att få e
 * Warp-Zone
 * Monster
 
-Bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.com, www.opengameart.org samt www.minecraftforum.net.
+Bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.com, www.opengameart.org och www.minecraftforum.net.
 
 ## Spelkaraktär
 
 Spelkaraktärens ruta gestaltas av färgen turkos (cyan) som tilldelas den ruta som är angiven som spelarens startposition. 
 
 ## Tester
+
 Många tester av spelet har på något sätt med karaktären att göra. Det handlar om rörelser, kollisioner med andra sprites, om den kan "ta" skatter osv. Dessa finns i mappen characterMovementTests. Här görs tex olika asserteringar om att figuren inte ska kunna röra sig åt en riktning där det finns en vägg och asserteringar om att när spelaren trycker på knapp som syftar till att karaktären rör sig i den angivna riktningen verkligen gör det. 
 
 
 ### Implementation
 
 Karaktären representeras av en egen klass somheter GameCharacter. I den klassen anges startposition, antal liv osv. Här finns ocks de metoder som anropas när figuren förflyttar sig. 
+
 ## Vägg
 
 I spelet representeras väggen inte av en egen klass. Däremot så representeras den av en färg/bild på det 2-dimensionella spelbrädet. 
@@ -106,11 +103,7 @@ I klassen GameBoardInterface finns en metod som heter positionEvent i där det t
 
 ## Golv
 
-// Om golv - vad denna har för egenskaper
-
-### Tester
-
-### Implementation
+Enda svårigheten som inkluderar golvet är att återställa färgen vit när andra sprites rör sig. Den grafiska representationen av spelkaraktärens rörelse bygger på att färga rutan framför turkos och rutan som lämnas vit. Golvet förekommer därför i många av våra tester.
 
 ## Dörr
 Dörren som spelare ska passera igenom representeras av en egen klass som heter Door. En instans av Door finns i klassen GameBoardInterface. Dörren har egenskaper som position samt om den är låst eller inte.  
@@ -244,16 +237,18 @@ Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en
 
 ## Svårigheter
 
-En av de svårigheter vi har haft är att det till en början var svårt att tänka ..
+Det var enkelt att bygga spelplanen genom att "översätta" heltal till färger men inte lika lätt att skriva test med färger som referens, det tog ett tag innan vi blev bekväma med det tankesättet. Det hade varit mycket enklare att basera allt på den ursprungliga heltals-Arrayen men vi upptäckte också att det hade sina fördelar. Exempelvis lasern gjordes rörlig genom att använda två olika heltal där ett sattes till att vara röd(laser) när den andra var vit (golv) och tvärt om. På samma sätt som det kan vara rörigt med två referenser kan det användas kreativt.
 
+Vi fick också lägga lite tankeverksamhet på att hitta ett bra sätt att byta bana, dvs "översätta" nästa banas array till en färg-array på ett smidigt sätt. Vi kom fram till att det enklaste sättet var bara att byta färger på det Spelbrädet vi redan hade och nollställa insamlade skatter på banan. 
 
-- Ett smidigt sätt att rita upp nästa bana
-- Få rörelse i lasern (även ta upp Stens tanke kring hur detta skulle kunnat göras)
-- Färger och hantering av tester kring dessa / fördelar nackdelar
+En annan tanke vi hade som hade gjort koden mer lätthanterlig hade varit att skapa objekt av alla sprites och sätta egenskaper som färg och bild i respektive klasser. Vi skapade då instanser av sprites som ärvde av JButton och satte in dessa på spelplanen men det gick inte att hantera på samma sätt då dessa inte, till skillnad från en färg, inte var knutna till en specifik sprite.
 
 ## Slutligen
+
 Det har varit en lärorik process att skapa spelet. Inte bara för det skapat en större förståelse för hur testdriven utveckling kan gå till utan också för att det ökat förståelse för hur 2-dimensionella spel kan byggas. 
 Jag tror att vi alla gärna hade fortsatt med utvecklingen och byggt vidare på spelet. Det finns oändligt många utvecklingmöjligheter med att lägga till olika features i spelet som vapen, monster osv, vilket hade varit kul. 
+
+
 
 
 
