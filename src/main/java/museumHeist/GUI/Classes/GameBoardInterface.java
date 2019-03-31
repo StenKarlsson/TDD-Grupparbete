@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
 import museumHeist.sprites.Main;
+import museumHeist.sprites.Monster;
 import museum_heist.Levels;
 import museum_heist.Position;
 
@@ -69,6 +70,7 @@ public class GameBoardInterface extends JFrame {
 	String picTreasure = "/gameSprites/Treasure.png";
 	String picQuestionMark = "/gameSprites/QuestionMark.png";
 	String picPortal = "/gameSprites/portal.png";
+	String picMonster = "/gameSprites/Monster.png";
 	private boolean setRandForTesting;
 	
 	
@@ -200,6 +202,18 @@ public class GameBoardInterface extends JFrame {
 					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
 				}	
 				
+				if(getCurrentLevel()[row][col] == 8) 
+					
+				{ 
+					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
+				}	
+				
+				if(getCurrentLevel()[row][col] == 7) 
+					
+				{ 
+					setupButton(row, col, picMonster, Color.LIGHT_GRAY); 
+				}	
+				
 				if(getCurrentLevel()[row][col] == 9) 
 					
 				{ 
@@ -277,6 +291,8 @@ public class GameBoardInterface extends JFrame {
 				image = ImageIO.read(this.getClass().getResource(picQuestionMark));
 			if (colour == Color.YELLOW) // portal
 				image = ImageIO.read(this.getClass().getResource(picPortal));
+			if (colour == Color.LIGHT_GRAY) // Monster
+				image = ImageIO.read(this.getClass().getResource(picMonster));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -415,6 +431,26 @@ public class GameBoardInterface extends JFrame {
 			this.characterObject.subractLife(1);
 			removeOneHeart();
 			Main.setLaserSpeed(1500);
+			
+			
+			runCode = false;
+		}
+		
+		if (getColorOfTile(nextTileDirection)==Color.LIGHT_GRAY) // Monster
+			
+		{
+			// Flyttar till spelaren till startposition 
+			Position impact = characterObject.getCurrentPosition();
+			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
+			
+			characterObject.setCurrentPosition(1, 1);
+			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+			this.characterObject.subractLife(1);
+			removeOneHeart();
+			
+			// Här ska monstret flyttas till startpositionen
+			colouriseSquare(Color.WHITE, nextTileDirection);
+			colouriseSquare(Color.LIGHT_GRAY, new Position(22,  22));
 			
 			
 			runCode = false;
@@ -670,6 +706,11 @@ public class GameBoardInterface extends JFrame {
 					
 				}
 
+				if (getCurrentLevel()[row][col] == 7) 
+					
+				{
+					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
+				}
 				
 				if(getCurrentLevel()[row][col] == 9) 
 					
@@ -719,6 +760,11 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.GREEN, new Position(row, col));
 				}
+				if(getCurrentLevel()[row][col] == 7) 
+					
+				{
+					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
+				}
 				if(getCurrentLevel()[row][col] == 9) 
 					
 				{
@@ -749,6 +795,8 @@ public class GameBoardInterface extends JFrame {
                 {
                 	
                 	if (color == color.RED) {colouriseSquare(color.WHITE,position);}
+                	else if(getColorOfTile(position).equals(color.LIGHT_GRAY)) {colouriseSquare(color.LIGHT_GRAY,position);}
+            		
                 	else 
                 	{
                 		colouriseSquare(color.RED,position);
@@ -764,6 +812,8 @@ public class GameBoardInterface extends JFrame {
                 			removeOneHeart();
                 			Main.setLaserSpeed(1500);
                 		}
+                		
+                		
                 	
                 	}
                 	
@@ -848,6 +898,100 @@ public class GameBoardInterface extends JFrame {
 	}
 
 	boolean isEven(double num) { return ((num % 2) == 0); }
+
+	public void moveMonster(JButton[][] squares2) 
+	{
+		// Går igenom alla index i arrayen
+		for ( int x = 0; x < squares.length; x++ )
+        {
+            for ( int y = 0; y < squares[0].length; y++ )
+            {
+            	
+            	// En rad värden hämtas för att användas i ifsatsen på det index som är monstrets
+            	Position position = new Position(x, y);
+            	
+            	
+            	int monster_x = (int)position.getX(); //
+            	int monster_y = (int)position.getY();
+            	
+            	
+            	int movement_x = 0;
+            	int movement_y = 0;
+            	
+                Color color = getColorOfTile(position);
+                
+                int value = getGridValueOfPosition(position);
+                int char_x = (int)characterObject.getCurrentPosition().getX();
+                int char_y = (int)characterObject.getCurrentPosition().getY();
+                
+                // Om färgen på rutan är LIGHT_GREY som representerar monstret så ändras positionen
+                
+                if (color.equals(color.LIGHT_GRAY)) 
+                {
+                	// Säger att monstret ska öka x-värde om spelaren har högre x-värde och tvärt om
+                	if (monster_x>char_x) 
+                	{
+                		movement_x= (monster_x)-1;
+                	}
+                	else if (monster_x==char_x) {movement_x=monster_x;}
+                	else movement_x= (monster_x)+1;
+                	
+                	
+                	// Säger att monstret ska sänka y-värde om spelaren har högre y-värde och tvärt om
+                	if (monster_y>char_y) 
+                	{
+                		movement_y= (monster_y)-1;
+                	}
+                	else if (monster_y==char_y) {movement_y= monster_y;}
+                	else movement_y= (monster_y)+1;
+                	
+                	
+                	
+                	Position PossibleMonsterDirection = new Position(movement_x, movement_y);
+                	int _value = getGridValueOfPosition(PossibleMonsterDirection);
+                	
+                	// Om den nya positionen är vit och har värdet 0 så kan monstret flytta sig
+                	
+                	if (getColorOfTile(new Position(movement_x, movement_y)).equals(color.WHITE)|| _value == 0 || getColorOfTile(new Position(movement_x, movement_y)).equals(color.CYAN)) 
+                	{
+                		// Om positionen är spelkaraktären så ska ett liv tas och karaktär och monster starta från ursprungliga positioner
+                		
+	                	if(getColorOfTile(new Position(movement_x, movement_y)).equals(color.CYAN)) {
+	                		// Sätter spelarens position innan förflyttning till vit
+	                		colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
+	            			
+	            			characterObject.setCurrentPosition(1, 1);
+	            			
+	            			// Sätter spelarens position efter förflyttning till turkos
+	            			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+	            			
+	            			// Tar ett liv
+	            			this.characterObject.subractLife(1);
+	            			removeOneHeart();
+	            			
+	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 22,22
+	            			
+	            			colouriseSquare(Color.WHITE, new Position(monster_x,  monster_y));
+	            			colouriseSquare(Color.LIGHT_GRAY, new Position(22,  22));
+	                	}	
+	                	
+	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+	                	colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));}
+	                	break;
+                	
+                	}
+                	
+                	
+                	
+                	
+                
+                }
+ 
+            }
+            
+       }
+		
+	}
 
 	 
 }

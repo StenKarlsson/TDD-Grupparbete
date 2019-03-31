@@ -17,6 +17,7 @@ public class Main {
 	static int timeInSeconds = 150;
 	protected static boolean playerIsMoving = false;
 	private static int laserSpeed = 2000;
+	private static int MonsterSpeed = 700;
 	
 	
 	
@@ -57,6 +58,37 @@ public class Main {
 						    		
 						    }}); 
 						Laser.start();	
+						
+						Thread Monster = new Thread(new Runnable() 
+						{
+						    
+
+							public void run()
+						    {
+						    	while(timeInSeconds != 0) // Går tills tiden är slut
+								{
+									try 
+									
+										{
+									gb.moveMonster(gb.getSquares());
+										 	
+									gb.showTimer(timeInSeconds);
+									
+
+										 	Thread.sleep(MonsterSpeed);
+
+										} 
+									
+									catch (InterruptedException e) 
+										{
+											e.printStackTrace();
+										         }
+										} gb.setCurrentLevel(Levels.getLevel(999));gb.repaintGameBoard();
+						    		
+						    }}); 
+						Monster.start();
+						
+						
 				    }}); 
 				gameThread.start();	 
 				
@@ -122,5 +154,15 @@ public class Main {
 
 	public static void setLaserSpeed(int laserSpeed) {
 		Main.laserSpeed = laserSpeed;
+	}
+
+
+	public static int getMonsterSpeed() {
+		return MonsterSpeed;
+	}
+
+
+	public static void setMonsterSpeed(int monsterSpeed) {
+		MonsterSpeed = monsterSpeed;
 	}
 }
