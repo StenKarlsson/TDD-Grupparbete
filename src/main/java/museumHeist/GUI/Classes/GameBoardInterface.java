@@ -31,6 +31,7 @@ import museumHeist.sprites.GameCharacter;
 import museumHeist.sprites.Main;
 import museum_heist.Levels;
 import museum_heist.Position;
+import soundTest.SoundPlayer;
 
 
 public class GameBoardInterface extends JFrame {
@@ -47,7 +48,7 @@ public class GameBoardInterface extends JFrame {
 	private Door door; 
 	private int treasuresLeftOnCurrentLevel; 
 	int level = 1;
-	
+	private SoundPlayer player; 
 	public boolean LevelCompleted = false;
 	Position startposition = new Position (1,1);
 	
@@ -76,6 +77,7 @@ public class GameBoardInterface extends JFrame {
 	
 	
 	public GameBoardInterface() {
+		player = new SoundPlayer(); 
 		setSquares(new JButton[25][25]);
 		setCurrentLevel(Levels.getLevel(1));
 		levelCount=1; 
@@ -113,6 +115,7 @@ public class GameBoardInterface extends JFrame {
 		addKeyBinding(board, KeyEvent.VK_A, "Left", (evt) -> {
 			updateCharacterPosition("Left");
 		});
+	player.playSound();
 	}
 	
 	public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {

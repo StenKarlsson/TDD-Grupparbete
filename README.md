@@ -23,7 +23,7 @@ Syftet med uppgiften är att med hjälp av JUnit skriva tester som ska stå som 
 
 ## Om Applikationen
 
-Applikationen är ett spel med 8-bitarskänsla som går ut på att en spelkaraktär vandrar omkring i en labyrintliknande värld och samlar skatter för att öppna dörren till nästa nivå. Spelaren har en viss tid på sig för att klara diverse bana och för att försvåra uppdraget finns bla rörliga eldklot som spelkaraktären måste akta sig för. 
+Applikationen är ett spel med 8-bitarskänsla som går ut på att en spelkaraktär vandrar omkring i en labyrintliknande värld och samlar skatter för att öppna dörren till nästa nivå. Spelaren har en viss tid på sig för att klara diverse bana och för att försvåra uppdraget finns bla rörlig laser som spelkaraktären måste akta sig för. 
 
 ## Bakgrund/Arbetsprocess
 
@@ -48,6 +48,21 @@ Ju längre utvecklingen av spelet har kommit desto mer har testerna blivit baser
 Vi använde till en början KeyListener för att förflytta spelarens karaktär, men på grund av problem med att fokus flyttades från komponenten
 så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar oavsett var fokus är.
 
+## Mainklassen och Tid
+
+Det var ganska sent i processen vi adderade en timer till spelet (och då även den rörliga funktionen med lasern). Spelet kördes vid den tidpunkten i en tråd (utan loop) från mainmetoden, det behövdes inte mer då rörelsen av spelkaraktären visades grafiskt genom att ändra knapparnas egenskap för färg.
+
+Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att begränsa tiden man har för att ta sig igenom en bana. 
+
+Vi skapade en egen tråd för timern där vi kör metoden Threed.sleep() i en while-loop för att låta tråden vila 1 sek och sedan subtrahera 1 från variabeln timeInSeconds varje varv loopen körs. 
+
+Med andra ord sätter variabeln timeInSeconds en nedräkning i sekunder, om tiden tar slut innan banan klarats så skrivs det "Game Over" och spelet är slut.
+
+För att spelaren ska få en chans att se banan innan tiden börjar rulla så har vi satt en boolean som vilkor (playerIsMoving) som triggar på en rörelse från spelkaraktären.
+
+Lasern gav vi också en egen tråd vilket beskrivs nedan. 
+
+
 ## Sprites
 
 Spelet bygger på rutor i en 2D Array. En stor del av testerna utgår från dessa och ligger som grund till implementationen av deras egenskaper.
@@ -64,7 +79,7 @@ Inledningsvis så tilldelades alla rutorna i spelet en egen färg för att få e
 
 ## Spelkaraktär
 
-Spelkaraktärens ruta gestaltas av färgen cyan som tilldelas den ruta som är angiven som spelarens startposition. 
+Spelkaraktärens ruta gestaltas av färgen turkos (cyan) som tilldelas den ruta som är angiven som spelarens startposition. 
 
 ## Tester
 Många tester av spelet har på något sätt med karaktären att göra. Det handlar om rörelser, kollisioner med andra sprites, om den kan "ta" skatter osv. Dessa finns i mappen characterMovementTests. Här görs tex olika asserteringar om att figuren inte ska kunna röra sig åt en riktning där det finns en vägg och asserteringar om att när spelaren trycker på knapp som syftar till att karaktären rör sig i den angivna riktningen verkligen gör det. 
@@ -101,17 +116,35 @@ I klassen newLevel görs asserteringar om att dörren ska byta tillstånd från 
 
 ### Implementation
 Implementationen för klassen dörr är mycket grundläggande med instansvariabler för position och en boolsk variabel som avgör om den är låst eller inte. Dessa har också publika getters och setters som anropas från klassen GameBoardInterface när antalet hämtade skatter == 10. 
+
 ## Laser
 
-// Om laser- vad denna har för egenskaper
+I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas up. Genom att låta dessa växla mellan laser och golv (utifrån färg) simuleras en förflyttning.
 
 ### Tester
 
+I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå på en laser, här kontrolleras också att spelakaraktären flyttas till startpositionen samt att en rörlig laser dödar en stillastående spelkaraktär. 
+
 ### Implementation
+
+Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att tilldelas färgen vit(golv) och röd(laser) i metoden flipLaserOnGameBoard i GameBoardInterface-klassen. 
+
+Dubbla for-loopar ittererar igenom alla index, är värdet 3 eller 6 växlar färgen på dessa positioner mellan röd och vit. Dessa färger är knutna till två bilder som också byts.
+
+```
+
+if (value==3 || value ==6) 
+{
+if (color == color.RED) {colouriseSquare(color.WHITE,position);}
+else { colouriseSquare(color.RED,position);
+}
+
+```
+Från mainmetoden i klassen Main har lasern en egen tråd, denna metod anropas gång på gång i en while-loop, metoden Thread.sleep() avgör hur frekvent. Vi har här valt att med hjälp av getters och setters styra inparameters värde och kan på så sätt ändra laserns frekvens som en del av spelet
 
 ## Frågetecken 
 
-Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, man kan få skatter, liv, tid eller avaktivera lasern men även förlora liv och tid.
+Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, man kan få skatter, liv, tid eller avaktivera lasern men man riskerar även att öka hastighet på laser, förlora liv eller tid.
 
 ### Tester
 Här handlar det givetvis inte om att testa java-metoden Math.random() utan att de möjliga utfallen resulterar i vad som är tänkt.
@@ -147,15 +180,21 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 
 ## Svårigheter
 
-- Grundläggande svårigheter med strukturen av spelplanen
+En av de svårigheter vi har haft är att det till en början var svårt att tänka ..
+
+
 - Ett smidigt sätt att rita upp nästa bana
 - Få rörelse i lasern (även ta upp Stens tanke kring hur detta skulle kunnat göras)
 - Färger och hantering av tester kring dessa / fördelar nackdelar
 
 ## Kända buggar
+
+// Hoppas detta är åtgärdat
+
 Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
 •	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
 •	Att rutan som karaktären dör på ibland ersätts av en laser.
+
 ## Slutligen
 Det har varit en lärorik process att skapa spelet. Inte bara för det skapat en större förståelse för hur testdriven utveckling kan gå till utan också för att det ökat förståelse för hur 2-dimensionella spel kan byggas. 
 Jag tror att vi alla gärna hade fortsatt med utvecklingen och byggt vidare på spelet. Det finns oändligt många utvecklingmöjligheter med att lägga till olika features i spelet som vapen, monster osv, vilket hade varit kul. 
