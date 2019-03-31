@@ -112,7 +112,7 @@ I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå p
 
 ### Implementation
 
-Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att färgen vit(golv) och röd(laser) i metoden flipLaserOnGameBoard i GameBoardInterface-klassen. 
+Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att tilldelas färgen vit(golv) och röd(laser) i metoden flipLaserOnGameBoard i GameBoardInterface-klassen. 
 
 Dubbla for-loopar ittererar igenom alla index, är värdet 3 eller 6 växlar färgen på dessa positioner mellan röd och vit. Dessa färger är knutna till två bilder som också byts.
 
