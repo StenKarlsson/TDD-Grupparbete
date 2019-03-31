@@ -242,11 +242,11 @@ Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en
 
 ## Svårigheter
 
-Det var enkelt att bygga spelplanen genom att "översätta" heltal till färger men inte lika lätt att skriva test med färger som referens, det tog ett tag innan vi blev bekväma med det tankesättet. Det hade varit mycket enklare att basera allt på den ursprungliga heltals-Arrayen men vi upptäckte också att det hade sina fördelar. Exempelvis lasern gjordes rörlig genom att använda två olika heltal där ett sattes till att vara röd(laser) när den andra var vit (golv) och tvärt om. På samma sätt som det kan vara rörigt med två referenser kan det användas kreativt.
+Det var relativt enkelt att bygga spelplanen genom att "översätta" heltal till färger men inte lika lätt att skriva tester med färg som referens, det tog däreför ett tag innan vi blev bekväma med det tankesättet. Ur testsynpunkt hade det varit mycket enklare att basera allt på den ursprungliga heltals-Arrayen men hade också sina fördelar. Exempelvis lasern gjordes rörlig genom att använda två olika heltal där ett sattes till att vara röd(laser) när den andra var vit (golv) och tvärt om. På samma sätt som det kan vara rörigt med två referenser kan det användas kreativt.
 
-Vi fick också lägga lite tankeverksamhet på att hitta ett bra sätt att byta bana, dvs "översätta" nästa banas array till en färg-array på ett smidigt sätt. Vi kom fram till att det enklaste sättet var bara att byta färger på det Spelbrädet vi redan hade och nollställa insamlade skatter på banan. 
+Vi fick också lägga lite tankeverksamhet på att hitta ett bra sätt att byta bana, dvs "översätta" nästa banas array till en färg-array på ett smidigt sätt. Vi kom fram till att det enklaste sättet var att byta färger på det Spelbrädet vi redan hade och nollställa insamlade skatter på banan. 
 
-En annan tanke vi hade som hade gjort koden mer lätthanterlig hade varit att skapa objekt av alla sprites och sätta egenskaper som färg och bild i respektive klasser. Vi skapade då instanser av sprites som ärvde av JButton och satte in dessa på spelplanen men det gick inte att hantera på samma sätt då dessa inte, till skillnad från en färg, inte var knutna till en specifik sprite.
+En annan tanke vi hade som hade gjort koden mer lätthanterlig/överskådlig hade varit att skapa objekt av alla sprites och sätta egenskaper som färg och bild i respektive klasser. Vi testade detta  genom att skapa instanser av sprites som ärvde av JButton och satte in dessa på spelplanen men det gick inte att hantera på samma sätt. Till skillnad från en färg var de knutna till en specifik sprite vilket hade fler nackdelar än fördelar. 
 
 ## Slutligen
 
