@@ -2,6 +2,8 @@ package characterMovementTests;
 
 import static org.junit.Assert.*;
 
+import javax.swing.JButton;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,45 +26,57 @@ public class CollisionWithLaserTest {
 	}
 
 	@Test
-	public void CollisionWithFireKillsCharacter() 
+	public void CollisionWithLaserKillsCharacter() 
 	{
 		//Arrange - spelkaraktären sätts en ruta före eld
 		gb.getCharacter().setCurrentPosition(1, 13);
 	
-		// spelkaraktären har 3 liv
+		// spelkaraktären ska ha 3 liv 
 		assertEquals(3, gb.getCharacter().getLife());
 		
-		//Act - spelkaraktären går ett steg till höger på elden
+		//Act - spelkaraktären går ett steg till höger på lasern
 	
 		gb.updateCharacterPosition("Right");
 		
-		// spelkaraktären förlorar ett liv och har 2 kvar
+		//Assert - spelkaraktären förlorar ett liv och ska ha 2 liv
 		assertEquals(2, gb.getCharacter().getLife());
 		
 	}
 	
 	@Test
-	public void CollisionWithFireMovesCharacterToStartPosition() 
+	public void CollisionWithLaserMovesCharacterToStartPosition() 
 	{
-		//Arrange - spelkaraktären sätts en ruta före eld
+		//Arrange - spelkaraktären sätts en ruta före en laser
 		gb.getCharacter().setCurrentPosition(1, 13);
-		//Act - spelkaraktären går ett steg till höger på elden
-				
+		
+		//Act - spelkaraktären går ett steg till höger på elden		
 		gb.updateCharacterPosition("Right");
 				
-		// spelkaraktären får positionen 1, 1 som är satt som startposition
+		//Assert - spelkaraktären ska flyttas till startpositionen 1,1
 		assertEquals(new Position(1, 1), gb.getCharacter().getCurrentPosition());
 	}
 	
 	@Test
 	public void CollisionWithFireCausedByFireMovingToThePositionWhereCharacterIsShouldKill() 
 	{
-		//Arrange - spelkaraktären sätts en ruta före en rörlig eld
+		
+		
+		//Arrange - spelkaraktären sätts en ruta före en rörlig laser
 		gb.getCharacter().setCurrentPosition(2, 12);
+		
+		// En SpelplansArray skapas 
+		JButton[][] laserMovement = gb.getSquares();
+		
+		// //Assert  - Antal liv ska vara 3
 		assertEquals(3, gb.getCharacter().getLife());
-		//Act - spelkaraktären går ett steg till höger till den rörliga elden
-				
+		
+		//Act - spelkaraktären går ett steg till höger till den rörliga elden som är inaktiv	
 		gb.updateCharacterPosition("Right");
+		
+		// Metoden som sköter rörelsen av lasern körs och lasern aktiveras där karaktären står
+		gb.flipLaserOnGameBoard(laserMovement); 
+		
+		// //Assert - Antal liv ska vara 2
 		assertEquals(2, gb.getCharacter().getLife());
 				
 		
