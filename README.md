@@ -48,6 +48,35 @@ Ju längre utvecklingen av spelet har kommit desto mer har testerna blivit baser
 Vi använde till en början KeyListener för att förflytta spelarens karaktär, men på grund av problem med att fokus flyttades från komponenten
 så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar oavsett var fokus är.
 
+## Mainklassen och Tid
+
+Det var ganska sent i processen vi adderade en tidsaspekt till spelet (och då även den rörliga funktionen med lasern). Spelet kördes vid den tidpunkten i en tråd från mainmetoden och det behövdes inte mer då rörelsen av spelkaraktären gjordes genom att ändra knapparnas egenskap för färg och på så sätt visa spelkaraktärens rörelse grafiskt.
+
+Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att sätta en timer för att begränsa den tid man har för att ta sig igenom diverse bana. 
+
+Vi skapade en tråd för Timern där vi kör metoden Threed.sleep(1000) för att låta tråden vila 1 sek och sedan subtrahera 1 från variebeln yimeInSeconds. För att spelaren ska få en chans att se banan innan tiden börjar rulla så har vi satt en Boolean som vilkor (playerIsMoving) som triggar på en rörelse från spelkaraktären.
+
+```
+
+Thread TimerThread = new Thread(new Runnable() 
+	{
+		public void run()				    
+		{
+			while(timeInSeconds != 0) // Går tills tiden är slut
+			{
+				try 
+							
+				{
+					if(playerIsMoving) {timeInSeconds--;}				 	
+					Thread.sleep(1000);
+				} 
+							
+				catch (InterruptedException e) {e.printStackTrace();}
+				
+				} 
+	}});  TimerThread.start();
+```
+
 ## Sprites
 
 Spelet bygger på rutor i en 2D Array. En stor del av testerna utgår från dessa och ligger som grund till implementationen av deras egenskaper.
@@ -164,6 +193,7 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 ```
 
 ## Svårigheter
+
 
 - Grundläggande svårigheter med strukturen av spelplanen
 - Ett smidigt sätt att rita upp nästa bana
