@@ -80,12 +80,12 @@ Bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.co
 
 Spelkaraktärens ruta gestaltas av färgen turkos (cyan) som tilldelas den ruta som är angiven som spelarens startposition. 
 
-## Tester
+**Tester**
 
 Många tester av spelet har på något sätt med karaktären att göra. Det handlar om rörelser, kollisioner med andra sprites, om den kan "ta" skatter osv. Dessa finns i mappen characterMovementTests. Här görs tex olika asserteringar om att figuren inte ska kunna röra sig åt en riktning där det finns en vägg och asserteringar om att när spelaren trycker på knapp som syftar till att karaktären rör sig i den angivna riktningen verkligen gör det. 
 
 
-### Implementation
+**Implementation**
 
 Karaktären representeras av en egen klass somheter GameCharacter. I den klassen anges startposition, antal liv osv. Här finns ocks de metoder som anropas när figuren förflyttar sig. 
 
@@ -94,11 +94,12 @@ Karaktären representeras av en egen klass somheter GameCharacter. I den klassen
 I spelet representeras väggen inte av en egen klass. Däremot så representeras den av en färg/bild på det 2-dimensionella spelbrädet. 
 Alla positioner med värde 1 på spelplanen målas ut som en svart ruta. Efter att det grafiska manéeret är satt så visas också väggarna med en tegelmönstrad bild. Väggen ska till skillnad från de andra ytorna inte gå att passera. 
 
-### Tester
+**Tester**
 
 I klassen AvoidWallCollisionTest så förflyttas karaktären mot en vägg. Implementationen som är en följd av detta test omöjliggör att karaktären kan ta sig igenom/förbi en vägg. 
 
-### Implementation
+**Implementation**
+
 I klassen GameBoardInterface finns en metod som heter positionEvent i där det triggas olika händelser beroende på var karaktären befinner sig. Om står står vid en vägg och rör sig i riktningen mot väggen så förhindras förflyttningen genom den metoden. 
 
 ## Golv
@@ -106,23 +107,26 @@ I klassen GameBoardInterface finns en metod som heter positionEvent i där det t
 Enda svårigheten som inkluderar golvet är att återställa färgen vit när andra sprites rör sig. Den grafiska representationen av spelkaraktärens rörelse bygger på att färga rutan framför turkos och rutan som lämnas vit. Golvet förekommer därför i många av våra tester.
 
 ## Dörr
+
 Dörren som spelare ska passera igenom representeras av en egen klass som heter Door. En instans av Door finns i klassen GameBoardInterface. Dörren har egenskaper som position samt om den är låst eller inte.  
 
-### Tester
+**Tester**
+
 I klassen newLevel görs asserteringar om att dörren ska byta tillstånd från att vara låst till att vara olåst om spelaren har fångat alla skatter i rummet samt att en ny bana läses in när spelaren passerar den olåsta dörren. 
 
-### Implementation
+**Implementation**
+
 Implementationen för klassen dörr är mycket grundläggande med instansvariabler för position och en boolsk variabel som avgör om den är låst eller inte. Dessa har också publika getters och setters som anropas från klassen GameBoardInterface när antalet hämtade skatter == 10. 
 
 ## Laser
 
 I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas up. Genom att låta dessa växla mellan laser och golv (utifrån färg) simuleras en förflyttning.
 
-### Tester
+**Tester**
 
 I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå på en laser, här kontrolleras också att spelakaraktären flyttas till startpositionen samt att en rörlig laser dödar en stillastående spelkaraktär. 
 
-### Implementation
+**Implementation**
 
 Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att tilldelas färgen vit(golv) och röd(laser) i metoden flipLaserOnGameBoard i GameBoardInterface-klassen. 
 
@@ -143,11 +147,12 @@ Från mainmetoden i klassen Main har lasern en egen tråd, denna metod anropas g
 
 Tanken med frågtecknet är att spelaren inte ska kunna förutsäga utfallet, man kan få skatter, liv, tid eller avaktivera lasern men man riskerar även att öka hastighet på laser, förlora liv eller tid.
 
-### Tester
+**Tester**
+
 Här handlar det givetvis inte om att testa java-metoden Math.random() utan att de möjliga utfallen resulterar i vad som är tänkt.
 ...... osv
 
-### Implementation
+**Implementation**
 
 Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats vilket resulterar i ett av sex möjliga ufall.
 ```
@@ -178,11 +183,11 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 
 Fungerar som en portal, om spelkaraktären ställer sig på denna så sker en warp till en slumpmässigt vald golv-ruta.
 
-### Tester
+**Tester**
 
 Det enda testet som gjorde var ett test för att ta reda på att spelkaraktären är flyttad. Implementationen är så enkel och självklar (jämfört med att utforma ett test för att säkerhetställa att karaktären flyttas till en golvyta i Arrayen). Därför valde vi att inte göra fler test.
 
-### Implementation
+**Implementation**
 
 En While loop innehåller for-loopar som ittererar igenom spelplanen och tar in slumpmässiga kordinater, när positionens värde är 0 (som motsvarar golv) så flyttas spelkaraktären till denna position. 
 
@@ -212,11 +217,11 @@ while(!CharacterMoved)
 
 Monstret rör sig mot spelkaraktären över positioner på spelplanen som utgörs av golv och tar ett liv av spelkaraktären vid kollison. 
 
-### Tester
+**Tester**
 
 Tester kring monstret handlar om att ta reda på att detta rör sig mot spelkaraktären oavsett riktning men även att det beter sig som förväntat efter kollision.
 
-### Implementation
+**Implementation**
 
 Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Main-klassen anropas i en while loop där frekvensen styrs av Thread.Sleep(). 
 
@@ -246,7 +251,9 @@ En annan tanke vi hade som hade gjort koden mer lätthanterlig hade varit att sk
 ## Slutligen
 
 Det har varit en lärorik process att skapa spelet. Inte bara för det skapat en större förståelse för hur testdriven utveckling kan gå till utan också för att det ökat förståelse för hur 2-dimensionella spel kan byggas. 
-Jag tror att vi alla gärna hade fortsatt med utvecklingen och byggt vidare på spelet. Det finns oändligt många utvecklingmöjligheter med att lägga till olika features i spelet som vapen, monster osv, vilket hade varit kul. 
+Jag tror att vi alla gärna hade fortsatt med utvecklingen och byggt vidare på spelet. Det finns oändligt många utvecklingmöjligheter med att lägga till olika features i spelet som vapen, fler monster osv, vilket hade varit kul. 
+
+Vi har också märkt att GitHub tar mindre och mindre fokus vilket är ett tecken på att vi börjar bli bekväma med hur det fungerar. 
 
 
 
