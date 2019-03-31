@@ -64,7 +64,7 @@ Inledningsvis så tilldelades alla rutorna i spelet en egen färg för att få e
 
 ## Spelkaraktär
 
-Spelkaraktärens ruta gestaltas av färgen cyan som tilldelas den ruta som är angiven som spelarens startposition. 
+Spelkaraktärens ruta gestaltas av färgen turkos (cyan) som tilldelas den ruta som är angiven som spelarens startposition. 
 
 ## Tester
 Många tester av spelet har på något sätt med karaktären att göra. Det handlar om rörelser, kollisioner med andra sprites, om den kan "ta" skatter osv. Dessa finns i mappen characterMovementTests. Här görs tex olika asserteringar om att figuren inte ska kunna röra sig åt en riktning där det finns en vägg och asserteringar om att när spelaren trycker på knapp som syftar till att karaktären rör sig i den angivna riktningen verkligen gör det. 
@@ -101,13 +101,31 @@ I klassen newLevel görs asserteringar om att dörren ska byta tillstånd från 
 
 ### Implementation
 Implementationen för klassen dörr är mycket grundläggande med instansvariabler för position och en boolsk variabel som avgör om den är låst eller inte. Dessa har också publika getters och setters som anropas från klassen GameBoardInterface när antalet hämtade skatter == 10. 
+
 ## Laser
 
-// Om laser- vad denna har för egenskaper
+I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas up. Genom att låta dessa växla mellan laser och golv (utifrån färg färg) simuleras en förflyttning.
 
 ### Tester
 
+I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå på en laser (röd ruta), här kontrolleras också att spelakaraktären flyttas till startpositionen samt att även en rörlig laser dödar en stillastående spelkaraktär. 
+
 ### Implementation
+
+Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att ges färgen vit(som är golv) och röd(laser) med flipLaserOnGameBoard i GameBoardInterface-klassen. 
+
+Dubbla for-loopar ittererar igenom alla index - själva kärnan i koden går sedan ut på att göra en rut vit om den är röd och tvärt om ifall värdet på spelbrädet är 3 eller 6.
+
+```
+
+if (value==3 || value ==6) 
+{
+if (color == color.RED) {colouriseSquare(color.WHITE,position);}
+else { colouriseSquare(color.RED,position);
+}
+
+```
+Från mainmetoden i klassen Main har lasern en egen tråd där denna metod anropas gång på gång, metoden Thread.sleep() avgör hur frekvent. Vi har här valt att med hjälp av getters och setters styra inparameters värde och kan på så sätt ändra laserns hastighet som en del av spelet
 
 ## Frågetecken 
 
