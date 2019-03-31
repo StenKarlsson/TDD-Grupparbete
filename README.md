@@ -104,7 +104,7 @@ Implementationen för klassen dörr är mycket grundläggande med instansvariabl
 
 ## Laser
 
-I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas up. Genom att låta dessa växla mellan laser och golv (utifrån färg färg) simuleras en förflyttning.
+I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas up. Genom att låta dessa växla mellan laser och golv (utifrån färg) simuleras en förflyttning.
 
 ### Tester
 
