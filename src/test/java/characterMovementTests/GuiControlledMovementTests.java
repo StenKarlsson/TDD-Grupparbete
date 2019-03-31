@@ -34,7 +34,7 @@ public class GuiControlledMovementTests {
 		assertEquals(colorOnTileBeforeMovement,Color.CYAN);
 		
 		//karakträen flyttar från rutan via metoden i gui
-		gb.updateCharacterPosition("East");
+		gb.updateCharacterPosition("Right");
 		//Färgen på samma ruta (pos) efter förflyttningen ska vara vit
 		Color colorOnTileAfterMovement = gb.getColorOfTile(pos); 
 		assertEquals(colorOnTileAfterMovement,Color.WHITE);
@@ -58,7 +58,7 @@ public class GuiControlledMovementTests {
 		assertEquals(colorOnTile,Color.WHITE);
 		
 		//karaktären flyttar till till höger via metoden i gui
-		gb.updateCharacterPosition("East");
+		gb.updateCharacterPosition("Left");
 		
 		//Färgen på samma ruta (pos) efter förflyttningen ska vara cyan
 		assertEquals(colorOnTile,Color.CYAN);

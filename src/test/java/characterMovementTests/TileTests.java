@@ -10,7 +10,7 @@ import museum_heist.Position;
 
 public class TileTests {
 
-	//Dessa tester funkar för tillfället bara på level999 (ändras i början av GameBoardInterface)
+	//Dessa tester funkar för tillfället bara på 1
 	
 	@Test
 	public void checkIfTileIsPlayer() {
@@ -31,7 +31,7 @@ public class TileTests {
 		
 		GameBoardInterface gb = new GameBoardInterface();
 		
-		Position pos = new Position(5,5);
+		Position pos = new Position(0,0);
 		Color actualColor = gb.getColorOfTile(pos);
 		
 		assertEquals(actualColor, Color.BLACK);
@@ -42,7 +42,7 @@ public class TileTests {
 		
 		GameBoardInterface gb = new GameBoardInterface();
 		
-		Position pos = new Position(2,2);
+		Position pos = new Position(1,5);
 		Color actualColor = gb.getColorOfTile(pos);
 		
 		assertEquals(actualColor, Color.ORANGE);
@@ -53,7 +53,7 @@ public class TileTests {
 		
 		//Arrange
 		GameBoardInterface gb = new GameBoardInterface();
-		Position pos = new Position(3,3);
+		Position pos = new Position(1,14);
 		
 		//Act
 		Color actualColor = gb.getColorOfTile(pos);
@@ -68,7 +68,7 @@ public class TileTests {
 		
 		//Arrange
 		GameBoardInterface gb = new GameBoardInterface();
-		Position pos = new Position(7,7);
+		Position pos = new Position(17,14);
 		
 		//Act
 		Color actualColor = gb.getColorOfTile(pos);

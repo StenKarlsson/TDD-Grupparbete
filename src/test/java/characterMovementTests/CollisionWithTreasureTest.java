@@ -48,8 +48,8 @@ public class CollisionWithTreasureTest {
 		assertEquals("Tile color before picked Treasure", Color.ORANGE, colorOfTileWithTreasure);  
 		
 		//  Spelaren rör sig över skatten
-		gb.updateCharacterPosition("East"); // Skattens position 
-		gb.updateCharacterPosition("East");
+		gb.updateCharacterPosition("Right"); // Skattens position 
+		gb.updateCharacterPosition("Right");
 		
 		// Hämtar färgen på spelplanen efter att spelaren passerat/plockat skatten
 		colorOfTileWithTreasure = gb.getColorOfTile(new Position(1, 5));
@@ -75,7 +75,7 @@ public class CollisionWithTreasureTest {
 		assertTrue(treasureCountBefore == 0);
 
 		//  Spelaren ställer sig på skatten
-		gb.updateCharacterPosition("East"); // Skattens position 
+		gb.updateCharacterPosition("Right"); // Skattens position 
 		
 		// Antal skatter efter upplockad skatt
 		int treasureCountAfter = gameCharacter.getTreasures();
@@ -99,8 +99,8 @@ public class CollisionWithTreasureTest {
 		assertTrue(gameCharacter.getTreasures() == 0);
 
 		//  Spelaren ställer sig på skatten
-		gb.updateCharacterPosition("East"); // Skattens position 
-		gb.updateCharacterPosition("West");
+		gb.updateCharacterPosition("Right"); // Skattens position 
+		gb.updateCharacterPosition("Left");
 		//gb.updateCharacterPosition("East");
 		
 		
