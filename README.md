@@ -171,9 +171,13 @@ Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats
 - Färger och hantering av tester kring dessa / fördelar nackdelar
 
 ## Kända buggar
+
+// Hoppas detta är åtgärdat
+
 Spelet har en del oförutsedda sidoeffekter som vi inte hunnit åtgärda tex:
 •	Att när en laser målas ut på en ruta som karaktären står på så försvinner karaktären från den rutan och ersätts med bilden på lasern. 
 •	Att rutan som karaktären dör på ibland ersätts av en laser.
+
 ## Slutligen
 Det har varit en lärorik process att skapa spelet. Inte bara för det skapat en större förståelse för hur testdriven utveckling kan gå till utan också för att det ökat förståelse för hur 2-dimensionella spel kan byggas. 
 Jag tror att vi alla gärna hade fortsatt med utvecklingen och byggt vidare på spelet. Det finns oändligt många utvecklingmöjligheter med att lägga till olika features i spelet som vapen, monster osv, vilket hade varit kul. 
