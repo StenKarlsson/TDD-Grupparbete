@@ -11,6 +11,8 @@ public class registerPositionOnGamBoard {
 	//Här testas ifall spelkaraktären kan känna av vilket värde som finns
 	//på den plats som den är på i 2darrayen som är spelbrädet
 	
+	// Dessa tester utgår från en testspelplan som inte längre existerar!!
+	
 	//Om figuren inte har flyttat sig ska den läsa in värde 1
 	@Test
 	public void dontMoveGetValue() {

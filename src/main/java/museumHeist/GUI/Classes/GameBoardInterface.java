@@ -68,6 +68,7 @@ public class GameBoardInterface extends JFrame {
 	String picDoorClosed = "/gameSprites/DoorClosed.png";
 	String picTreasure = "/gameSprites/Treasure.png";
 	String picQuestionMark = "/gameSprites/QuestionMark.png";
+	String picPortal = "/gameSprites/portal.png";
 	private boolean setRandForTesting;
 	
 	
@@ -169,7 +170,7 @@ public class GameBoardInterface extends JFrame {
 					}
 					
 				}
-				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6 || getCurrentLevel()[row][col] == 7) 
+				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
 				{
 					setupButton(row, col, picGround, Color.WHITE);
 				}
@@ -197,6 +198,12 @@ public class GameBoardInterface extends JFrame {
 					
 				{ 
 					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
+				}	
+				
+				if(getCurrentLevel()[row][col] == 9) 
+					
+				{ 
+					setupButton(row, col, picPortal, Color.YELLOW); 
 				}	
 			}
 			
@@ -268,6 +275,8 @@ public class GameBoardInterface extends JFrame {
 				image = ImageIO.read(this.getClass().getResource(picGround));
 			if (colour == Color.MAGENTA) // Frågetecken
 				image = ImageIO.read(this.getClass().getResource(picQuestionMark));
+			if (colour == Color.YELLOW) // portal
+				image = ImageIO.read(this.getClass().getResource(picPortal));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -417,6 +426,44 @@ public class GameBoardInterface extends JFrame {
 			
 			runCode = false;
 			
+		}
+		
+		if (getColorOfTile(nextTileDirection)==Color.YELLOW) // Portal
+			
+		{
+			// Färgar positionen WHITE
+			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());	
+						
+			boolean CharacterMoved = false;
+			// Förflyttning
+			
+			
+			while(!CharacterMoved) 
+			{
+
+				int row = (int)(25.0*Math.random());
+				int col = (int)(25.0*Math.random());
+				
+				for ( int q = 0; q < squares.length; q++ )
+		          {
+		              for ( int x = 0; x < squares[0].length; x++ )
+		              {
+		              	
+		            	  if (getGridValueOfPosition(new Position(row, col))==0)
+		            	  {
+		            		  this.characterObject.setCurrentPosition(row, row); 
+		            		  CharacterMoved = true;
+		            	  
+		            	  }
+		            	  
+		              }   
+		         }
+				
+			}
+			
+			// Färgar positionen CYAN
+			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+			runCode = false;
 		}
 
 		
@@ -623,6 +670,12 @@ public class GameBoardInterface extends JFrame {
 					
 				}
 
+				
+				if(getCurrentLevel()[row][col] == 9) 
+					
+				{
+					colouriseSquare(Color.YELLOW, new Position(row, col));	
+				}
 			}
 		}
 		
@@ -666,6 +719,12 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.GREEN, new Position(row, col));
 				}
+				if(getCurrentLevel()[row][col] == 9) 
+					
+				{
+					colouriseSquare(Color.YELLOW, new Position(row, col));	
+				}
+				
 
 			}
 		}
