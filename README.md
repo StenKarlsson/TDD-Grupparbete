@@ -108,13 +108,13 @@ I spelet representeras lasern inte av en egen klass utan av färgen röd på det
 
 ### Tester
 
-I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå på en laser (röd ruta), här kontrolleras också att spelakaraktären flyttas till startpositionen samt att även en rörlig laser dödar en stillastående spelkaraktär. 
+I klassen CollisonWithLaserTest kontrolleras att spelakaraktären dör den gå på en laser, här kontrolleras också att spelakaraktären flyttas till startpositionen samt att en rörlig laser dödar en stillastående spelkaraktär. 
 
 ### Implementation
 
 Lasern är representerad av en aktiv(indexvärde 3) och en inaktiv(indexvärde 6) laser på spelbrädet i klassen Levels. Dessa två värden pendlar mellan att ges färgen vit(som är golv) och röd(laser) med flipLaserOnGameBoard i GameBoardInterface-klassen. 
 
-Dubbla for-loopar ittererar igenom alla index - själva kärnan i koden går sedan ut på att göra en rut vit om den är röd och tvärt om ifall värdet på spelbrädet är 3 eller 6.
+Dubbla for-loopar ittererar igenom alla index, själva kärnan i koden går sedan ut på att göra en knapp vit om den är röd och tvärt om förutsatt att värdet på spelbrädet är 3 eller 6.
 
 ```
 
@@ -125,7 +125,7 @@ else { colouriseSquare(color.RED,position);
 }
 
 ```
-Från mainmetoden i klassen Main har lasern en egen tråd där denna metod anropas gång på gång, metoden Thread.sleep() avgör hur frekvent. Vi har här valt att med hjälp av getters och setters styra inparameters värde och kan på så sätt ändra laserns hastighet som en del av spelet
+Från mainmetoden i klassen Main har lasern en egen tråd, denna metod anropas gång på gång i en while-loop, metoden Thread.sleep() avgör hur frekvent. Vi har här valt att med hjälp av getters och setters styra inparameters värde och kan på så sätt ändra laserns frekvens som en del av spelet
 
 ## Frågetecken 
 
