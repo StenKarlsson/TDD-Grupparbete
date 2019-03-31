@@ -29,7 +29,6 @@ import javax.swing.SwingConstants;
 import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
 import museumHeist.sprites.Main;
-import museumHeist.sprites.Monster;
 import museum_heist.Levels;
 import museum_heist.Position;
 import soundTest.SoundPlayer;
@@ -266,7 +265,7 @@ public class GameBoardInterface extends JFrame {
 	//färglägger en enskild ruta i grid
 	
 	
-	private void colouriseSquare(Color colour, Position position) 
+	public void colouriseSquare(Color colour, Position position) 
 	{
 	
 		Image image = null;
@@ -453,7 +452,7 @@ public class GameBoardInterface extends JFrame {
 			
 			// Här ska monstret flyttas till startpositionen
 			colouriseSquare(Color.WHITE, nextTileDirection);
-			colouriseSquare(Color.LIGHT_GRAY, new Position(22,  22));
+			colouriseSquare(Color.LIGHT_GRAY, new Position(21,  21));
 			
 			
 			runCode = false;
@@ -972,10 +971,10 @@ public class GameBoardInterface extends JFrame {
 	            			this.characterObject.subractLife(1);
 	            			removeOneHeart();
 	            			
-	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 22,22
+	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 21,21
 	            			
 	            			colouriseSquare(Color.WHITE, new Position(monster_x,  monster_y));
-	            			colouriseSquare(Color.LIGHT_GRAY, new Position(22,  22));
+	            			colouriseSquare(Color.LIGHT_GRAY, new Position(21,  21));
 	                	}	
 	                	
 	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
