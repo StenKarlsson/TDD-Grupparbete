@@ -50,32 +50,18 @@ så blev det helt enkelt lättare att använda KeyBindings eftersom det funkar o
 
 ## Mainklassen och Tid
 
-Det var ganska sent i processen vi adderade en tidsaspekt till spelet (och då även den rörliga funktionen med lasern). Spelet kördes vid den tidpunkten i en tråd från mainmetoden och det behövdes inte mer då rörelsen av spelkaraktären gjordes genom att ändra knapparnas egenskap för färg och på så sätt visa spelkaraktärens rörelse grafiskt.
+Det var ganska sent i processen vi adderade en tidsaspekt till spelet (och då även den rörliga funktionen med lasern). Spelet kördes vid den tidpunkten i en tråd utan loop från mainmetoden, det behövdes inte mer då rörelsen av spelkaraktären gjordes genom att ändra knapparnas egenskap för färg och på så sätt visa spelkaraktärens rörelse grafiskt.
 
-Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att sätta en timer för att begränsa den tid man har för att ta sig igenom diverse bana. 
+Eftersom vi kände att vi behövde hitta ett moment som innebar en utmaning bestämde vi oss för att sätta en timer för att begränsa den tid man har för att ta sig igenom en bana. 
 
-Vi skapade en tråd för Timern där vi kör metoden Threed.sleep(1000) för att låta tråden vila 1 sek och sedan subtrahera 1 från variebeln yimeInSeconds. För att spelaren ska få en chans att se banan innan tiden börjar rulla så har vi satt en Boolean som vilkor (playerIsMoving) som triggar på en rörelse från spelkaraktären.
+Vi skapade en egen tråd för timern där vi kör metoden Threed.sleep() i en while-loop för att låta tråden vila 1 sek och sedan subtrahera 1 från variabeln timeInSeconds varje varv loopen körs. 
 
-```
+Med andra ord sätter variabeln timeInSeconds en nedräkning i sekunder, om tiden tar slut innan banan klarats så skrivs det "Game Over" och spelet är slut.
 
-Thread TimerThread = new Thread(new Runnable() 
-	{
-		public void run()				    
-		{
-			while(timeInSeconds != 0) // Går tills tiden är slut
-			{
-				try 
-							
-				{
-					if(playerIsMoving) {timeInSeconds--;}				 	
-					Thread.sleep(1000);
-				} 
-							
-				catch (InterruptedException e) {e.printStackTrace();}
-				
-				} 
-	}});  TimerThread.start();
-```
+För att spelaren ska få en chans att se banan innan tiden börjar rulla så har vi satt en boolean som vilkor (playerIsMoving) som triggar på en rörelse från spelkaraktären.
+
+Lasern gav vi också en egen tråd vilket beskrivs nedan.
+
 
 ## Sprites
 
