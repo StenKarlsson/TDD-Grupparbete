@@ -7,9 +7,9 @@
 
 Länk till Planering: https://github.com/StenKarlsson/TDD-Grupparbete/projects/2
 
-Bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.com, www.opengameart.org och www.minecraftforum.net.
+Sprite-bilderna är "lånade" från https://thegameassetsmine.com, www.keywordhungry.com, www.opengameart.org och www.minecraftforum.net.
 
-Bilder från spelet:
+Skärmdump från spelet:
 
 https://www.dropbox.com/s/7gbtvmxybvgnyf7/TC_level2.png?dl=0
 https://www.dropbox.com/s/lxfwqhdj1xadte7/TC_level3.png?dl=0
