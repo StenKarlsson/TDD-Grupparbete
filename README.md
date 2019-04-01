@@ -240,7 +240,7 @@ Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en
 
 ## Svårigheter
 
-Det var relativt enkelt att bygga spelplanen genom att "översätta" heltal till färger men inte lika lätt att skriva tester med färg som referens, det tog därför ett tag innan vi blev bekväma med det tankesättet. Ur testsynpunkt hade det varit mycket enklare att basera allt på den ursprungliga heltals-Arrayen men hade också sina fördelar. Exempelvis lasern gjordes rörlig genom att använda två olika heltal där ett sattes till att vara röd(laser) när den andra var vit (golv) och tvärt om. 
+Det var relativt enkelt att bygga spelplanen genom att "översätta" heltal till färger men inte lika lätt att skriva tester med färg som referens, det tog därför ett tag innan vi blev bekväma med det tankesättet. Ur testsynpunkt hade det varit mycket enklare att basera allt på den ursprungliga heltals-Arrayen den hade också sina fördelar. Exempelvis lasern gjordes rörlig genom att använda två olika heltal där ett sattes till att vara röd(laser) när den andra var vit (golv) och tvärt om. 
 
 Vi fick också lägga lite tankeverksamhet på att hitta ett bra sätt att byta bana, dvs "översätta" nästa banas int-array till en färg-array på ett smidigt sätt. Vi kom fram till att det enklaste sättet var att inte rita ut en ny array utan istället byta färger på det spelbrädet vi redan hade och nollställa insamlade skatter på banan. 
 
