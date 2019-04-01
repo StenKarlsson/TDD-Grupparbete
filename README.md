@@ -1,4 +1,4 @@
-# Treasures Quest
+# Treasure Quest
 **Grupparbete - Testdriven Utveckling**
 
 **Kursledare:** Holger Rosencrantz
