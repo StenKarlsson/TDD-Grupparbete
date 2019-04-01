@@ -1,7 +1,5 @@
 package museumHeist.GUI.Classes;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -9,10 +7,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -159,7 +154,6 @@ public class GameBoardInterface extends JFrame {
 				if (getCurrentLevel()[row][col] == 1) 
 				{
 					
-					
 					if (isEven(levelCount)) 
 					{
 					if(squares[row][col]==squares[0][2]) {setupButton(row, col, picLifeGrey, Color.BLACK);}
@@ -168,7 +162,6 @@ public class GameBoardInterface extends JFrame {
 					
 					else 
 					{
-						
 						if(squares[row][col]==squares[0][2]) {setupButton(row, col, picLife, Color.BLACK);}
 						else setupButton(row, col, picWall, Color.BLACK);
 					}
@@ -188,7 +181,6 @@ public class GameBoardInterface extends JFrame {
 				if (getCurrentLevel()[row][col] == 3) 
 				{
 					setupButton(row, col, picLaser, Color.RED);
-					
 				}
 				
 				if(getCurrentLevel()[row][col] == 2) 
@@ -274,7 +266,7 @@ public class GameBoardInterface extends JFrame {
 		try {
 			if (colour == Color.CYAN) // Spelare
 				image = ImageIO.read(this.getClass().getResource(picPlayer));
-			if (colour == Color.BLACK) // Vägg
+			if (colour == Color.BLACK) // Vägg - Variation av bild
 				{
 				if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picWallGrey));}
 				else image = ImageIO.read(this.getClass().getResource(picWall));
@@ -297,7 +289,7 @@ public class GameBoardInterface extends JFrame {
 				image = ImageIO.read(this.getClass().getResource(picMonster));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 			
@@ -333,33 +325,24 @@ public class GameBoardInterface extends JFrame {
 
 			treasuresLeftOnCurrentLevel = 10; 
 			printLife();
-
-			
-			
 	
 		}
-					
-		
-			
+						
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
 			
 		{
-			
-		
+
 			characterObject.grabTreasure(); // Skatt +1
 			showTotalTreasure(); // Skriver ut totalt antal skatter i högra hörnet
 			decreaseTreasuresLeftOnLevel();
 			//skapa nytt ljudklipp 
-			
-		
 			
 		}
 		
 		if (getColorOfTile(nextTileDirection)==Color.MAGENTA) // Frågetecken
 			
 		{
-			 
-			
+
 				    int rand = 1;
 				    rand = (int)(7.0*Math.random());
 				    
@@ -466,7 +449,7 @@ public class GameBoardInterface extends JFrame {
 			
 		}
 		
-		if (getColorOfTile(nextTileDirection)==Color.YELLOW) // Portal
+		if (getColorOfTile(nextTileDirection)==Color.YELLOW) // Warp-Zone
 			
 		{
 			// Färgar positionen WHITE
@@ -489,7 +472,7 @@ public class GameBoardInterface extends JFrame {
 		              	
 		            	  if (getGridValueOfPosition(new Position(row, col))==0)
 		            	  {
-		            		  this.characterObject.setCurrentPosition(row, row); 
+		            		  this.characterObject.setCurrentPosition(row, col); 
 		            		  CharacterMoved = true;
 		            	  
 		            	  }
@@ -509,10 +492,7 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 	
-	private int setRandForTesting(int setCase) {
-		return setCase;
-		
-	}
+	
 
 	public void decreaseTreasuresLeftOnLevel() {
 		treasuresLeftOnCurrentLevel --; 				//Skatter kvar på banan -1
@@ -640,23 +620,6 @@ public class GameBoardInterface extends JFrame {
 	}
 	
 	
-	public void setLevel(int i) {
-		setCurrentLevel(Levels.getLevel(i)); 
-		buildButtonArray(); 
-	}
-
-	public int getTreasuresLeftOnCurrentLevel() {
-		return treasuresLeftOnCurrentLevel;
-	}
-
-	public void setTreasuresLeftOnCurrentLevel(int treasuresLeftOnCurrentLevel) {
-		this.treasuresLeftOnCurrentLevel = treasuresLeftOnCurrentLevel;
-	}
-	
-	public int getLevelCount() {
-		return levelCount;
-	}
-	
 	// Målar om GameBoarden vid banbyte , överlagrad metod som bara används vid game over för bana 999
 		
 	public void repaintGameBoard(int level) 
@@ -683,42 +646,21 @@ public class GameBoardInterface extends JFrame {
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
 				
-				if (getCurrentLevel()[row][col] == 5)
-					
+				// Ser till att ta bort spelare och monster
+				if (getColorOfTile(new Position(row, col)).equals(Color.LIGHT_GRAY)) 
 				{
-					colouriseSquare(Color.ORANGE, new Position(row, col));
+					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
 				
-				if (getCurrentLevel()[row][col] == 8)
-					
+				if (getColorOfTile(new Position(row, col)).equals(Color.CYAN))  
 				{
-					colouriseSquare(Color.MAGENTA, new Position(row, col));
-				}
-				if (getCurrentLevel()[row][col] == 3) 
-					
-				{
-					colouriseSquare(Color.RED, new Position(row, col));	
-				}
-				if(getCurrentLevel()[row][col] == 2) 
-					
-				{
-					
-					
-					colouriseSquare(Color.GREEN, new Position(row, col));
-					
-				}
-
-				if (getCurrentLevel()[row][col] == 7) 
-					
-				{
-					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
+					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
 				
-				if(getCurrentLevel()[row][col] == 9) 
-					
-				{
-					colouriseSquare(Color.YELLOW, new Position(row, col));	
-				}
+				
+				
+				
+				
 			}
 		}
 		
@@ -844,9 +786,6 @@ public class GameBoardInterface extends JFrame {
 		{
 			if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picLifeGrey));}
 			else image = ImageIO.read(this.getClass().getResource(picLife));
-			
-			
-			
 
 			for ( int i = 0; this.characterObject.getLife()>i; i++ )
 	        {
@@ -857,7 +796,6 @@ public class GameBoardInterface extends JFrame {
 		
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -883,23 +821,6 @@ public class GameBoardInterface extends JFrame {
 		this.squares[0][23].setText(Integer.toString(this.characterObject.getTreasures()));
 	}
 
-	public JButton[][] getSquares() {
-		return squares;
-	}
-
-	public void setSquares(JButton[][] squares) {
-		this.squares = squares;
-	}
-
-	public int[][] getCurrentLevel() {
-		return currentLevel;
-	}
-
-	public void setCurrentLevel(int[][] currentLevel) {
-		this.currentLevel = currentLevel;
-	}
-
-	boolean isEven(double num) { return ((num % 2) == 0); }
 
 	public void moveMonster(JButton[][] squares2) 
 	{
@@ -913,7 +834,7 @@ public class GameBoardInterface extends JFrame {
             	Position position = new Position(x, y);
             	
             	
-            	int monster_x = (int)position.getX(); //
+            	int monster_x = (int)position.getX(); 
             	int monster_y = (int)position.getY();
             	
             	
@@ -922,7 +843,6 @@ public class GameBoardInterface extends JFrame {
             	
                 Color color = getColorOfTile(position);
                 
-                int value = getGridValueOfPosition(position);
                 int char_x = (int)characterObject.getCurrentPosition().getX();
                 int char_y = (int)characterObject.getCurrentPosition().getY();
                 
@@ -962,7 +882,11 @@ public class GameBoardInterface extends JFrame {
 	                		// Sätter spelarens position innan förflyttning till vit
 	                		colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
 	            			
-	            			characterObject.setCurrentPosition(1, 1);
+	                		if(this.characterObject.getLife()>0) 
+	            			{
+	                			characterObject.setCurrentPosition(1, 1);
+	            			}
+	            			
 	            			
 	            			// Sätter spelarens position efter förflyttning till turkos
 	            			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
@@ -972,9 +896,11 @@ public class GameBoardInterface extends JFrame {
 	            			removeOneHeart();
 	            			
 	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 21,21
-	            			
+	            			if(this.characterObject.getLife()>0) 
+	            			{
 	            			colouriseSquare(Color.WHITE, new Position(monster_x,  monster_y));
 	            			colouriseSquare(Color.LIGHT_GRAY, new Position(21,  21));
+	            			}
 	                	}	
 	                	
 	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
@@ -994,6 +920,41 @@ public class GameBoardInterface extends JFrame {
        }
 		
 	}
+	
+	public void setLevel(int i) {
+		setCurrentLevel(Levels.getLevel(i)); 
+		buildButtonArray(); 
+	}
+
+	public int getTreasuresLeftOnCurrentLevel() {
+		return treasuresLeftOnCurrentLevel;
+	}
+
+	public void setTreasuresLeftOnCurrentLevel(int treasuresLeftOnCurrentLevel) {
+		this.treasuresLeftOnCurrentLevel = treasuresLeftOnCurrentLevel;
+	}
+	
+	public int getLevelCount() {
+		return levelCount;
+	}
+	
+	public JButton[][] getSquares() {
+		return squares;
+	}
+
+	public void setSquares(JButton[][] squares) {
+		this.squares = squares;
+	}
+
+	public int[][] getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setCurrentLevel(int[][] currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	boolean isEven(double num) { return ((num % 2) == 0); }
 
 	 
 }
