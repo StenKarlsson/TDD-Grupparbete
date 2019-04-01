@@ -21,10 +21,7 @@ public class TestMonsterMovement {
 		@Before
 		public void setup() 
 		{
-			gb = new GameBoardInterface();
-			
-			
-			
+			gb = new GameBoardInterface();	
 		}
 
 		// Här undersöks monstrets rörelse som bygger på att x och y variablarna jämförs med spelkaraktärens position och flyttar mot denna.
@@ -36,7 +33,7 @@ public class TestMonsterMovement {
 			//Arrange - spelkaraktären sätts två rutor till vänster om monstret
 			gb.getCharacter().setCurrentPosition(19, 21);
 		
-			// Monstret rör sig mot spelkaraktären en gång utifrån dennas position
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
@@ -51,7 +48,7 @@ public class TestMonsterMovement {
 			//Arrange - spelkaraktären sätts två rutor till höger om monstret
 			gb.getCharacter().setCurrentPosition(21, 23);
 		
-			// Monstret rör sig mot spelkaraktären en gång utifrån dennas position
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
@@ -66,7 +63,7 @@ public class TestMonsterMovement {
 			//Arrange - spelkaraktären sätts två rutor ovanför monstret
 			gb.getCharacter().setCurrentPosition(21, 19);
 		
-			// Monstret rör sig mot spelkaraktären en gång utifrån dennas position
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
@@ -80,7 +77,7 @@ public class TestMonsterMovement {
 			//Arrange - spelkaraktären sätts två rutor under monstret
 			gb.getCharacter().setCurrentPosition(21, 23);
 		
-			// Monstret rör sig mot spelkaraktären en gång utifrån dennas position
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
@@ -98,7 +95,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 22);
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
-			// Monstret ska röra sig mot spelakaraktären och kollidera med denna
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - Spelaren ska tappa ett liv
@@ -113,7 +110,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 22);
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
-			// Monstret ska röra sig mot spelakaraktären och kollidera med denna
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - Spelaren ska flytta till startpositionen
@@ -128,7 +125,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 22);
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
-			// Monstret ska röra sig mot spelakaraktären och kollidera med denna
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - Monstret ska flytta till startpositionen vilket betyder att position 21, 21 ska vara LIGHT_GREY
@@ -145,7 +142,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 22);
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
-			// Monstret ska röra sig mot spelakaraktären och kollidera med denna
+			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
 			gb.moveMonster(gb.getSquares());
 			
 			// Assert - Monstret ska flytta till startpositionen vilket betyder att position 21, 21 ska vara LIGHT_GREY
