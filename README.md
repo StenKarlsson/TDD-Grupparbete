@@ -202,7 +202,7 @@ while(!CharacterMoved)
 		              {
 		            	  if (getGridValueOfPosition(new Position(row, col))==0)
 		            	  {
-		            		  this.characterObject.setCurrentPosition(row, row); 
+		            		  this.characterObject.setCurrentPosition(row, col); 
 		            		  CharacterMoved = true;
 		            	  } 
 		              }   
