@@ -118,6 +118,23 @@ public class GameBoardInterface extends JFrame {
 	player.playSound();
 	}
 	
+	public int characterGetLives() {
+		return characterObject.getLife();
+	}
+	
+	public void characterAddLives(int amount) {
+		characterObject.addLife(amount);
+	}
+	
+	public void characterSubtractOneLife() {
+		characterObject.subractLife(1);
+		removeOneHeart();
+	}
+	
+	public void characterPickUpTreasures(int amount) {
+		characterObject.grabTreasure(amount);
+	}
+	
 	public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {
 		InputMap im = comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap ap = comp.getActionMap();
@@ -361,7 +378,7 @@ public class GameBoardInterface extends JFrame {
 			 
 			
 				    int rand = 1;
-				    rand = (int)(7.0*Math.random());
+				    rand = randomNumberGenerator(7.0);
 				    
 				    //setRandForTesting(6);
 				    
@@ -479,8 +496,8 @@ public class GameBoardInterface extends JFrame {
 			while(!CharacterMoved) 
 			{
 
-				int row = (int)(25.0*Math.random());
-				int col = (int)(25.0*Math.random());
+				int row = randomNumberGenerator(25.0);
+				int col = randomNumberGenerator(25.0);
 				
 				for ( int q = 0; q < squares.length; q++ )
 		          {
@@ -507,6 +524,10 @@ public class GameBoardInterface extends JFrame {
 		
 		return runCode; // Ska spelaren flytta sig?
 		
+	}
+	
+	public int randomNumberGenerator(Double range) {
+		return (int)(range*Math.random());
 	}
 	
 	private int setRandForTesting(int setCase) {

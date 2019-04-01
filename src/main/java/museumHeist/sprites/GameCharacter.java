@@ -1,13 +1,9 @@
 package museumHeist.sprites;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.geom.Point2D;
-
 import museum_heist.GameBoard;
 import museum_heist.Position;
 
-public class GameCharacter /* implements KeyListener */ {
+public class GameCharacter {
 	
 	private Position currentPosition;
 	
