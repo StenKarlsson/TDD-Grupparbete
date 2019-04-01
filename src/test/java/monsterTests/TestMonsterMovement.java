@@ -21,7 +21,8 @@ public class TestMonsterMovement {
 		@Before
 		public void setup() 
 		{
-			gb = new GameBoardInterface();	
+			gb = new GameBoardInterface();
+			gb.setLevel(2);
 		}
 
 		// Här undersöks monstrets rörelse som bygger på att x och y variablarna jämförs med spelkaraktärens position och flyttar mot denna.
