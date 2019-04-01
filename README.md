@@ -102,7 +102,7 @@ I klassen GameBoardInterface finns en metod som heter positionEvent i där det t
 
 ## Golv
 
-Precis som väggen har golvet inge egen klass och representeras på samma sätt på spelbrädet. Golvet är neutralt i den mening att det inte inte ges någon händelse i metoden positionEvent, däremot ingår golvet i många av testerna då det är viktigt för den grafiska representationen att de rörliga figurerna inte lämnar en "svans" efter sig. Vid en rörelse måste alltså positionen figuren rör sig till få figurens färg och positionen den rör sig från måste tilldelas golvets färg.
+Precis som väggen har golvet ingen egen klass och representeras på samma sätt på spelbrädet. Golvet är neutralt i den mening att det inte inte tilldelas någon händelse i metoden positionEvent, däremot ingår golvet i många av testerna då det är viktigt för den grafiska representationen att de rörliga figurerna inte lämnar en "svans" efter sig. Vid en rörelse måste alltså positionen figuren rör sig till få figurens färg och positionen den rör sig från måste tilldelas golvets färg.
 
 ## Dörr
 
@@ -118,11 +118,11 @@ Implementationen för klassen dörr är mycket grundläggande med instansvariabl
 
 ## Laser
 
-I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika nummer när spelbrädet ritas upp. Genom att låta dessa växla mellan laser och golv (röd och vit ) simuleras en förflyttning.
+I spelet representeras lasern inte av en egen klass utan av färgen röd på det 2-dimensionella spelbrädet, eftersom lasern ska vara rörlig utnyttjas två olika heltal när spelbrädet ritas upp. Genom att låta dessa växla mellan laser och golv (röd och vit) simuleras en förflyttning.
 
 **Tester**
 
-I klassen CollisonWithLaserTest finns de tester som ligger till grund för implementationen - test för att se till att spelkaraktären dör den gå på en laser, att spelkaraktären flyttas till startpositionen samt att en rörlig laser dödar en stillastående spelkaraktär. 
+I klassen CollisonWithLaserTest finns de tester som ligger till grund för implementationen - test för att se till att spelkaraktären dör när den går på en laser, att spelkaraktären flyttas till startpositionen samt att en rörlig laser dödar en stillastående spelkaraktär. 
 
 **Implementation**
 
@@ -221,7 +221,7 @@ Här har vi testat att monstret hela tiden rör sig mot spelkaraktären oavsett 
 
 **Implementation**
 
-Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Main-klassen, monstrets hastighet sätts på samma sätt. 
+Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Main-klassen och monstrets hastighet sätts på samma sätt. 
 
 Riktningen styrs i metoden moveMonster(), där körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
 
@@ -235,7 +235,7 @@ if (monster_x>char_x)
            }
 	   
 ```
-Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en yta med golv i optimal riktning. För att lösa detta hade vi behövt testa att monstret aldrig står stilla om det har möjlighet att röra sig och implementation av detta. 
+Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en yta med golv i optimal riktning. För att lösa detta hade vi behövt testa att monstret aldrig står stilla om det har möjlighet att röra sig och implementera detta i koden. 
 
 
 ## Svårigheter
