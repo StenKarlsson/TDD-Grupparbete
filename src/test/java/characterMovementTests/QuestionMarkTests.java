@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import museumHeist.GUI.Classes.GameBoardInterface;
+import museumHeist.sprites.Main;
 
 public class QuestionMarkTests {
 
@@ -37,6 +38,7 @@ public class QuestionMarkTests {
 	
 	
 	//Här testas metoden som genererad slumpade nummer, som används för att avgöra vad som ska hända när spelaren går på en ruta med frågetecken
+	@Ignore
 	@Test
 	public void randomNumbersWithinRangeTest() {
 		//Arrange
@@ -44,10 +46,10 @@ public class QuestionMarkTests {
 		int max = 3;
 		int rand;
 		int expectedMin = 0;
-		int expectedMax = 6;
+		int expectedMax = 7;
 		//Act
 		for (int i = 0; i < 100000; i++) {
-			rand = gb.randomNumberGenerator(7.0);
+			rand = gb.randomNumberGenerator(8.0);
 			
 			if (rand >= max) {
 				max = rand;
@@ -65,13 +67,28 @@ public class QuestionMarkTests {
 	
 	@Ignore
 	@Test
-	public void pickUpFiveTreasuresTest() {
+	public void loseOneLifeTest() {
+		
+		//Arrange
+		int actualLives;
+		int expectedLives = 2;
+		
+		//Act
+		gb.characterLoseLife(1);
+		actualLives = gb.characterGetLives();
+		//Assert
+		assertEquals(actualLives, expectedLives);
+	}
+	
+	@Ignore
+	@Test
+	public void pickUpFiveTreasuresTest() throws Exception {
 		//Arrange
 		int expectedTreasures = 5;
 		int actualTreasures;
 		//Act
-		gb.decreaseTreasuresLeftOnLevel(5);
-		actualTreasures = gb.getTreasuresLeftOnCurrentLevel(); //måste även kontrollera att antalet skatter o characterObject stämmer
+		gb.characterPickUpTreasure(5);
+		actualTreasures = gb.characterGetTreasures(); //måste även kontrollera att antalet skatter o characterObject stämmer
 		//Assert
 		assertEquals(actualTreasures, expectedTreasures);
 		
@@ -81,52 +98,91 @@ public class QuestionMarkTests {
 	@Test
 	public void turnOffLaserTest() {
 		//Arrange
-		
+		boolean expected = false;
+		boolean actual;
 		//Act
-		
+		gb.turnOffLaser();
+		actual = gb.getLaserStatus();
 		//Assert
-		
+		assertEquals(actual, expected);
 		
 	}
 	
 	@Ignore
 	@Test
-	public void addTwoLives() {
+	public void addThreeLives() {
 		//Arrange
-		int expectedLives = 5;
+		int expectedLives = 6;
 		int actualLives;
 		//Act
-		
+		gb.characterAddLives(3);
+		actualLives = gb.characterGetLives();
 		
 		//Assert
-		
+		assertEquals(actualLives, expectedLives);
 		
 	}
 	
 	@Ignore
 	@Test
 	public void add30SecondsToTimer() {
-		fail("Not yet implemented");
 		//Arrange
-		
+		int expectedTime;
+		int actualTime;
 		//Act
+		expectedTime = 150+30;				// 150 sekunder är standard tiden
+		Main.setTimeInSeconds(Main.getTimeInSeconds()+30);
+		actualTime = Main.getTimeInSeconds();
 		
 		//Assert
-		
+		assertEquals(actualTime, expectedTime);
 		
 	}
 	
 	@Ignore
 	@Test
-	public void remove20SecondsFromTimer() {
-		fail("Not yet implemented");
+	public void subtract30SecondsFromTimer() {
 		//Arrange
-		
+		int expectedTime;
+		int actualTime;
 		//Act
+		expectedTime = 150-30;
+		Main.setTimeInSeconds(Main.getTimeInSeconds()-30);
+		actualTime = Main.getTimeInSeconds();
 		
 		//Assert
+		assertEquals(actualTime, expectedTime);
+	}
+	
+	
+	
+	@Ignore
+	@Test
+	public void slowDownLaserTest() {
+		//Arrange
+		int actualLaserSpeed;
+		int expectedLaserSpeed;
+		//Act
+		expectedLaserSpeed = 3000;
+		Main.setLaserSpeed(3000);
+		actualLaserSpeed = Main.getLaserSpeed();
 		
+		//Assert
+		assertEquals(actualLaserSpeed, expectedLaserSpeed);
 		
 	}
 
+	
+	@Test
+	public void speedUpLaser() {
+		//Arrange
+		int actualLaserSpeed;
+		int expectedLaserSpeed;
+		//Act
+		expectedLaserSpeed = 500;
+		Main.setLaserSpeed(500);
+		actualLaserSpeed = Main.getLaserSpeed();
+		//Assert
+		assertEquals(actualLaserSpeed, expectedLaserSpeed);
+	}
 }

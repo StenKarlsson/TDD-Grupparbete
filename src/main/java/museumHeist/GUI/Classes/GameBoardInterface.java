@@ -344,49 +344,35 @@ public class GameBoardInterface extends JFrame {
 		{
 
 				    int rand = 1;
-				    rand = randomNumberGenerator(7.0);
+				    rand = randomNumberGenerator(8.0);
 				    
 				    //setRandForTesting(6);
 				    
 				    switch(rand) 
 				    {
 				      case 0: // Tar ett liv
-				    	  this.characterObject.subractLife(1);
-				    	  	removeOneHeart();
-							
+				    	  	characterLoseLife(1);
 				        break;
 				      case 1: // Plockar upp 5 skatter
-				    		characterObject.grabTreasure(5);
-				    	  	decreaseTreasuresLeftOnLevel(5);
+				    	  	characterPickUpTreasure(5);
 				        break;
 				      case 2: // Stänger av lasern
-				    	  laserActive=false;
-				    	  for ( int q = 0; q < squares.length; q++ )
-				          {
-				              for ( int x = 0; x < squares[0].length; x++ )
-				              {
-				              	Position position = new Position(q, x);
-				                  Color color = getColorOfTile(position);
-				                  int value = getGridValueOfPosition(position);
-				                  if (value==3 || value ==6) 
-				                  {
-				                  	colouriseSquare(color.WHITE,position);	
-				                  }
-				              }   
-				         }
+				    	 turnOffLaser();
 				        break;
 				      case 3: // Lägger till 3 liv
-				    	  this.characterObject.addLife(3);
+				    	  this.
 				    	  printLife();
-				    		
-				        break;
+				    	break;
 				      case 4: // Lägger till 30 sek
 				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()+30);
 				        break;
-				      case 5: // Sänker Laserns hastighet
+				      case 5: // Tar bort 30 sek
+				    	  Main.setTimeInSeconds(Main.getTimeInSeconds()-30);
+				    	  break;
+				      case 6: // Sänker Laserns hastighet
 				    	  Main.setLaserSpeed(3000);
 				        break;
-				      case 6: // Ökar Laserns hastighet
+				      case 7: // Ökar Laserns hastighet
 				    	  Main.setLaserSpeed(500);
 				        break;
 				  
@@ -498,17 +484,7 @@ public class GameBoardInterface extends JFrame {
 			}
 	}
 	
-	public void decreaseTreasuresLeftOnLevel(int amount) {
-		treasuresLeftOnCurrentLevel -= amount;				//Skatter kvar på banan - amount
-		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
-		
-		//dörren byter tillstånd från låst till öppen om alla skatter är funna
-		if(treasuresLeftOnCurrentLevel<=0) {
-			door.setdoorIsLocked(false);
-			colouriseSquare(Color.PINK, door.getDoorsPosition());
-			}
-	}
-	
+
 	//Ändrar spelarens/karaktärens position samt byter färg på rutan den flyttar till
 	public void updateCharacterPosition(String direction) {
 		String recievedString = direction;
@@ -744,8 +720,7 @@ public class GameBoardInterface extends JFrame {
                 			
                 			characterObject.setCurrentPosition(1, 1);
                 			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-                			this.characterObject.subractLife(1);
-                			removeOneHeart();
+                			characterLoseLife(1);
                 			Main.setLaserSpeed(1500);
                 		}
                 		
@@ -770,8 +745,7 @@ public class GameBoardInterface extends JFrame {
 			characterObject.setCurrentPosition(1, 1);
 		}
 		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-		this.characterObject.subractLife(1);
-		removeOneHeart();
+		characterLoseLife(1);
 	}
 
 	// Skriver ut tiden på timern på sista rutan översta raden
@@ -804,21 +778,7 @@ public class GameBoardInterface extends JFrame {
 		}
 	}
 	
-	private void removeOneHeart()
-	{
-
-		Image image;
-		try {
-			if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picWallGrey));}
-			else image = ImageIO.read(this.getClass().getResource(picWall));
-			
-			getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (this.characterObject.getLife()==0) {repaintGameBoard(999); }
-		
-	}
+	
 	// Skriver ut tiden på timern på sista rutan översta raden
 	public void showTotalTreasure() {
 		
@@ -1001,7 +961,74 @@ public class GameBoardInterface extends JFrame {
 		return (int)(d*Math.random());
 	}
 
-	
+	public void characterLoseLife(int amount) {
+		characterObject.subractLife(amount);
+		
+		Image image;
+		try {
+			if (isEven(levelCount)) { image = ImageIO.read(this.getClass().getResource(picWallGrey));}
+			else image = ImageIO.read(this.getClass().getResource(picWall));
+			
+			getSquares()[0][this.characterObject.getLife()].setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (this.characterObject.getLife()==0) {repaintGameBoard(999); }
+		
+		
+	}
+
+	public int characterGetLives() {
+		return characterObject.getLife();
+	}
+
+	public void characterPickUpTreasure(int amount) {
+		characterObject.grabTreasure(5);
+		treasuresLeftOnCurrentLevel -= amount;				//Skatter kvar på banan - amount
+		System.out.println("Skatt upplockad, totalt " + treasuresLeftOnCurrentLevel +" kvar på banan" );
+		
+		//dörren byter tillstånd från låst till öppen om alla skatter är funna
+		if(treasuresLeftOnCurrentLevel<=0) {
+			door.setdoorIsLocked(false);
+			colouriseSquare(Color.PINK, door.getDoorsPosition());
+			}		
+	}
+
+	public int characterGetTreasures() throws Exception {
+		
+		if (treasuresLeftOnCurrentLevel == characterObject.getTreasures()) {
+			return treasuresLeftOnCurrentLevel;
+		}
+		else{
+			throw new Exception("Something is wrong with the treasure counter, please contact the support");
+		}
+	}
+
+	public void turnOffLaser() {
+		 laserActive=false;
+   	  for ( int q = 0; q < squares.length; q++ )
+         {
+             for ( int x = 0; x < squares[0].length; x++ )
+             {
+             	Position position = new Position(q, x);
+                 Color color = getColorOfTile(position);
+                 int value = getGridValueOfPosition(position);
+                 if (value==3 || value ==6) 
+                 {
+                 	colouriseSquare(color.WHITE,position);	
+                 }
+             }   
+        }
+	}
+
+	public boolean getLaserStatus() {
+		return laserActive;
+	}
+
+	public void characterAddLives(int amount) {
+		characterObject.addLife(amount);
+		printLife();
+	}
 
 	 
 }
