@@ -329,9 +329,10 @@ public class GameBoardInterface extends JFrame {
 		}
 						
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
-			player.playTreasureSound();
+			
 		{
 
+			player.playTreasureSound();
 			characterObject.grabTreasure(); // Skatt +1
 			showTotalTreasure(); // Skriver ut totalt antal skatter i högra hörnet
 			decreaseTreasuresLeftOnLevel();
