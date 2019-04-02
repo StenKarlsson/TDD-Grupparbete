@@ -35,7 +35,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(19, 21);
 		
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
 			
@@ -50,7 +50,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 23);
 		
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
 			
@@ -65,7 +65,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 19);
 		
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
 			assertEquals(Color.LIGHT_GRAY, gb.getColorOfTile(new Position(21, 20)));	
@@ -79,7 +79,7 @@ public class TestMonsterMovement {
 			gb.getCharacter().setCurrentPosition(21, 23);
 		
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - monstret ska ha tagit ett steg mot spelkaraktären vars ruta nu ska ha färgen LIGHT_GREY
 			
@@ -97,7 +97,7 @@ public class TestMonsterMovement {
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - Spelaren ska tappa ett liv
 
@@ -112,7 +112,7 @@ public class TestMonsterMovement {
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - Spelaren ska flytta till startpositionen
 
@@ -127,7 +127,7 @@ public class TestMonsterMovement {
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - Monstret ska flytta till startpositionen vilket betyder att position 21, 21 ska vara LIGHT_GREY
 
@@ -144,13 +144,31 @@ public class TestMonsterMovement {
 			gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
 			
 			// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
-			gb.moveMonster(gb.getSquares());
+			gb.monsterCanMoveTowardsCharacter(gb.getSquares());
 			
 			// Assert - Monstret ska flytta till startpositionen vilket betyder att position 21, 21 ska vara LIGHT_GREY
 
 			assertEquals(Color.WHITE, gb.getColorOfTile(new Position(21, 22)));
 		}
 		
+		// Även om det inte finns en position som är i riktning mot karaktären så ska monstret röra sig
+		
+				@Test
+				public void MonsterShouldAlwaysMove() 
+				{
+					//Arrange - Monstret kan pga väggar bara gå i en riktning rkt bak bort från karaktären
+					gb.setLevel(11);
+					// Karaktären sätts ovanför monstret med en vägg mellan
+					gb.getCharacter().setCurrentPosition(21, 19);
+					gb.colouriseSquare(Color.CYAN, gb.getCharacter().getCurrentPosition());
+					
+					// Act - Monstret rör sig mot spelkaraktären en gång utifrån dennas position
+					
+					gb.forceMonsterToMove();
+					
+					 // Assert - monstret ska ha tagit ett steg nedåt, dvs positionen ska vara LIGHT__GREY
+					assertEquals(Color.LIGHT_GRAY, gb.getColorOfTile(new Position(22, 21)));
+				}
 		
 
 }

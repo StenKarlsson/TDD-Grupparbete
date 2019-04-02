@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.lang.model.element.Element;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
@@ -197,11 +198,6 @@ public class GameBoardInterface extends JFrame {
 					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
 				}	
 				
-				if(getCurrentLevel()[row][col] == 8) 
-					
-				{ 
-					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
-				}	
 				
 				if(getCurrentLevel()[row][col] == 7) 
 					
@@ -711,11 +707,12 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
 				}
-				if(getCurrentLevel()[row][col] == 7) 
-					currentMonsterStartPosition = new Position(row, col);
+				if(getCurrentLevel()[row][col] == 9) 	
 					
 				{
-					colouriseSquare(Color.YELLOW, new Position(row, col));	
+					currentMonsterStartPosition = new Position(row, col);
+					colouriseSquare(Color.YELLOW, new Position(row, col));
+					
 				}
 				
 
@@ -825,7 +822,7 @@ public class GameBoardInterface extends JFrame {
 	}
 
 
-	public void moveMonster(JButton[][] squares2) 
+	public boolean monsterCanMoveTowardsCharacter(JButton[][] squares2) 
 	{
 		// Går igenom alla index i arrayen
 		for ( int x = 0; x < squares.length; x++ )
@@ -908,7 +905,7 @@ public class GameBoardInterface extends JFrame {
 	                	
 	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
 	                	colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));}
-	                	break;
+	                	return true;
                 	
                 	}
                 	
@@ -920,7 +917,83 @@ public class GameBoardInterface extends JFrame {
  
             }
             
-       }
+       } return false; // Monstret kan inte gå mot spelkaraktären
+		
+	}
+	
+	public boolean forceMonsterToMove() 
+	{
+		
+		
+		for ( int x = 0; x < squares.length; x++ )
+        {
+            for ( int y = 0; y < squares[0].length; y++ )
+            {
+            	Position position = new Position(x, y);
+            	int monster_x = (int)position.getX(); 
+            	int monster_y = (int)position.getY();
+            	int movement_x = 0;
+            	int movement_y = 0;
+                Color color = getColorOfTile(position);
+                
+                
+            	if (color.equals(Color.LIGHT_GRAY)) 
+            	{ 
+            		
+            		
+            		if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()+1)).equals(Color.WHITE)) 
+					{
+            			movement_x = (int) position.getX();
+            			movement_y = (int)position.getY()+1;
+            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
+                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+                		return true; 
+            			
+                    	
+					}
+            		
+            		else if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()-1)).equals(Color.WHITE)) 
+					{
+            			movement_x = (int) position.getX();
+            			movement_y = (int)position.getY()-1;
+            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
+                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+                		return true; 
+            			
+                    	
+					}
+            		
+            		else if (getColorOfTile(new Position((int)position.getX()+1, (int)position.getY())).equals(Color.WHITE)) 
+					{
+            			movement_x = (int) position.getX()+1;
+            			movement_y = (int)position.getY();
+            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
+                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+                		return true; 
+            			
+                    	
+					}
+            		
+            		else if (getColorOfTile(new Position((int)position.getX()-1, (int)position.getY())).equals(Color.WHITE)) 
+					{
+            			movement_x = (int) position.getX()-1;
+            			movement_y = (int)position.getY();
+            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
+                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+                		return true; 
+            			
+                    	
+					}
+            		
+            		
+            		
+            		
+            		 
+            	}
+            }
+            
+        }
+		return false; // Om monstret inte har någon väg att gå
 		
 	}
 	
@@ -958,6 +1031,8 @@ public class GameBoardInterface extends JFrame {
 	}
 
 	boolean isEven(double num) { return ((num % 2) == 0); }
+
+	
 
 	 
 }

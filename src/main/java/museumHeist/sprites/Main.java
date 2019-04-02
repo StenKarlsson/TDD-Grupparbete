@@ -70,7 +70,10 @@ public class Main {
 									try 
 									
 										{
-									gb.moveMonster(gb.getSquares());
+										if(playerIsMoving) {
+									if(gb.monsterCanMoveTowardsCharacter(gb.getSquares())) {}
+									else gb.forceMonsterToMove();
+										}
 										 	
 									gb.showTimer(timeInSeconds);
 									
