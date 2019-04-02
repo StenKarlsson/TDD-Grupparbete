@@ -29,7 +29,7 @@ import javax.swing.SwingConstants;
 import museumHeist.sprites.Door;
 import museumHeist.sprites.GameCharacter;
 import museumHeist.sprites.Main;
-import museumHeist.sprites.Monster;
+
 import museum_heist.Levels;
 import museum_heist.Position;
 import soundTest.SoundPlayer;
@@ -116,7 +116,7 @@ public class GameBoardInterface extends JFrame {
 		addKeyBinding(board, KeyEvent.VK_A, "Left", (evt) -> {
 			updateCharacterPosition("Left");
 		});
-	player.playSound();
+	player.loopLevelSound();
 	}
 	
 	public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {
@@ -324,7 +324,7 @@ public class GameBoardInterface extends JFrame {
 		boolean runCode = true;
 		
 		if (getColorOfTile(nextTileDirection)==Color.PINK) // öppen dörr
-		{ 	
+		{ 	player.playDoorEntrySound();
 			levelCount++; 
 			setCurrentLevel(Levels.getLevel(levelCount));
 			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
@@ -343,7 +343,7 @@ public class GameBoardInterface extends JFrame {
 		
 			
 		if (getColorOfTile(nextTileDirection)==Color.ORANGE) // Skatt
-			
+			player.playTreasureSound();
 		{
 			
 		

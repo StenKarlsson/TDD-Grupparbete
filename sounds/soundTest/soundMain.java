@@ -10,8 +10,8 @@ public class soundMain {
 private static SoundPlayer player = new SoundPlayer(); 
 
 public static void main(String[]args) {
-	
-	player.playSound(); 
+	player.playTreasureSound();
+	//player.playTreasureSound();
 	
 	
 	
