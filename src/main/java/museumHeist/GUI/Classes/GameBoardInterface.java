@@ -193,7 +193,6 @@ public class GameBoardInterface extends JFrame {
 					setupButton(row, col, picTreasure, Color.ORANGE);
 				}
 					
-			
 				if(getCurrentLevel()[row][col] == 7) 
 					
 				{ 
@@ -651,7 +650,6 @@ public class GameBoardInterface extends JFrame {
 				{	
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
-
 				if (getCurrentLevel()[row][col] == 1) 
 				{
 					colouriseSquare(Color.BLACK, new Position(row, col));	
@@ -738,7 +736,8 @@ public class GameBoardInterface extends JFrame {
 	
 	}
 	
-	private void characterIsKilled() {
+	private void characterIsKilled() 
+	{
 		colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
 		
 		if(this.characterObject.getLife()>0) 
