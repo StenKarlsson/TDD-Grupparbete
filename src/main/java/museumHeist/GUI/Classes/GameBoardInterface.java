@@ -46,6 +46,7 @@ public class GameBoardInterface extends JFrame {
 	private SoundPlayer player; 
 	public boolean LevelCompleted = false;
 	Position startposition = new Position (1,1);
+	Position currentMonsterStartPosition;
 	
 
 	static boolean laserOn = true;
@@ -206,6 +207,7 @@ public class GameBoardInterface extends JFrame {
 					
 				{ 
 					setupButton(row, col, picMonster, Color.LIGHT_GRAY); 
+					currentMonsterStartPosition= new Position(row, col);
 				}	
 				
 				if(getCurrentLevel()[row][col] == 9) 
@@ -435,7 +437,7 @@ public class GameBoardInterface extends JFrame {
 			
 			// Här ska monstret flyttas till startpositionen
 			colouriseSquare(Color.WHITE, nextTileDirection);
-			colouriseSquare(Color.LIGHT_GRAY, new Position(21,  21));
+			colouriseSquare(Color.LIGHT_GRAY, currentMonsterStartPosition);
 			
 			
 			runCode = false;
@@ -709,7 +711,8 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
 				}
-				if(getCurrentLevel()[row][col] == 9) 
+				if(getCurrentLevel()[row][col] == 7) 
+					currentMonsterStartPosition = new Position(row, col);
 					
 				{
 					colouriseSquare(Color.YELLOW, new Position(row, col));	
@@ -899,7 +902,7 @@ public class GameBoardInterface extends JFrame {
 	            			if(this.characterObject.getLife()>0) 
 	            			{
 	            			colouriseSquare(Color.WHITE, new Position(monster_x,  monster_y));
-	            			colouriseSquare(Color.LIGHT_GRAY, new Position(21,  21));
+	            			colouriseSquare(Color.LIGHT_GRAY, currentMonsterStartPosition);
 	            			}
 	                	}	
 	                	

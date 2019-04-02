@@ -22,7 +22,7 @@ public class TestMonsterMovement {
 		public void setup() 
 		{
 			gb = new GameBoardInterface();
-			gb.setLevel(2);
+			gb.setLevel(10); // Väljer den bana som är konstruerad för att testa monstrets rörelse
 		}
 
 		// Här undersöks monstrets rörelse som bygger på att x och y variablarna jämförs med spelkaraktärens position och flyttar mot denna.
