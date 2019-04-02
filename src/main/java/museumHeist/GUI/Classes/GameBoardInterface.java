@@ -113,7 +113,7 @@ public class GameBoardInterface extends JFrame {
 		addKeyBinding(board, KeyEvent.VK_A, "Left", (evt) -> {
 			updateCharacterPosition("Left");
 		});
-	player.loopLevelSound();
+			player.loopLevelSound();
 	}
 	
 	public static void addKeyBinding(JComponent comp, int keyCode, String id, final ActionListener actionListener) {
@@ -314,7 +314,8 @@ public class GameBoardInterface extends JFrame {
 		boolean runCode = true;
 		
 		if (getColorOfTile(nextTileDirection)==Color.PINK) // öppen dörr
-		{ 	player.playDoorEntrySound();
+		{ 	
+			player.playDoorEntrySound();
 			levelCount++; 
 			setCurrentLevel(Levels.getLevel(levelCount));
 			this.characterObject.addLife(1); // Lägger till ett liv vid klarad bana
@@ -409,6 +410,7 @@ public class GameBoardInterface extends JFrame {
 		{
 			// Flyttar till spelaren till startposition 
 			characterIsKilled();
+			player.playRespawnSound();
 			Main.setLaserSpeed(1500);
 			
 			

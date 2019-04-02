@@ -11,11 +11,14 @@ public class SoundPlayer {
 	String shine = "399904__mrthenoronha__shining-8-bit.wav";
 	String boss = "179684__nicolasdrweski__mario-boss.wav";
 	String enterDoor = "270319__littlerobotsoundfactory__jingle-win-01.wav";
-private AudioClip gameSoundclip;
+String evolve = "391656__jeckkech__evolve.wav";
+String respawn = "458251__tolerabledruid6__you-died.wav";
+	private AudioClip gameSoundclip;
   
 private File levelSoundFile = new File("sounds/resources/Soundfiles/"+levelMusic);
 private File treasureSoundFile = new File("sounds/resources/Soundfiles/"+shine);
-private File enterDoorSoundFile = new File("sounds/resources/Soundfiles/"+shine);
+private File enterDoorSoundFile = new File("sounds/resources/Soundfiles/"+evolve);
+private File respawnSoundFile = new File("sounds/resources/Soundfiles/"+respawn);
 
 
   
@@ -56,7 +59,21 @@ private File enterDoorSoundFile = new File("sounds/resources/Soundfiles/"+shine)
 		
 		try {
 			//skapa nytt ljudklipp 
-			gameSoundclip = Applet.newAudioClip(new File(enterDoor.toString()).toURI().toURL());
+			gameSoundclip = Applet.newAudioClip(new File(enterDoorSoundFile.toString()).toURI().toURL());
+			gameSoundclip.play();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		//
+		//alarmSoundclip.loop();
+		//alarmSoundclip.stop();
+		
+	}
+  public void playRespawnSound() {
+		
+		try {
+			//skapa nytt ljudklipp 
+			gameSoundclip = Applet.newAudioClip(new File(respawnSoundFile.toString()).toURI().toURL());
 			gameSoundclip.play();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
