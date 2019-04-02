@@ -153,6 +153,11 @@ public class GameBoardInterface extends JFrame {
 			for (int col = 0; col < getCurrentLevel()[row].length; col++) 
 			{
 				
+				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
+				{
+					setupButton(row, col, picGround, Color.WHITE);
+				}
+				
 				if (getCurrentLevel()[row][col] == 1) 
 				{
 					
@@ -169,9 +174,16 @@ public class GameBoardInterface extends JFrame {
 					}
 					
 				}
-				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
+			
+				if(getCurrentLevel()[row][col] == 2) 
+					
+				{ 
+					setupButton(row, col, picDoorClosed, Color.GREEN); door.setDoorsPosition(new Position(row,col));
+				}	
+				
+				if (getCurrentLevel()[row][col] == 3) 
 				{
-					setupButton(row, col, picGround, Color.WHITE);
+					setupButton(row, col, picLaser, Color.RED);
 				}
 	
 				if (getCurrentLevel()[row][col] == 5) 
@@ -180,30 +192,18 @@ public class GameBoardInterface extends JFrame {
 					setupButton(row, col, picTreasure, Color.ORANGE);
 				}
 					
-				if (getCurrentLevel()[row][col] == 3) 
-				{
-					setupButton(row, col, picLaser, Color.RED);
-				}
-				
-				if(getCurrentLevel()[row][col] == 2) 
-					
-				{ 
-					setupButton(row, col, picDoorClosed, Color.GREEN); door.setDoorsPosition(new Position(row,col));
-				}	
-				
-
-				if(getCurrentLevel()[row][col] == 8) 
-					
-				{ 
-					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
-				}	
-				
-				
+			
 				if(getCurrentLevel()[row][col] == 7) 
 					
 				{ 
 					setupButton(row, col, picMonster, Color.LIGHT_GRAY); 
 					currentMonsterStartPosition= new Position(row, col);
+				}	
+				
+				if(getCurrentLevel()[row][col] == 8) 
+					
+				{ 
+					setupButton(row, col, picQuestionMark, Color.MAGENTA); 
 				}	
 				
 				if(getCurrentLevel()[row][col] == 9) 
@@ -407,12 +407,7 @@ public class GameBoardInterface extends JFrame {
 			
 		{
 			// Flyttar till spelaren till startposition 
-			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-			
-			characterObject.setCurrentPosition(1, 1);
-			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-			this.characterObject.subractLife(1);
-			removeOneHeart();
+			characterIsKilled();
 			Main.setLaserSpeed(1500);
 			
 			
@@ -424,12 +419,7 @@ public class GameBoardInterface extends JFrame {
 		{
 			// Flyttar till spelaren till startposition 
 			Position impact = characterObject.getCurrentPosition();
-			colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-			
-			characterObject.setCurrentPosition(1, 1);
-			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-			this.characterObject.subractLife(1);
-			removeOneHeart();
+			characterIsKilled();
 			
 			// Här ska monstret flyttas till startpositionen
 			colouriseSquare(Color.WHITE, nextTileDirection);
@@ -489,6 +479,8 @@ public class GameBoardInterface extends JFrame {
 		return runCode; // Ska spelaren flytta sig?
 		
 	}
+
+	
 	
 	
 
@@ -654,10 +646,7 @@ public class GameBoardInterface extends JFrame {
 				{
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
-				
-				
-				
-				
+					
 				
 			}
 		}
@@ -678,34 +667,34 @@ public class GameBoardInterface extends JFrame {
 			for (int col = 0; col < getCurrentLevel()[row].length; col++) 
 			{
 				
-				if (getCurrentLevel()[row][col] == 1) 
-				{
-					colouriseSquare(Color.BLACK, new Position(row, col));	
-				}
 				if (getCurrentLevel()[row][col] == 0 || getCurrentLevel()[row][col] == 6) 
 				{	
 					colouriseSquare(Color.WHITE, new Position(row, col));
 				}
-				if (getCurrentLevel()[row][col] == 5)	
+
+				if (getCurrentLevel()[row][col] == 1) 
 				{
-					colouriseSquare(Color.ORANGE, new Position(row, col));
-				}
-				if (getCurrentLevel()[row][col] == 8)	
-				{
-					colouriseSquare(Color.MAGENTA, new Position(row, col));
-				}
-				if (getCurrentLevel()[row][col] == 3) 	
-				{
-					colouriseSquare(Color.RED, new Position(row, col));	
+					colouriseSquare(Color.BLACK, new Position(row, col));	
 				}
 				if(getCurrentLevel()[row][col] == 2) 	
 				{
 					colouriseSquare(Color.GREEN, new Position(row, col));
 				}
+				if (getCurrentLevel()[row][col] == 3) 	
+				{
+					colouriseSquare(Color.RED, new Position(row, col));	
+				}
+				if (getCurrentLevel()[row][col] == 5)	
+				{
+					colouriseSquare(Color.ORANGE, new Position(row, col));
+				}
 				if(getCurrentLevel()[row][col] == 7) 
-					
 				{
 					colouriseSquare(Color.LIGHT_GRAY, new Position(row, col));	
+				}
+				if (getCurrentLevel()[row][col] == 8)	
+				{
+					colouriseSquare(Color.MAGENTA, new Position(row, col));
 				}
 				if(getCurrentLevel()[row][col] == 9) 	
 					
@@ -768,6 +757,18 @@ public class GameBoardInterface extends JFrame {
             
        }
 	
+	}
+	
+	private void characterIsKilled() {
+		colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
+		
+		if(this.characterObject.getLife()>0) 
+		{
+			characterObject.setCurrentPosition(1, 1);
+		}
+		colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
+		this.characterObject.subractLife(1);
+		removeOneHeart();
 	}
 
 	// Skriver ut tiden på timern på sista rutan översta raden
@@ -879,21 +880,7 @@ public class GameBoardInterface extends JFrame {
                 		// Om positionen är spelkaraktären så ska ett liv tas och karaktär och monster starta från ursprungliga positioner
                 		
 	                	if(getColorOfTile(new Position(movement_x, movement_y)).equals(color.CYAN)) {
-	                		// Sätter spelarens position innan förflyttning till vit
-	                		colouriseSquare(Color.WHITE, characterObject.getCurrentPosition());
-	            			
-	                		if(this.characterObject.getLife()>0) 
-	            			{
-	                			characterObject.setCurrentPosition(1, 1);
-	            			}
-	            			
-	            			
-	            			// Sätter spelarens position efter förflyttning till turkos
-	            			colouriseSquare(Color.CYAN, characterObject.getCurrentPosition());
-	            			
-	            			// Tar ett liv
-	            			this.characterObject.subractLife(1);
-	            			removeOneHeart();
+	                		characterIsKilled();
 	            			
 	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 21,21
 	            			if(this.characterObject.getLife()>0) 
@@ -909,10 +896,6 @@ public class GameBoardInterface extends JFrame {
                 	
                 	}
                 	
-                	
-                	
-                	
-                
                 }
  
             }
@@ -921,74 +904,43 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 	
+	
+	// Metod som flyttar monstret till närmaste golv på spelplanen om det inte går att gå mot karaktären
+	
 	public boolean forceMonsterToMove() 
 	{
-		
-		
-		for ( int x = 0; x < squares.length; x++ )
+		for ( int y = 0; y < squares.length; y++ )
         {
-            for ( int y = 0; y < squares[0].length; y++ )
+            for ( int x = 0; x < squares[0].length; x++ )
             {
             	Position position = new Position(x, y);
-            	int monster_x = (int)position.getX(); 
-            	int monster_y = (int)position.getY();
-            	int movement_x = 0;
-            	int movement_y = 0;
                 Color color = getColorOfTile(position);
                 
                 
             	if (color.equals(Color.LIGHT_GRAY)) 
             	{ 
             		
-            		
             		if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()+1)).equals(Color.WHITE)) 
 					{
-            			movement_x = (int) position.getX();
-            			movement_y = (int)position.getY()+1;
-            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
-                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
-                		return true; 
-            			
-                    	
+            			return forcedMovement((int)position.getX(),(int)position.getY(), 0, 1, position );
 					}
             		
             		else if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()-1)).equals(Color.WHITE)) 
 					{
-            			movement_x = (int) position.getX();
-            			movement_y = (int)position.getY()-1;
-            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
-                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
-                		return true; 
-            			
-                    	
+            			return forcedMovement((int)position.getX(),(int)position.getY(), 0, -1, position );
+	
 					}
             		
             		else if (getColorOfTile(new Position((int)position.getX()+1, (int)position.getY())).equals(Color.WHITE)) 
 					{
-            			movement_x = (int) position.getX()+1;
-            			movement_y = (int)position.getY();
-            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
-                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
-                		return true; 
-            			
-                    	
+            			return forcedMovement((int)position.getX(),(int)position.getY(), +1, 0, position ); 	
 					}
             		
             		else if (getColorOfTile(new Position((int)position.getX()-1, (int)position.getY())).equals(Color.WHITE)) 
 					{
-            			movement_x = (int) position.getX()-1;
-            			movement_y = (int)position.getY();
-            			colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
-                		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
-                		return true; 
-            			
-                    	
+            			return forcedMovement((int)position.getX(),(int)position.getY(), -1, 0, position );	
 					}
-            		
-            		
-            		
-            		
-            		 
+            				 
             	}
             }
             
@@ -997,6 +949,16 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 	
+	// Metod som flyttar monstret ett steg åt någon riktning
+	
+	public boolean forcedMovement(int monster_x, int monster_y, int x_change, int y_change, Position position) 
+	{
+		int movement_x = (int) position.getX()+x_change;
+		int movement_y = (int)position.getY()+y_change;
+		colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));
+		colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
+		return true; 
+	}
 	public void setLevel(int i) {
 		setCurrentLevel(Levels.getLevel(i)); 
 		buildButtonArray(); 
