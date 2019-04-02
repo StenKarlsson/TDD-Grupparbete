@@ -227,7 +227,7 @@ Här har vi testat att monstret hela tiden rör sig mot spelkaraktären oavsett 
 
 **Implementation**
 
-Precis som vid implementationen av lasern bygger monstrets rörelse på metodanrop i en egen tråd i Main-klassen - monstrets hastighet sätts på samma sätt. Se variabeln "Monsterspeed" nedan. Även för monstret sker ingen rörelse förrän användaren flyttar sin karaktär.
+Precis som vid implementationen av lasern bygger monstrets rörelse på metodanrop i en egen tråd i Main-klassen - monstrets hastighet sätts på samma sätt. Se variabeln "Monsterspeed" nedan. Vid ny bana (eller omstart) så inväntar monstret att användaren flyttar karaktären innan det börjar röra sig.
 
 Först undersöks om monstret kan röra sig mot karaktären (monsterCanMoveTowardsCharacter()), om det är fallet returneras true och monstret tar ett steg mot karaktären. Om inte så är fallet körs forceMonsterToMove() som gör att monstret tar ett steg mot ett annat golv i någon annan riktning. 
 
