@@ -344,7 +344,7 @@ public class GameBoardInterface extends JFrame {
 		{
 
 				    int rand = 1;
-				    rand = (int)(7.0*Math.random());
+				    rand = randomNumberGenerator(7.0);
 				    
 				    //setRandForTesting(6);
 				    
@@ -453,8 +453,8 @@ public class GameBoardInterface extends JFrame {
 			while(!CharacterMoved) 
 			{
 
-				int row = (int)(25.0*Math.random());
-				int col = (int)(25.0*Math.random());
+				int row = randomNumberGenerator(25.0);
+				int col = randomNumberGenerator(25.0);
 				
 				for ( int q = 0; q < squares.length; q++ )
 		          {
@@ -996,6 +996,10 @@ public class GameBoardInterface extends JFrame {
 	}
 
 	boolean isEven(double num) { return ((num % 2) == 0); }
+
+	public int randomNumberGenerator(double d) {
+		return (int)(d*Math.random());
+	}
 
 	
 

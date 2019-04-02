@@ -1,13 +1,11 @@
 package characterMovementTests;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import java.awt.Color;
-import java.security.Timestamp;
-
+import org.junit.Ignore;
 import org.junit.Test;
 
-import museumHeist.sprites.Main;
-import museum_heist.Position;
+import museumHeist.GUI.Classes.GameBoardInterface;
 
 public class QuestionMarkTests {
 
@@ -34,11 +32,101 @@ public class QuestionMarkTests {
 	// Testa så att det förvinner 20 sekunder. 
 	//Att Game Over visas om tiden blir 0 eller mindre.
 	
+	GameBoardInterface gb = new GameBoardInterface();
+	
+	
+	
+	//Här testas metoden som genererad slumpade nummer, som används för att avgöra vad som ska hända när spelaren går på en ruta med frågetecken
 	@Test
-	public void test() {
+	public void randomNumbersWithinRangeTest() {
+		//Arrange
+		int min = 3;
+		int max = 3;
+		int rand;
+		int expectedMin = 0;
+		int expectedMax = 6;
+		//Act
+		for (int i = 0; i < 100000; i++) {
+			rand = gb.randomNumberGenerator(7.0);
+			
+			if (rand >= max) {
+				max = rand;
+			}
+			
+			if (rand <= min) {
+				min = rand;
+			}
+			
+		}
+		//Assert
+		assertEquals(min, expectedMin);
+		assertEquals(max, expectedMax);
+	}
+	
+	@Ignore
+	@Test
+	public void pickUpFiveTreasuresTest() {
+		//Arrange
+		int expectedTreasures = 5;
+		int actualTreasures;
+		//Act
+		gb.decreaseTreasuresLeftOnLevel(5);
+		actualTreasures = gb.getTreasuresLeftOnCurrentLevel(); //måste även kontrollera att antalet skatter o characterObject stämmer
+		//Assert
+		assertEquals(actualTreasures, expectedTreasures);
+		
+	}
+	
+	@Ignore
+	@Test
+	public void turnOffLaserTest() {
+		//Arrange
+		
+		//Act
+		
+		//Assert
+		
+		
+	}
+	
+	@Ignore
+	@Test
+	public void addTwoLives() {
+		//Arrange
+		int expectedLives = 5;
+		int actualLives;
+		//Act
+		
+		
+		//Assert
+		
+		
+	}
+	
+	@Ignore
+	@Test
+	public void add30SecondsToTimer() {
 		fail("Not yet implemented");
+		//Arrange
+		
+		//Act
+		
+		//Assert
+		
+		
+	}
+	
+	@Ignore
+	@Test
+	public void remove20SecondsFromTimer() {
+		fail("Not yet implemented");
+		//Arrange
+		
+		//Act
+		
+		//Assert
+		
+		
 	}
 
-	
-	
 }
