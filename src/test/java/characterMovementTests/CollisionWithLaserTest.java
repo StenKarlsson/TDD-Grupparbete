@@ -57,7 +57,7 @@ public class CollisionWithLaserTest {
 	}
 	
 	@Test
-	public void CollisionWithFireCausedByFireMovingToThePositionWhereCharacterIsShouldKill() 
+	public void CollisionWithFireCausedByFireMovingToThePositionWhereCharacterIsKillsCharacter() 
 	{
 		
 		
