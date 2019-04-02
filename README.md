@@ -223,13 +223,38 @@ Monstret rör sig mot spelkaraktären över positioner på spelplanen som utgör
 
 **Tester**
 
-Här har vi testat att monstret hela tiden rör sig mot spelkaraktären oavsett riktning och spelkaraktären dör när deras position är samma. Vi testar också att monstret och spelkaratären flyttas till sina startpositioner efter en kollison.
+Här har vi testat att monstret hela tiden rör sig mot spelkaraktären oavsett riktning, att det rör sig även om det inte finns en väg i rätt riktning och att spelkaraktären dör när deras position är samma. Vi testar också att monstret och spelkaratären flyttas till sina startpositioner efter en kollison.
 
 **Implementation**
 
-Precis som vid implementationen av lasern bygger monstrets rörelse på att en metod i en egen tråd i Main-klassen och monstrets hastighet sätts på samma sätt. 
+Precis som vid implementationen av lasern bygger monstrets rörelse på metodanrop i en egen tråd i Main-klassen - monstrets hastighet sätts på samma sätt. Se variabeln "Monsterspeed" nedan. Vid ny bana (eller omstart) så inväntar monstret att användaren flyttar karaktären innan det börjar röra sig.
 
-Riktningen styrs i metoden moveMonster(), där körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
+Först undersöks om monstret kan röra sig mot karaktären (monsterCanMoveTowardsCharacter()), om det är fallet returneras true och monstret tar ett steg mot karaktären. Om så inte är fallet körs forceMonsterToMove() som gör att monstret tar ett steg mot ett golv i någon annan riktning. 
+
+```
+
+Thread Monster = new Thread(new Runnable() 
+	{
+		public void run()
+				{
+				   while(timeInSeconds != 0) // Går tills tiden är slut
+				{
+				try 				
+				{
+						if(playerIsMoving) 
+						{
+							if(gb.monsterCanMoveTowardsCharacter(gb.getSquares())) {}
+							else gb.forceMonsterToMove();
+						}
+										 	
+					gb.showTimer(timeInSeconds);
+					Thread.sleep(MonsterSpeed);
+				} 
+									
+```
+
+
+I metoden monsterCanMoveTowardsCharacter() körs dubbla for-loopar som går igenom alla index i spelplanen och letar efter färgen ljusgrått som representerar ett monster. Sedan jämförs monstrets position med spelkaraktärens position i x och y-led.
 
 Om monstrets position i x eller y-led är större än spelkaraktärens position så minskas monstrets position i relation till denna.
 
@@ -241,7 +266,8 @@ if (monster_x>char_x)
            }
 	   
 ```
-Monstret är tyvärr inte särskilt smart och står stilla om det inte hittar en yta med golv i optimal riktning. För att lösa detta hade vi behövt testa att monstret aldrig står stilla om det har möjlighet att röra sig och implementera detta i koden. 
+Om monstret inte rör sig returnerar metoden false metoden forceMonsterToMove() flyttar monstret ett steg i någon riktning om möjligt.
+
 
 
 ## Svårigheter
