@@ -1,8 +1,9 @@
 package characterMovementTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import museumHeist.GUI.Classes.GameBoardInterface;
@@ -23,6 +24,7 @@ public class WarpZoneTests {
 		}
 		
 	// Här testas att spelkaraktären förflyttas från Warp_Zone
+	@Ignore
 	@Test
 	public void WarpZoneMovesCharacterFromTile() {
 		//Arrange
@@ -37,7 +39,7 @@ public class WarpZoneTests {
 		
 	}
 	
-	
+	@Ignore
 	@Test
 	public void test() {
 		//Arrange
@@ -52,4 +54,21 @@ public class WarpZoneTests {
 		
 	}
 
+	
+	// Test som kollar så att portalen skickar iväg karaktären
+	@Test
+	public void warpZoneDestinationTest() {
+		//Arrange
+		Position actualPos;
+		Position expectedPos;
+		//Act
+		gb.getCharacter().setCurrentPosition(4, 16);
+		gb.updateCharacterPosition("Right");
+		expectedPos = new Position(4, 17);
+		actualPos = gb.getCharacter().getCurrentPosition();
+		//Assert
+		assertFalse(actualPos.x == expectedPos.x && actualPos.y == expectedPos.y);
+	}
+	
+	
 }

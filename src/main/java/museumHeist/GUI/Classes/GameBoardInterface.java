@@ -443,19 +443,19 @@ public class GameBoardInterface extends JFrame {
 				int col = randomNumberGenerator(25.0);
 				
 				for ( int q = 0; q < squares.length; q++ )
-		          {
-		              for ( int x = 0; x < squares[0].length; x++ )
-		              {
-		              	
-		            	  if (getGridValueOfPosition(new Position(row, col))==0)
-		            	  {
-		            		  this.characterObject.setCurrentPosition(row, col); 
-		            		  CharacterMoved = true;
-		            	  
-		            	  }
-		            	  
-		              }   
-		         }
+				  {
+				      for ( int x = 0; x < squares[0].length; x++ )
+				      {
+				      	
+				    	  if (getGridValueOfPosition(new Position(row, col))==0)
+				    	  {
+				    		  this.characterObject.setCurrentPosition(row, col); 
+				    		  CharacterMoved = true;
+				    	  
+				    	  }
+				    	  
+				      }   
+				 }
 				
 			}
 			
@@ -469,9 +469,6 @@ public class GameBoardInterface extends JFrame {
 		
 	}
 
-	
-	
-	
 
 	public void decreaseTreasuresLeftOnLevel() {
 		treasuresLeftOnCurrentLevel --; 				//Skatter kvar på banan -1
