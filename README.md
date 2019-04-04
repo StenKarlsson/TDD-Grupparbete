@@ -157,28 +157,28 @@ Här testar vi först metoden Math.random() 100 000 gånger för att fastslå at
 
 **Implementation**
 
-Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats vilket resulterar i ett av sex möjliga utfall.
+Koden bygger på en slumpfunktion som sätter inputparametern till en switchsats vilket resulterar i ett av åtta möjliga utfall.
 ```
 
-		rand = (int)(6.0*Math.random());
-
+		int rand = 1;
+		rand = randomNumberGenerator(8.0);
+				    
 		switch(rand) 
 		{
-			case 0: // Tar ett liv
-			this.characterObject.subractLife(1);
-
-
-
-			removeOneHeart();							
+		 	case 0: // Tar ett liv
+			characterLoseLife(1);
 			break;
-
 			case 1: // Plockar upp 5 skatter
-			characterObject.grabTreasure(5);
-			decreaseTreasuresLeftOnLevel(5);
+			characterPickUpTreasure(5);
 			break;
-
 			case 2: // Stänger av lasern
-
+			turnOffLaser();
+			break;
+			case 3: // Lägger till 3 liv
+			this.
+			printLife();
+			break;
+			
 			...osv
 			
 ```
