@@ -59,15 +59,18 @@ public class WarpZoneTests {
 	@Test
 	public void warpZoneDestinationTest() {
 		//Arrange
-		Position actualPos;
-		Position expectedPos;
+		int startPositionX = 4;
+		int startpositionY = 16;
+		int actualPositionX;
+		int actualPositionY;
 		//Act
-		gb.getCharacter().setCurrentPosition(4, 16);
+		gb.getCharacter().setCurrentPosition(startPositionX, startpositionY);
 		gb.updateCharacterPosition("Right");
-		expectedPos = new Position(4, 17);
-		actualPos = gb.getCharacter().getCurrentPosition();
+		actualPositionX = (int) gb.getCharacter().getCurrentPosition().getX();
+		actualPositionY = (int) gb.getCharacter().getCurrentPosition().getY();
+
 		//Assert
-		assertFalse(actualPos.x == expectedPos.x && actualPos.y == expectedPos.y);
+		assertFalse(startPositionX == actualPositionX && startpositionY+1 == actualPositionY);
 	}
 	
 	
