@@ -783,7 +783,7 @@ public class GameBoardInterface extends JFrame {
 	}
 
 
-	public boolean monsterCanMoveTowardsCharacter(JButton[][] squares2) 
+		public boolean monsterCanMoveTowardsCharacter(JButton[][] squares2) 
 	{
 		// Går igenom alla index i arrayen
 		for ( int x = 0; x < squares.length; x++ )
@@ -791,67 +791,58 @@ public class GameBoardInterface extends JFrame {
             for ( int y = 0; y < squares[0].length; y++ )
             {
             	
-            	// En rad värden hämtas för att användas i ifsatsen på det index som är monstrets
-            	Position position = new Position(x, y);
-            	
-            	
-            	int monster_x = (int)position.getX(); 
-            	int monster_y = (int)position.getY();
-            	
-            	
-            	int movement_x = 0;
-            	int movement_y = 0;
-            	
-                Color color = getColorOfTile(position);
+
+            	int new_x = 0;
+            	int new_y = 0;
                 
                 int char_x = (int)characterObject.getCurrentPosition().getX();
                 int char_y = (int)characterObject.getCurrentPosition().getY();
                 
                 // Om färgen på rutan är LIGHT_GREY som representerar monstret så ändras positionen
                 
-                if (color.equals(color.LIGHT_GRAY)) 
+                if (getColorOfTile(new Position(x, y)).equals(Color.LIGHT_GRAY)) 
                 {
                 	// Säger att monstret ska öka x-värde om spelaren har högre x-värde och tvärt om
-                	if (monster_x>char_x) 
+                	if (x>char_x) 
                 	{
-                		movement_x= (monster_x)-1;
+                		new_x= x-1;
                 	}
-                	else if (monster_x==char_x) {movement_x=monster_x;}
-                	else movement_x= (monster_x)+1;
+                	else if (x==char_x) {new_x=x;}
+                	else new_x= x+1;
                 	
                 	
                 	// Säger att monstret ska sänka y-värde om spelaren har högre y-värde och tvärt om
-                	if (monster_y>char_y) 
+                	if (y>char_y) 
                 	{
-                		movement_y= (monster_y)-1;
+                		new_y= y-1;
                 	}
-                	else if (monster_y==char_y) {movement_y= monster_y;}
-                	else movement_y= (monster_y)+1;
+                	else if (y==char_y) {new_y= y;}
+                	else new_y= y+1;
                 	
                 	
                 	
-                	Position PossibleMonsterDirection = new Position(movement_x, movement_y);
+                	Position PossibleMonsterDirection = new Position(new_x, new_y);
                 	int _value = getGridValueOfPosition(PossibleMonsterDirection);
                 	
                 	// Om den nya positionen är vit och har värdet 0 så kan monstret flytta sig
                 	
-                	if (getColorOfTile(new Position(movement_x, movement_y)).equals(color.WHITE)|| _value == 0 || getColorOfTile(new Position(movement_x, movement_y)).equals(color.CYAN)) 
+                	if (getColorOfTile(new Position(new_x, new_y)).equals(Color.WHITE)|| _value == 0 || getColorOfTile(new Position(new_x, new_y)).equals(Color.CYAN)) 
                 	{
                 		// Om positionen är spelkaraktären så ska ett liv tas och karaktär och monster starta från ursprungliga positioner
                 		
-	                	if(getColorOfTile(new Position(movement_x, movement_y)).equals(color.CYAN)) {
+	                	if(getColorOfTile(new Position(new_x, new_y)).equals(Color.CYAN)) {
 	                		characterIsKilled();
 	            			
 	            			// Här ska monstrets nuvarande position sättas till vit och flytta denna till 21,21
 	            			if(this.characterObject.getLife()>0) 
 	            			{
-	            			colouriseSquare(Color.WHITE, new Position(monster_x,  monster_y));
+	            			colouriseSquare(Color.WHITE, new Position(x,  y));
 	            			colouriseSquare(Color.LIGHT_GRAY, currentMonsterStartPosition);
 	            			}
 	                	}	
 	                	
-	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(movement_x,  movement_y));
-	                	colouriseSquare(Color.WHITE, new Position(monster_x, monster_y));}
+	                	else {colouriseSquare(Color.LIGHT_GRAY, new Position(new_x,  new_y));
+	                	colouriseSquare(Color.WHITE, new Position(x, y));}
 	                	return true;
                 	
                 	}
@@ -880,25 +871,25 @@ public class GameBoardInterface extends JFrame {
             	if (color.equals(Color.LIGHT_GRAY)) 
             	{ 
             		
-            		if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()+1)).equals(Color.WHITE)) 
+            		if (getColorOfTile(new Position(x, y+1)).equals(Color.WHITE)) 
 					{
-            			return forcedMovement((int)position.getX(),(int)position.getY(), 0, 1, position );
+            			return forcedMovement(x, y, 0, 1, position );
 					}
             		
-            		else if (getColorOfTile(new Position((int)position.getX(), (int)position.getY()-1)).equals(Color.WHITE)) 
+            		else if (getColorOfTile(new Position(x, y-1)).equals(Color.WHITE)) 
 					{
-            			return forcedMovement((int)position.getX(),(int)position.getY(), 0, -1, position );
+            			return forcedMovement(x, y, 0, -1, position );
 	
 					}
             		
-            		else if (getColorOfTile(new Position((int)position.getX()+1, (int)position.getY())).equals(Color.WHITE)) 
+            		else if (getColorOfTile(new Position(x+1, y)).equals(Color.WHITE)) 
 					{
-            			return forcedMovement((int)position.getX(),(int)position.getY(), +1, 0, position ); 	
+            			return forcedMovement(x, y, +1, 0, position ); 	
 					}
             		
-            		else if (getColorOfTile(new Position((int)position.getX()-1, (int)position.getY())).equals(Color.WHITE)) 
+            		else if (getColorOfTile(new Position(x-1, y)).equals(Color.WHITE)) 
 					{
-            			return forcedMovement((int)position.getX(),(int)position.getY(), -1, 0, position );	
+            			return forcedMovement(x, y, -1, 0, position );	
 					}
             				 
             	}
@@ -908,6 +899,8 @@ public class GameBoardInterface extends JFrame {
 		return false; // Om monstret inte har någon väg att gå
 		
 	}
+	
+	
 	
 	// Metod som flyttar monstret ett steg åt någon riktning
 	
