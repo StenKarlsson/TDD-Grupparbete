@@ -153,8 +153,7 @@ Tanken med frågetecknet är att spelaren inte ska kunna förutsäga utfallet, m
 
 **Tester**
 
-Här handlar det givetvis inte om att testa java-metoden Math.random() utan att de möjliga utfallen resulterar i vad som är tänkt.
-...... osv
+Här testar vi först metoden Math.random() 100 000 gånger för att fastslå att vår inmatning ger rätt resultat (inte lägre än 0, och inte högre än 7), och sedan kommer några tester som testar alla de olika scenarion som ska kunna hända beroende på utfall. (få ett extra liv, få 3 extra liv, få 5 skatter, lägga till eller ta bort 30 sekunder från timern, stänga av / snabba på / sakta ner lasern)
 
 **Implementation**
 
@@ -189,7 +188,7 @@ Fungerar som en portal, om spelkaraktären ställer sig på denna så sker en wa
 
 **Tester**
 
-Det enda testet som låg till grund för metoden som sköter warpen är ett test för att ta reda på att spelkaraktären är flyttad. Implementationen är så enkel och självklar (jämfört med att utforma ett test för att säkerhetsställa att karaktären flyttas till en golvyta i Arrayen). Därför valde vi att inte göra fler test.
+I det här testet så sätts spelarens startposition ett steg till vänster om en portal, karaktären tar sedan ett steg åt höger, och sen kontrolleras det att karaktären INTE är ett steg till höger om startpositionen.
 
 **Implementation**
 
